@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Card generator",
+  "name": "Card Generator (from excel to cards)",
   "icons": [
     {
       "src": "favicon.ico",
