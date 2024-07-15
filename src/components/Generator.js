@@ -145,13 +145,13 @@ const Generator = () => {
                     </div>
                     <div className="form-group border rounded p-3 mt-3">
                         <h5>Slike</h5>
+                        <h6>Mapa <b>(Računalnik)</b> in posamezno slike <b>(Telefon)</b></h6>
                         <input
                             type="file"
                             ref={imagesFileInputRef}
+                            {...(!isMobileDevice && {directory: "", webkitdirectory: ""})}
                             className="form-control-file w-100"
                             onChange={handleImagesChange}
-                            {...(!isMobileDevice && {webkitdirectory: "", directory: ""})}
-                            accept="image/*"
                             multiple
                             style={{height: "auto", fontSize: "large"}}
                             disabled={uploading}
@@ -159,7 +159,7 @@ const Generator = () => {
                     </div>
                     <div className="form-group border rounded p-3 mt-3">
                         <h5>Ogled</h5>
-                        <h6>Naslov stolpca, ki določa število kart</h6>
+                        <h6>Naslov stolpca v Excelu, ki določa število kart</h6>
                         <input
                             type="text"
                             value={nameOfColumn}
@@ -216,10 +216,10 @@ const Generator = () => {
                             className="form-select w-100"
                             style={{height: "auto", fontSize: "large"}}
                             value={selectedType}
-                            onChange={(event) => setSelectedType(event.target.value)}
-                        >
+                            onChange={(event) => setSelectedType(event.target.value)}>
                             <option value="pdf">Pdf</option>
                             <option value="jpg">Jpg</option>
+                            <option value="jpeg">Jpeg</option>
                             <option value="png">Png</option>
                         </select>
                         <input
@@ -235,7 +235,7 @@ const Generator = () => {
                 <div className="mt-4 col-md-8 light p-3">
                     <h5>Karte</h5>
                     <div style={{height: "80vh", overflowY: "auto"}}>
-                        <div id={"cards-container"} className="d-flex flex-wrap justify-content-start border">
+                        <div id={"cards-container"} className="d-flex flex-wrap justify-content-center border">
                             {cards.map((card, index) => (
                                 <div key={index} className="card-container">
                                     <Card card={card} template={templateFile} findImage={findImage}/>

@@ -19,16 +19,16 @@ const Index = () => {
                     <h3>Kaj potrebuješ</h3>
                     <ul>
                         <li>Excel datoteko <a
-                            href={"https://github.com/pintargasper/CardGenerator/releases/download/pre-release/Cards.xlsx"}
+                            href={"https://github.com/pintargasper/CardGenerator/releases/download/release-v1.0.2/Cards.xlsx"}
                             target={"_blank"} rel="noreferrer">Cards.xlsx (Vzorčna datoteka)</a> -> pridobljeno iz strani <a
                             href={"https://github.com/pintargasper/CardGenerator/releases"}
-                            target={"_blank"} rel="noreferrer">Github</a>
+                            target={"_blank"} rel="noreferrer">GitHub</a>
                         </li>
                         <li>Mapo slik <a
-                            href={"https://github.com/pintargasper/CardGenerator/releases/download/pre-release/images.zip"}
+                            href={"https://github.com/pintargasper/CardGenerator/releases/download/release-v1.0.2/images.zip"}
                             target={"_blank"} rel="noreferrer">images (Vzorčna mapa)</a> -> pridobljeno iz
                             strani <a href={"https://github.com/pintargasper/CardGenerator/releases"}
-                                target={"_blank"} rel="noreferrer">Github</a></li>
+                                target={"_blank"} rel="noreferrer">GitHub</a></li>
                         <li>Datoteka (Predloga) -> pridobljeno iz <Link to={"./create"}>predloge</Link></li>
                     </ul>
                 </div>
@@ -59,14 +59,16 @@ const Index = () => {
                         <p>
                             <b>Uporaba komponente:</b>
                         </p>
-                        <ul>
-                            <li>title=&#123;<b>&#34;Naslov&#34;</b>&#125;</li>
-                            <li>progress=&#123;<b>Število</b>&#125;</li>
-                            <li>textColor=&#123;<b>&#34;Barva besedila&#34;</b>&#125;</li>
-                            <li>loadingBarColor=&#123;<b>&#34;Barva vrstice&#34;</b>&#125;</li>
-                            <li>fontFamily=&#123;<b>&#34;Pisava&#34;</b>&#125;</li>
-                            <li>fontSize=&#123;<b>Velikost besedila</b>&#125;</li>
-                        </ul>
+                        <code>
+                            &lt;<span style={{color: "#5e974b"}}>LoadingBar</span> <br/>
+                            <span style={{color: "#321c14", marginLeft: "20px"}}>title</span>=&#123;<span style={{color: "#990000"}}>"Naslov"</span>&#125; <br/>
+                            <span style={{color: "#321c14", marginLeft: "20px"}}>progress</span>=&#123;<span style={{color: "#990000"}}>Število</span>&#125; <br/>
+                            <span style={{color: "#321c14", marginLeft: "20px"}}>textColor</span>=&#123;<span style={{color: "#990000"}}>"Barva besedila"</span>&#125; <br/>
+                            <span style={{color: "#321c14", marginLeft: "20px"}}>loadingBarColor</span>=&#123;<span style={{color: "#990000"}}>"Barva vrstice"</span>&#125; <br/>
+                            <span style={{color: "#321c14", marginLeft: "20px"}}>fontFamily</span>=&#123;<span style={{color: "#990000"}}>"Pisava"</span>&#125;<br/>
+                            <span style={{color: "#321c14", marginLeft: "20px"}}>fontSize</span>=&#123;<span style={{color: "#990000"}}>Velikost besedila</span>&#125;<br/>
+                        /&gt;
+                        </code>
                     </div>
                 </div>
             </section>

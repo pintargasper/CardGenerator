@@ -1,70 +1,32 @@
-# Getting Started with Create React App
+# Card Generator
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Card Generator allows you to create any card and generate it in JPG, JPEG or PNG format. It also allows you to download images in PDF mode.
 
-## Available Scripts
+## What do you need?
 
-In the project directory, you can run:
+- **Excel file** <a href="https://github.com/pintargasper/CardGenerator/releases/download/release-v1.0.2/Cards.xlsx">`Cards.xlsx`</a> (Sample file) -> obtained from GitHub page
+- **Pictures folder** <a href="https://github.com/pintargasper/CardGenerator/releases/download/release-v1.0.2/images.zip">`images`</a> (Sample folder) -> obtained from GitHub page
+- **File (Template)** -> obtained from the <a href="">`Template`</a>
 
-### `npm start`
+## Supported formats
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **A4** -> 3 x 3 images to one page. Card Size: Width: 240px; Height: 332px
+- **13x18** -> 2 x 2 images to one page. Card Size: Width: 240px; Height: 332px
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Currently additional components
 
-### `npm test`
+### LoadingBar component
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The LoadingBar component enables the display of a loading bar.
 
-### `npm run build`
+#### Using the LoadingBar component
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```jsx
+<LoadingBar 
+    title={"Naslov"} 
+    progress={Število} 
+    textColor={"Barva besedila"} 
+    loadingBarColor={"Barva vrstice"} 
+    fontFamily={"Pisava"} 
+    fontSize={Velikost besedila} 
+/>

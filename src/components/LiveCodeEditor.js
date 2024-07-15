@@ -29,9 +29,10 @@ const LiveCodeEditor = () => {
     const handleEmptyTemplate = () => {
         const defaultCode = `
     (() => {
+       const message = "Hello world!";
        return (
             <>
-                <p>Hello world!</p>
+                <p>{message}</p>
             </>    
        );
 })()`;
@@ -71,7 +72,7 @@ const LiveCodeEditor = () => {
     };
 
     const cardProperties = {
-        dimensions: { width: 240, height: 332, headerHeight: 30, imageHeight: 162 },
+        dimensions: { width: 240, minWidth: 240, height: 332, minHeight: 332, headerHeight: 30, imageHeight: 162 },
         textColor: "#FFFFFF",
         loadingBarColor: "rgba(37, 150, 190, 0.7)",
         textTitleSize: "20px",
@@ -84,7 +85,8 @@ const LiveCodeEditor = () => {
         Navadna: "normalna.jpg",
         Posebna: "posebna.jpg",
         Urok: "urok.jpg",
-        Sestavljena: "sestavljena.jpg"
+        Sestavljena: "sestavljena.jpg",
+        Sestavljena_Urok: "sestavljena.jpg"
     };
 
     return (
@@ -104,12 +106,14 @@ const LiveCodeEditor = () => {
                     <div style={{color: cardProperties.textColor, fontSize: cardProperties.textTitleSize, fontFamily: cardProperties.fontFamily}}>
                         {card.Ime}
                     </div>
-                    <img src={findImage(cardTypeImages[card.Tip])} alt={card.Tip}
-                        className="img-fluid border p-0" style={{height: \`\${cardProperties.dimensions.headerHeight}px\`, width: \`\${cardProperties.dimensions.headerHeight}px\`}}/>
+                    <img src={findImage(cardTypeImages[card.Tip.replace("/", "_")])} alt={card.Tip}
+                        className="img-fluid border p-0" style={{height: \`\${cardProperties.dimensions.headerHeight}px\`, 
+                        width: \`\${cardProperties.dimensions.headerHeight}px\`}}/>
                 </div>
                 <div style={{height: \`\${cardProperties.dimensions.imageHeight}px\`}}>
                     <img src={findImage(card.Slika)} alt={card.Slika} className="mx-auto d-block p-1"
-                        style={{height: \`\${cardProperties.dimensions.imageHeight}px\`, width: \`\${cardProperties.dimensions.imageHeight}px\`, backgroundColor: "rgba(37, 150, 190, 0.7)"}}/>
+                        style={{height: \`\${cardProperties.dimensions.imageHeight}px\`, width: \`\${cardProperties.dimensions.imageHeight}px\`, 
+                        backgroundColor: "rgba(37, 150, 190, 0.7)"}}/>
                 </div>
                 <div style={{
                     flexGrow: 1,
@@ -117,7 +121,7 @@ const LiveCodeEditor = () => {
                     backgroundColor: "rgba(0, 0, 0, 0.5)",
                     padding: "5px"
                 }}>
-                    {card.Tip === "Urok" ?
+                    {card.Tip === "Urok" || card.Tip === "Sestavljena/Urok" ?
                         <div style={{color: cardProperties.textColor, fontSize: cardProperties.textSize, fontFamily: cardProperties.fontFamily}}>
                             {card.Opis}
                         </div>
@@ -178,7 +182,7 @@ const LiveCodeEditor = () => {
             <div className="row">
                 <LiveProvider code={userCode || defaultCode} scope={{findImage, imageFiles, LoadingBar}}
                               language={"jsx"} enableTypeScript={false}>
-                    <div className="col-lg-6" style={{height: "90vh", overflowY: "auto", overflowX: "auto"}}>
+                    <div className="col-lg-6" style={{maxHeight: "90vh", overflowY: "auto", overflowX: "auto"}}>
                         <LiveEditor code={formatCode(userCode || defaultCode)} language={"jsx"}
                                     onChange={handleCodeChange}/>
                     </div>
@@ -197,10 +201,9 @@ const LiveCodeEditor = () => {
                             <input
                                 type="file"
                                 ref={imagesFileInputRef}
+                                {...(!isMobileDevice && {directory: "", webkitdirectory: ""})}
                                 className="form-control-file w-100"
                                 onChange={handleImagesChange}
-                                {...(!isMobileDevice && {webkitdirectory: "", directory: ""})}
-                                accept="image/*"
                                 multiple
                                 style={{height: "auto", fontSize: "large"}}
                             />

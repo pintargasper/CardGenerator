@@ -30,12 +30,14 @@ export const ToImage = async (selectedFormat, numOfColCard = 2, numOfRowCard = 2
 
         await Promise.all(canvasPromises);
 
-        const imageData = canvas.toDataURL("image/" + (selectedFormat === "jpg" || selectedFormat === "pdf" ? "jpeg" : "png")).replace(/^data:image\/(png|jpeg);base64,/, "");
-
+        const imageData = canvas.toDataURL("image/" + (selectedFormat === "jpeg" ? "jpeg" :
+                                                                    selectedFormat === "jpg" ? "jpg" :
+                                                                    selectedFormat === "pdf" ? "jepg" : "jpg"))
+            .replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
         if (selectedFormat === "pdf") {
             images.push(imageData);
         } else {
-            zip.file(`image_${Math.floor(i / cardsPerImage) + 1}.${selectedFormat === "jpg" ? "jpeg" : "png"}`, imageData, { base64: true });
+            zip.file(`image_${Math.floor(i / cardsPerImage) + 1}.${selectedFormat === "jpg" ? "jpg" : selectedFormat === "jpeg" ? "jpeg" : "png"}`, imageData, { base64: true });
         }
     }
 
