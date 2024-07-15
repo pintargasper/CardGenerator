@@ -28,5 +28,5 @@ The LoadingBar component enables the display of a loading bar.
     textColor={"Barva besedila"} 
     loadingBarColor={"Barva vrstice"} 
     fontFamily={"Pisava"} 
-    fontSize={Velikost besedila} 
+    fontSize={"Velikost besedila} 
 />
