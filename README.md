@@ -23,10 +23,10 @@ The LoadingBar component enables the display of a loading bar.
 
 ```jsx
 <LoadingBar 
-    title={"Naslov"} 
-    progress={Število} 
-    textColor={"Barva besedila"} 
-    loadingBarColor={"Barva vrstice"} 
-    fontFamily={"Pisava"} 
-    fontSize={Velikost besedila} 
+    title={"Title"}
+    progress={Number} 
+    textColor={"Text color"} 
+    loadingBarColor={"loading bar color"} 
+    fontFamily={"font family"}
+    fontSize={Text size} 
 />
