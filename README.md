@@ -4,8 +4,8 @@ Card Generator allows you to create any card and generate it in JPG, JPEG or PNG
 
 ## What do you need?
 
-- **Excel file** <a href="https://github.com/pintargasper/CardGenerator/releases/download/release-v1.0.2/Cards.xlsx">`Cards.xlsx`</a> (Sample file) -> obtained from GitHub page
-- **Pictures folder** <a href="https://github.com/pintargasper/CardGenerator/releases/download/release-v1.0.2/images.zip">`images`</a> (Sample folder) -> obtained from GitHub page
+- **Excel file** <a href="https://github.com/pintargasper/CardGenerator/releases/download/v1.0.2/Cards.xlsx">`Cards.xlsx`</a> (Sample file) -> obtained from GitHub page
+- **Pictures folder** <a href="https://github.com/pintargasper/CardGenerator/releases/download/v1.0.2/images.zip">`images`</a> (Sample folder) -> obtained from GitHub page
 - **File (Template)** -> obtained from the <a href="">`Template`</a>
 
 ## Supported formats

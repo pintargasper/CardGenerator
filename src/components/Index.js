@@ -19,13 +19,13 @@ const Index = () => {
                     <h3>Kaj potrebuješ</h3>
                     <ul>
                         <li>Excel datoteko <a
-                            href={"https://github.com/pintargasper/CardGenerator/releases/download/release-v1.0.2/Cards.xlsx"}
+                            href={"https://github.com/pintargasper/CardGenerator/releases/download/v1.0.2/Cards.xlsx"}
                             target={"_blank"} rel="noreferrer">Cards.xlsx (Vzorčna datoteka)</a> -> pridobljeno iz strani <a
                             href={"https://github.com/pintargasper/CardGenerator/releases"}
                             target={"_blank"} rel="noreferrer">GitHub</a>
                         </li>
                         <li>Mapo slik <a
-                            href={"https://github.com/pintargasper/CardGenerator/releases/download/release-v1.0.2/images.zip"}
+                            href={"https://github.com/pintargasper/CardGenerator/releases/download/v1.0.2/images.zip"}
                             target={"_blank"} rel="noreferrer">images (Vzorčna mapa)</a> -> pridobljeno iz
                             strani <a href={"https://github.com/pintargasper/CardGenerator/releases"}
                                 target={"_blank"} rel="noreferrer">GitHub</a></li>
