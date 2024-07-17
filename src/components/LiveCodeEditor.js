@@ -1,8 +1,11 @@
 import React, {useRef, useState} from "react";
 import {LiveEditor, LiveError, LivePreview, LiveProvider} from "react-live";
 import LoadingBar from "./LoadingBar";
+import {useTranslation} from "react-i18next";
 
 const LiveCodeEditor = () => {
+    const { t} = useTranslation();
+
     const [imageFiles, setImageFiles] = useState([]);
     const [userCode, setUserCode] = useState("");
     const imagesFileInputRef = useRef(null);
@@ -188,7 +191,7 @@ const LiveCodeEditor = () => {
                     </div>
                     <div className="col-lg-3 d-flex justify-content-center">
                         <div className="d-flex mt-2 flex-column align-items-center">
-                            <h3 className="mb-2">Predogled</h3>
+                            <h3 className="mb-2">{t("create.title")}</h3>
                             <div className="text-center">
                                 <LivePreview/>
                                 <LiveError/>
@@ -197,32 +200,48 @@ const LiveCodeEditor = () => {
                     </div>
                     <div className="col-lg-3 justify-content-center">
                         <div className="form-group border rounded p-3 mt-3 w-100">
-                            <h5>Referenčne slike</h5>
+                            <h5>{t("create.upload.title")}</h5>
+                            <label
+                                htmlFor="image-upload"
+                                className={"btn btn-light"}
+                                style={{
+                                    display: "block",
+                                    fontSize: "large",
+                                    padding: "10px",
+                                    textAlign: "center",
+                                    cursor: "pointer",
+                                    borderRadius: "5px",
+                                    marginBottom: "10px"
+                                }}
+                            >
+                                {imageFiles.length === 0 ? t("create.upload.buttons.upload.before") : t("create.upload.buttons.upload.after") + ": " + imageFiles.length}
+                            </label>
                             <input
+                                id="image-upload"
                                 type="file"
                                 ref={imagesFileInputRef}
                                 {...(!isMobileDevice && {directory: "", webkitdirectory: ""})}
                                 className="form-control-file w-100"
                                 onChange={handleImagesChange}
                                 multiple
-                                style={{height: "auto", fontSize: "large"}}
+                                style={{display: "none"}}
                             />
                         </div>
                         <div className="form-group border rounded p-3 mt-3 w-100">
-                            <h5>Predloga</h5>
+                            <h5>{t("create.template.title")}</h5>
                             <input
                                 type="button"
-                                value={"Prazna predloga"}
+                                value={t("create.template.buttons.empty_template")}
                                 className="btn btn-light w-100 mt-2"
                                 style={{height: "auto", fontSize: "large"}}
                                 onClick={handleEmptyTemplate}
                             />
                         </div>
                         <div className="form-group border rounded p-3 mt-3 w-100">
-                            <h5>Prenos</h5>
+                            <h5>{t("create.download.title")}</h5>
                             <input
                                 type="button"
-                                value="Prenesi predlogo"
+                                value={t("create.download.buttons.download_template")}
                                 className="btn btn-light w-100 mt-2"
                                 style={{height: "auto", fontSize: "large"}}
                                 onClick={handleDownload}

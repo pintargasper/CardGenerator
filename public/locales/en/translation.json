@@ -1,0 +1,141 @@
+{
+  "app_name": "Card Generator",
+
+  "navigation": {
+    "links": {
+      "generator": "Generator",
+      "create_card": "Create Card"
+    },
+    "language": {
+      "language": "Language",
+      "slovene": "Slovenščina",
+      "english": "English"
+    }
+  },
+  "index": {
+    "what_is": {
+      "title": "What is Card Generator?",
+      "description": "Card Generator allows the creation of any card and also its generation in jpg, jpeg or png format. It also allows downloading images in PDF mode."
+    },
+    "what_you_need": {
+      "title": "What do you need?",
+      "1": {
+        "description_1/2": "Excel file",
+        "description_1_link": "Cards.xlsx (sample file)",
+        "description_2/2": "obtained from the website",
+        "description_2_link": "GitHub"
+      },
+      "2": {
+        "description_1/2": "Image folder",
+        "description_1_link": "images (sample folder)",
+        "description_2/2": "obtained from the website",
+        "description_2_link": "GitHub"
+      },
+      "3": {
+        "description_1/2": "Template file",
+        "description_2/2": "obtained from",
+        "description_2_link": "templates"
+      }
+    },
+    "supported_formats": {
+      "title": "Supported Formats",
+      "description_1/3": "images per page. Card size",
+      "description_2/3": "Width",
+      "description_3/3": "Height"
+    },
+    "currently_additional_components": {
+      "title": "Currently Additional Components",
+      "components": {
+        "loading_bar": {
+          "title": "LoadingBar Component",
+          "description": "The LoadingBar component allows displaying a loading bar",
+          "use": {
+            "title": "Using the Component",
+            "parts": {
+              "title": "Title",
+              "progress": "Number",
+              "text_color": "Text Color",
+              "loading_bar_color": "Bar Color",
+              "font_family": "Font Family",
+              "font_size": "Font Size"
+            }
+          }
+        }
+      }
+    }
+  },
+  "generator": {
+    "cards": "Cards",
+    "upload": {
+      "excel": {
+        "title": "Excel"
+      },
+      "images": {
+        "title": "Images",
+        "description_1/4": "Folder",
+        "description_2/4": "Computer",
+        "description_3/4": "and individual images",
+        "description_4/4": "Phone"
+      }
+    },
+    "view": {
+      "title": "Preview",
+      "description_1/3": "Column title in Excel determining the number of cards",
+      "description_2/3": "Default repeat",
+      "description_3/3": "Select template",
+      "buttons": {
+        "upload": {
+          "excel": {
+            "before": "Choose file",
+            "after": "File"
+          },
+          "images": {
+            "before": "Choose images",
+            "after": "Number of images"
+          },
+          "template": {
+            "before": "Choose template",
+            "after": "Template"
+          },
+          "all": {
+            "title": "Upload"
+          }
+        },
+        "reset": "Reset"
+      }
+    },
+    "download": {
+      "title": "Download",
+      "description_1/3": "Total number of cards",
+      "description_2/3": "Format",
+      "description_3/3": "Type",
+      "buttons": {
+        "generate": "Generate"
+      }
+    }
+  },
+  "create": {
+    "title": "Preview",
+    "upload": {
+      "title": "Reference images",
+      "buttons": {
+        "upload": {
+          "before": "Choose images",
+          "after": "Number of images"
+        }
+      }
+    },
+    "template": {
+      "title": "Template",
+      "buttons": {
+        "empty_template": "Empty template"
+      }
+    },
+    "download": {
+      "title": "Download",
+      "buttons": {
+        "download_template": "Download template"
+      }
+    }
+  }
+}

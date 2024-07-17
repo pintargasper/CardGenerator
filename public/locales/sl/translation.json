@@ -1,0 +1,141 @@
+{
+  "app_name": "Generator kart",
+
+  "navigation": {
+    "links": {
+      "generator": "Generator",
+      "create_card": "Izdelaj karto"
+    },
+    "language": {
+      "language": "Jezik",
+      "slovene": "Slovenščina",
+      "english": "English"
+    }
+  },
+  "index": {
+    "what_is": {
+      "title": "Kaj je Card Generator?",
+      "description": "Card Generator omogoča izdelavo poljubne karte in tudi generacijo le-te v jpg, jpeg ali png format. Prav tako omogoča prenos slik v pdf načinu"
+    },
+    "what_you_need": {
+      "title": "Kaj potrebuješ?",
+      "1": {
+        "description_1/2": "Excel datoteko",
+        "description_1_link": "Cards.xlsx (vzorčna datoteka)",
+        "description_2/2": "pridobljeno iz strani",
+        "description_2_link": "GitHub"
+      },
+      "2": {
+        "description_1/2": "Mapo slik",
+        "description_1_link": "images (vzorčna mapa)",
+        "description_2/2": "pridobljeno iz strani",
+        "description_2_link": "GitHub"
+      },
+      "3": {
+        "description_1/2": "Datoteka (predloga)",
+        "description_2/2": "pridobljeno iz",
+        "description_2_link": "predloge"
+      }
+    },
+    "supported_formats": {
+      "title": "Podprti formati",
+      "description_1/3": "slik na eno stran. Velikost karte",
+      "description_2/3": "Širina",
+      "description_3/3": "Višina"
+    },
+    "currently_additional_components": {
+      "title": "Trenutno dodatne komponente",
+      "components": {
+        "loading_bar": {
+          "title": "LoadingBar komponenta",
+          "description": "LoadingBar komponenta omogoča prikaz vrstice za nalaganje",
+          "use": {
+            "title": "Uporaba komponente",
+            "parts": {
+              "title": "Naslov",
+              "progress": "Število",
+              "text_color": "Barva besedila",
+              "loading_bar_color": "Barva vrstice",
+              "font_family": "Pisava",
+              "font_size": "Velikost besedila"
+            }
+          }
+        }
+      }
+    }
+  },
+  "generator": {
+    "cards": "Karte",
+    "upload": {
+      "excel": {
+        "title": "Excel"
+      },
+      "images": {
+        "title": "Slike",
+        "description_1/4": "Mapa",
+        "description_2/4": "Računalnik",
+        "description_3/4": "in posamezne slike",
+        "description_4/4": "Telefon"
+      }
+    },
+    "view": {
+      "title": "Ogled",
+      "description_1/3": "Naslov stolpca v Excelu, ki določa število kart",
+      "description_2/3": "Privzeta ponovitev",
+      "description_3/3": "Izbira predloge",
+      "buttons": {
+        "upload": {
+          "excel": {
+            "before": "Izberi datoteko",
+            "after": "Datoteka"
+          },
+          "images": {
+            "before": "Izberi slike",
+            "after": "Število slik"
+          },
+          "template": {
+            "before": "Izberi predlogo",
+            "after": "Predloga"
+          },
+          "all": {
+            "title": "Naloži"
+          }
+        },
+        "reset": "Ponastavi"
+      }
+    },
+    "download": {
+      "title": "Prenos",
+      "description_1/3": "Skupno število kart",
+      "description_2/3": "Format",
+      "description_3/3": "Tip",
+      "buttons": {
+        "generate": "Generiraj"
+      }
+    }
+  },
+  "create": {
+    "title": "Predogled",
+    "upload": {
+      "title": "Referenčne slike",
+      "buttons": {
+        "upload": {
+          "before": "Izberi slike",
+          "after": "Število slik"
+        }
+      }
+    },
+    "template": {
+      "title": "Predloga",
+      "buttons": {
+        "empty_template": "Prazna predloga"
+      }
+    },
+    "download": {
+      "title": "Prenos",
+      "buttons": {
+        "download_template": "Prenesi predlogo"
+      }
+    }
+  }
+}

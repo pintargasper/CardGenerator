@@ -4,11 +4,15 @@ import { ToImage } from "./generate/ToImage";
 import { ToPdf } from "./generate/ToPdf";
 import Popup from "./popup/Popup";
 import Card from "./card/Card";
+import {useTranslation} from "react-i18next";
 
 const Generator = () => {
+    const { t} = useTranslation();
+
     const [excelFile, setExcelFile] = useState(null);
     const [imageFiles, setImageFiles] = useState([]);
     const [templateFile, setTemplateFile] = useState(null);
+    const [templateFileName, setTemplateFileName] = useState("");
     const [cards, setCards] = useState([]);
     const [selectedFormat, setSelectedFormat] = useState("a4");
     const [selectedType, setSelectedType] = useState("pdf");
@@ -23,7 +27,7 @@ const Generator = () => {
 
     const handleExcelChange = (event) => {
         const file = event.target.files[0];
-        setExcelFile(file);
+        setExcelFile(file !== undefined ? file : null);
     };
 
     const handleImagesChange = (event) => {
@@ -41,8 +45,10 @@ const Generator = () => {
                 setTemplateFile(event.target.result);
             };
             reader.readAsText(file);
+            setTemplateFileName(file);
         } else {
             setTemplateFile(null);
+            setTemplateFileName("");
         }
     };
 
@@ -92,6 +98,7 @@ const Generator = () => {
         setExcelFile(null);
         setImageFiles([]);
         setTemplateFile(null);
+        setTemplateFileName("");
         setCards([]);
         setSelectedFormat("a4");
         setSelectedType("pdf");
@@ -132,58 +139,110 @@ const Generator = () => {
             <div className="row">
                 <div className="mt-4 col-md-4">
                     <div className="form-group border rounded p-3">
-                        <h5>Excel</h5>
+                        <h5>{t("generator.upload.excel.title")}</h5>
+                        <label
+                            htmlFor="excel-upload"
+                            className={"btn btn-light"}
+                            style={{
+                                display: "block",
+                                fontSize: "large",
+                                padding: "10px",
+                                textAlign: "center",
+                                cursor: "pointer",
+                                borderRadius: "5px",
+                                marginBottom: "10px"
+                            }}
+                        >
+                            {excelFile === null ? t("generator.view.buttons.upload.excel.before") : t("generator.view.buttons.upload.excel.after") + ": " + excelFile.name}
+                        </label>
                         <input
+                            id={"excel-upload"}
                             type="file"
                             ref={excelFileInputRef}
                             className="form-control-file w-100"
                             onChange={handleExcelChange}
                             accept=".xlsx, .xls"
-                            style={{height: "auto", fontSize: "large"}}
+                            style={{height: "auto", fontSize: "large", display: "none"}}
                             disabled={uploading}
                         />
                     </div>
                     <div className="form-group border rounded p-3 mt-3">
-                        <h5>Slike</h5>
-                        <h6>Mapa <b>(Računalnik)</b> in posamezno slike <b>(Telefon)</b></h6>
+                        <h5>{t("generator.upload.images.title")}</h5>
+                        <h6>{t("generator.upload.images.description_1/4")}
+                            <b> ({t("generator.upload.images.description_2/4")}) </b>
+                            {t("generator.upload.images.description_3/4")}
+                            <b> ({t("generator.upload.images.description_4/4")}) </b>
+                        </h6>
+                        <label
+                            htmlFor="images-upload"
+                            className={"btn btn-light"}
+                            style={{
+                                display: "block",
+                                fontSize: "large",
+                                padding: "10px",
+                                textAlign: "center",
+                                cursor: "pointer",
+                                borderRadius: "5px",
+                                marginBottom: "10px"
+                            }}
+                        >
+                            {imageFiles.length === 0 ? t("generator.view.buttons.upload.images.before") : t("generator.view.buttons.upload.images.after") + ": " + imageFiles.length}
+                        </label>
                         <input
+                            id={"images-upload"}
                             type="file"
                             ref={imagesFileInputRef}
                             {...(!isMobileDevice && {directory: "", webkitdirectory: ""})}
                             className="form-control-file w-100"
                             onChange={handleImagesChange}
                             multiple
-                            style={{height: "auto", fontSize: "large"}}
+                            style={{height: "auto", fontSize: "large", display: "none"}}
                             disabled={uploading}
                         />
                     </div>
                     <div className="form-group border rounded p-3 mt-3">
-                        <h5>Ogled</h5>
-                        <h6>Naslov stolpca v Excelu, ki določa število kart</h6>
+                        <h5>{t("generator.view.title")}</h5>
+                        <h6>{t("generator.view.description_1/3")}</h6>
                         <input
                             type="text"
                             value={nameOfColumn}
                             className="w-100"
-                            placeholder={"Privzeta ponovitev: 1x"}
+                            placeholder={t("generator.view.description_2/3") + ": 1x"}
                             style={{height: "auto", fontSize: "large"}}
                             onChange={(event) => {
                                 setNameOfColumn(event.target.value)
                             }}
                             disabled={uploading}
                         />
-                        <h6 className={"mt-2"}>Izbira predloge</h6>
+                        <h6 className={"mt-2"}>{t("generator.view.description_3/3")}</h6>
+                        <label
+                            htmlFor="template-upload"
+                            className={"btn btn-light"}
+                            style={{
+                                display: "block",
+                                fontSize: "large",
+                                padding: "10px",
+                                textAlign: "center",
+                                cursor: "pointer",
+                                borderRadius: "5px",
+                                marginBottom: "10px"
+                            }}
+                        >
+                            {templateFileName === "" ? t("generator.view.buttons.upload.template.before") : t("generator.view.buttons.upload.template.after") + ": " + templateFileName.name}
+                        </label>
                         <input
+                            id={"template-upload"}
                             type="file"
                             ref={templateFileInputRef}
                             className="form-control-file w-100"
                             onChange={handleTemplateChange}
                             accept=".js"
-                            style={{height: "auto", fontSize: "large"}}
+                            style={{height: "auto", fontSize: "large", display: "none"}}
                             disabled={uploading}
                         />
                         <input
                             type="button"
-                            value="Naloži"
+                            value={t("generator.view.buttons.upload.all.title")}
                             className="btn btn-light w-100 mt-2"
                             style={{height: "auto", fontSize: "large"}}
                             onClick={handleUpload}
@@ -191,7 +250,7 @@ const Generator = () => {
                         />
                         <input
                             type="button"
-                            value="Ponastavi"
+                            value={t("generator.view.buttons.reset")}
                             className="btn btn-light w-100 mt-2"
                             style={{height: "auto", fontSize: "large"}}
                             onClick={clearUpload}
@@ -199,19 +258,17 @@ const Generator = () => {
                         />
                     </div>
                     <div className="form-group border rounded p-3 mt-3">
-                        <h5>Prenos</h5>
-                        <h6>Skupno število kart: {cards.length}</h6>
-                        <h6>Format</h6>
-                        <select
-                            className="form-select w-100"
-                            style={{height: "auto", fontSize: "large"}}
-                            value={selectedFormat}
-                            onChange={(event) => setSelectedFormat(event.target.value)}
-                        >
+                        <h5>{t("generator.download.title")}</h5>
+                        <h6>{t("generator.download.description_1/3")}: {cards.length}</h6>
+                        <h6>{t("generator.download.description_2/3")}</h6>
+                        <select className="form-select w-100"
+                                style={{height: "auto", fontSize: "large"}}
+                                value={selectedFormat}
+                                onChange={(event) => setSelectedFormat(event.target.value)}>
                             <option value="a4">A4</option>
                             <option value="13x18">13x18</option>
                         </select>
-                        <h6 className={"mt-1"}>Tip</h6>
+                        <h6 className={"mt-1"}>{t("generator.download.description_3/3")}</h6>
                         <select
                             className="form-select w-100"
                             style={{height: "auto", fontSize: "large"}}
@@ -224,7 +281,7 @@ const Generator = () => {
                         </select>
                         <input
                             type="button"
-                            value="Generiraj"
+                            value={t("generator.download.buttons.generate")}
                             className="btn btn-light w-100 mt-2"
                             style={{height: "auto", fontSize: "large"}}
                             onClick={generate}
@@ -233,7 +290,7 @@ const Generator = () => {
                     </div>
                 </div>
                 <div className="mt-4 col-md-8 light p-3">
-                    <h5>Karte</h5>
+                    <h5>{t("generator.cards")}</h5>
                     <div style={{height: "80vh", overflowY: "auto"}}>
                         <div id={"cards-container"} className="d-flex flex-wrap justify-content-center border">
                             {cards.map((card, index) => (
