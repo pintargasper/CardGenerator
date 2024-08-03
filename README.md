@@ -10,7 +10,7 @@ Card Generator allows you to create any card and generate it in JPG, JPEG or PNG
 
 - **Excel file** <a href="https://github.com/pintargasper/CardGenerator/releases/download/v1.0.3/Cards.xlsx" target="_blank">`Cards.xlsx`</a> (Sample file) -> obtained from GitHub page
 - **Pictures folder** <a href="https://github.com/pintargasper/CardGenerator/releases/download/v1.0.3/images.zip" target="_blank">`images`</a> (Sample folder) -> obtained from GitHub page
-- **File (Template)** -> obtained from the <a href="https://cards.gasperpintar.com/create">`Template`</a>
+- **File (Template)** -> obtained from the <a href="https://cards.gasperpintar.com/create" target="_blank">`Template`</a>
 
 ## Supported formats
 
