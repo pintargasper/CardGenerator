@@ -57,7 +57,7 @@
               "text_color": "Text Color",
               "loading_bar_color": "Bar Color",
               "font_family": "Font Family",
-              "font_size": "Font Size"
+              "font_size": "Number"
             }
           }
         }
@@ -136,6 +136,14 @@
       "buttons": {
         "download_template": "Download template"
       }
+    },
+    "code": {
+      "title": "Hello world"
     }
+  },
+  "popup": {
+    "title": "Generating",
+    "pdf": "document",
+    "images": "images"
   }
 }

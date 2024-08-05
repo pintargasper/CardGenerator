@@ -139,7 +139,7 @@ const Generator = () => {
             <div className="row">
                 <div className="mt-4 col-md-4">
                     <div className="form-group border rounded p-3">
-                        <h5>{t("generator.upload.excel.title")}</h5>
+                        <p className={"h5"}>{t("generator.upload.excel.title")}</p>
                         <label
                             htmlFor="excel-upload"
                             className={"btn btn-light"}
@@ -167,12 +167,12 @@ const Generator = () => {
                         />
                     </div>
                     <div className="form-group border rounded p-3 mt-3">
-                        <h5>{t("generator.upload.images.title")}</h5>
-                        <h6>{t("generator.upload.images.description_1/4")}
+                        <p className={"h5"}>{t("generator.upload.images.title")}</p>
+                        <p className={"h6"}>{t("generator.upload.images.description_1/4")}
                             <b> ({t("generator.upload.images.description_2/4")}) </b>
                             {t("generator.upload.images.description_3/4")}
                             <b> ({t("generator.upload.images.description_4/4")}) </b>
-                        </h6>
+                        </p>
                         <label
                             htmlFor="images-upload"
                             className={"btn btn-light"}
@@ -201,8 +201,8 @@ const Generator = () => {
                         />
                     </div>
                     <div className="form-group border rounded p-3 mt-3">
-                        <h5>{t("generator.view.title")}</h5>
-                        <h6>{t("generator.view.description_1/3")}</h6>
+                        <p className={"h5"}>{t("generator.view.title")}</p>
+                        <p className={"h6"}>{t("generator.view.description_1/3")}</p>
                         <input
                             type="text"
                             value={nameOfColumn}
@@ -214,7 +214,7 @@ const Generator = () => {
                             }}
                             disabled={uploading}
                         />
-                        <h6 className={"mt-2"}>{t("generator.view.description_3/3")}</h6>
+                        <p className={"h6 mt-2"}>{t("generator.view.description_3/3")}</p>
                         <label
                             htmlFor="template-upload"
                             className={"btn btn-light"}
@@ -258,10 +258,10 @@ const Generator = () => {
                         />
                     </div>
                     <div className="form-group border rounded p-3 mt-3">
-                        <h5>{t("generator.download.title")}</h5>
-                        <h6>{t("generator.download.description_1/3")}: {cards.length}</h6>
-                        <h6>{t("generator.download.description_2/3")}</h6>
-                        <select className="form-select w-100"
+                        <p className={"h5"}>{t("generator.download.title")}</p>
+                        <p className={"h6"}>{t("generator.download.description_1/3")}: {cards.length}</p>
+                        <p className={"h6"}>{t("generator.download.description_2/3")}</p>
+                        <select className="form-select w-100" aria-label="Format"
                                 style={{height: "auto", fontSize: "large"}}
                                 value={selectedFormat}
                                 onChange={(event) => setSelectedFormat(event.target.value)}>
@@ -270,7 +270,7 @@ const Generator = () => {
                         </select>
                         <h6 className={"mt-1"}>{t("generator.download.description_3/3")}</h6>
                         <select
-                            className="form-select w-100"
+                            className="form-select w-100" aria-label="Type"
                             style={{height: "auto", fontSize: "large"}}
                             value={selectedType}
                             onChange={(event) => setSelectedType(event.target.value)}>
@@ -290,7 +290,7 @@ const Generator = () => {
                     </div>
                 </div>
                 <div className="mt-4 col-md-8 light p-3">
-                    <h5>{t("generator.cards")}</h5>
+                    <p className={"h5"}>{t("generator.cards")}</p>
                     <div style={{height: "80vh", overflowY: "auto"}}>
                         <div id={"cards-container"} className="d-flex flex-wrap justify-content-center border">
                             {cards.map((card, index) => (

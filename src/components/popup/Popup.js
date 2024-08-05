@@ -1,4 +1,9 @@
+import {useTranslation} from "react-i18next";
+
 const Popup = ({ show, type }) => {
+
+    const { t} = useTranslation();
+
     if (!show) {
         return null;
     }
@@ -9,7 +14,7 @@ const Popup = ({ show, type }) => {
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-body text-center">
-                            <h4>Generiranje {type === "pdf" ? "pdf dokumenta" : "slik"}</h4>
+                            <h4>{t("popup.title")} {type === "pdf" ? t("popup.pdf") : t("popup.images")} ({type})</h4>
                         </div>
                     </div>
                 </div>

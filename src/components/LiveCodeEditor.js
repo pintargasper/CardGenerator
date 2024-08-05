@@ -32,7 +32,7 @@ const LiveCodeEditor = () => {
     const handleEmptyTemplate = () => {
         const defaultCode = `
     (() => {
-       const message = "Hello world!";
+       const message = "` + t("create.code.title") + `!";
        return (
             <>
                 <p>{message}</p>
@@ -200,7 +200,7 @@ const LiveCodeEditor = () => {
                     </div>
                     <div className="col-lg-3 justify-content-center">
                         <div className="form-group border rounded p-3 mt-3 w-100">
-                            <h5>{t("create.upload.title")}</h5>
+                            <p className={"h5"}>{t("create.upload.title")}</p>
                             <label
                                 htmlFor="image-upload"
                                 className={"btn btn-light"}
@@ -228,7 +228,7 @@ const LiveCodeEditor = () => {
                             />
                         </div>
                         <div className="form-group border rounded p-3 mt-3 w-100">
-                            <h5>{t("create.template.title")}</h5>
+                            <p className={"h5"}>{t("create.template.title")}</p>
                             <input
                                 type="button"
                                 value={t("create.template.buttons.empty_template")}
@@ -238,7 +238,7 @@ const LiveCodeEditor = () => {
                             />
                         </div>
                         <div className="form-group border rounded p-3 mt-3 w-100">
-                            <h5>{t("create.download.title")}</h5>
+                            <p className={"h5"}>{t("create.download.title")}</p>
                             <input
                                 type="button"
                                 value={t("create.download.buttons.download_template")}

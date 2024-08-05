@@ -13,6 +13,7 @@ const LoadingBar = ({ title, progress = 0, textColor, loadingBarColor, fontFamil
                     aria-valuenow={progress}
                     aria-valuemin="0"
                     aria-valuemax="100"
+                    aria-label="Progress"
                 ></div>
                 <div
                     style={{

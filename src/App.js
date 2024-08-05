@@ -1,5 +1,6 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./index.css"
 import Index from "./components/Index";
 import Generator from "./components/Generator";
 import LiveCodeEditor from "./components/LiveCodeEditor";

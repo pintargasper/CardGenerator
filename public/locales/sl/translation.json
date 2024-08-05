@@ -57,7 +57,7 @@
               "text_color": "Barva besedila",
               "loading_bar_color": "Barva vrstice",
               "font_family": "Pisava",
-              "font_size": "Velikost besedila"
+              "font_size": "Število"
             }
           }
         }
@@ -136,6 +136,14 @@
       "buttons": {
         "download_template": "Prenesi predlogo"
       }
+    },
+    "code": {
+      "title": "Pozdravljen svet"
     }
+  },
+  "popup": {
+    "title": "Generiranje",
+    "pdf": "dokumenta",
+    "images": "slik"
   }
 }

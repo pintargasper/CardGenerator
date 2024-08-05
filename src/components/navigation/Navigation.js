@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { Navbar, Nav, NavDropdown, Dropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
