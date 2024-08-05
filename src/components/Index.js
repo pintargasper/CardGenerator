@@ -20,7 +20,7 @@ const Index = () => {
                     <ul>
                         <li>{t("index.what_you_need.1.description_1/2")}
                             &nbsp;
-                            <a href={"https://github.com/pintargasper/CardGenerator/releases/download/v1.0.3/Cards.xlsx"}
+                            <a href={"https://github.com/pintargasper/CardGenerator/releases/download/v1.0.4/Cards.xlsx"}
                                target={"_blank"} rel="noreferrer"
                                style={{color: "#1a0dab"}}>{t("index.what_you_need.1.description_1_link")}</a> -> {t("index.what_you_need.1.description_2/2")}
                             &nbsp;
@@ -30,7 +30,7 @@ const Index = () => {
                         </li>
                         <li>{t("index.what_you_need.2.description_1/2")}
                             &nbsp;
-                            <a href={"https://github.com/pintargasper/CardGenerator/releases/download/v1.0.3/images.zip"}
+                            <a href={"https://github.com/pintargasper/CardGenerator/releases/download/v1.0.4/images.zip"}
                                target={"_blank"} rel="noreferrer"
                                style={{color: "#1a0dab"}}>{t("index.what_you_need.2.description_1_link")}</a> -> {t("index.what_you_need.2.description_2/2")}
                             &nbsp;

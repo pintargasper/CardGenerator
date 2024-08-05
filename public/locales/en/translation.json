@@ -145,5 +145,12 @@
     "title": "Generating",
     "pdf": "document",
     "images": "images"
+  },
+  "pages": {
+    "404": {
+      "short_description": "Oops! Page not found",
+      "long_description": "We apologize, but the page you are looking for could not be found",
+      "button": "Return to home page"
+    }
   }
 }

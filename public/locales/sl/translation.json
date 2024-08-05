@@ -145,5 +145,12 @@
     "title": "Generiranje",
     "pdf": "dokumenta",
     "images": "slik"
+  },
+  "pages": {
+    "404": {
+      "short_description": "Ups! Stran ni najdena",
+      "long_description": "Opravičujemo se, ampak strani, ki jo iščete, ni mogoče najti",
+      "button": "Vrni se na domačo stran"
+    }
   }
 }

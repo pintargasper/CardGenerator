@@ -5,6 +5,7 @@ import Index from "./components/Index";
 import Generator from "./components/Generator";
 import LiveCodeEditor from "./components/LiveCodeEditor";
 import Navigation from "./components/navigation/Navigation";
+import Page404 from "./components/pages/404"
 
 const App = () => {
     return (
@@ -14,6 +15,7 @@ const App = () => {
                 <Route path="/" element={<Index />} />
                 <Route path="/generator" element={<Generator />} />
                 <Route path="/create" element={<LiveCodeEditor />} />
+                <Route path="*" element={<Page404 />} />
             </Routes>
         </BrowserRouter>
     );
