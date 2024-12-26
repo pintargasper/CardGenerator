@@ -13,6 +13,9 @@ const LiveCodeEditor = () => {
     const isMobileDevice = /Mobi|Android/i.test(navigator.userAgent);
 
     const findImage = (imageName) => {
+        if (!imageFiles || imageFiles.length === 0) {
+            return `/files/img/create/${imageName}`;
+        }
         const image = imageFiles.find((image) => image.name === imageName);
         return image ? URL.createObjectURL(image) : "";
     };

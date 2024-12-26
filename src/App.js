@@ -6,17 +6,19 @@ import Generator from "./components/Generator";
 import LiveCodeEditor from "./components/LiveCodeEditor";
 import Navigation from "./components/navigation/Navigation";
 import Page404 from "./components/pages/404"
+import Footer from "./components/Footer";
 
 const App = () => {
     return (
         <BrowserRouter>
-            <Navigation/>
+            <Navigation />
             <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/generator" element={<Generator />} />
                 <Route path="/create" element={<LiveCodeEditor />} />
                 <Route path="*" element={<Page404 />} />
             </Routes>
+            <Footer />
         </BrowserRouter>
     );
 };

@@ -13,9 +13,17 @@
     }
   },
   "index": {
+    "version": {
+      "title": "Latest version"
+    },
     "what_is": {
       "title": "What is Card Generator?",
       "description": "Card Generator allows the creation of any card and also its generation in jpg, jpeg or png format. It also allows downloading images in PDF mode."
+    },
+    "supported_languages" : {
+      "title": "Supported languages",
+      "language_1": "Slovenian",
+      "language_2": "English"
     },
     "what_you_need": {
       "title": "What do you need?",
@@ -152,5 +160,9 @@
       "long_description": "We apologize, but the page you are looking for could not be found",
       "button": "Return to home page"
     }
+  },
+  "footer": {
+    "terms": "Terms of Service",
+    "policy": "Privacy Policy"
   }
 }

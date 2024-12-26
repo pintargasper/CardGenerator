@@ -13,9 +13,17 @@
     }
   },
   "index": {
+    "version": {
+      "title": "Zadnja različica"
+    },
     "what_is": {
       "title": "Kaj je Card Generator?",
-      "description": "Card Generator omogoča izdelavo poljubne karte in tudi generacijo le-te v jpg, jpeg ali png format. Prav tako omogoča prenos slik v pdf načinu"
+      "description": "Generator kart omogoča izdelavo poljubne karte in tudi generacijo le-te v jpg, jpeg ali png format. Prav tako omogoča prenos slik v pdf načinu."
+    },
+    "supported_languages" : {
+      "title": "Podprti jeziki",
+      "language_1": "Slovenščina",
+      "language_2": "Angleščina"
     },
     "what_you_need": {
       "title": "Kaj potrebuješ?",
@@ -152,5 +160,9 @@
       "long_description": "Opravičujemo se, ampak strani, ki jo iščete, ni mogoče najti",
       "button": "Vrni se na domačo stran"
     }
+  },
+  "footer": {
+    "terms": "Pogoji storitve",
+    "policy": "Politika zasebnosti"
   }
 }
