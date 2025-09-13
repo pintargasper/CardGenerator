@@ -1,0 +1,19 @@
+.navbar {
+    -fx-background-color: #34495e;
+}
+
+.nav-button {
+    -fx-background-color: #1abc9c;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 20px;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+}
+
+.nav-button:hover {
+    -fx-background-color: #16a085;
+}

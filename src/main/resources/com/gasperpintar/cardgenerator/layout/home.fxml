@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="TOP_CENTER"
+      spacing="20.0"
+      styleClass="home-container"
+      stylesheets="@../css/home.css">
+
+    <padding>
+        <Insets top="20" bottom="30" left="30" right="30"/>
+    </padding>
+
+    <Label text="Welcome to Card Generator!" styleClass="home-title"/>
+
+    <VBox alignment="CENTER" spacing="5" styleClass="home-description-box">
+        <Label text="Card Generator allows the creation of any card and its export in JPG, JPEG, or PNG format."
+               wrapText="true" styleClass="home-description"/>
+        <Label text="You can also download images in PDF mode." wrapText="true" styleClass="home-description"/>
+    </VBox>
+
+    <Label text="Latest version: 1.0.0" styleClass="home-version"/>
+
+    <Label text="Supported languages" styleClass="home-section-title"/>
+    <VBox spacing="5" alignment="CENTER" styleClass="home-language-list">
+        <Label text="• English" styleClass="home-language-item"/>
+    </VBox>
+
+</VBox>

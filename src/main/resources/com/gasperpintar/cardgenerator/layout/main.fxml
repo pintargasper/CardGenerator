@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:id="mainBorderPane"
+            fx:controller="com.gasperpintar.cardgenerator.controller.MainController"
+            stylesheets="@../css/main.css">
+
+    <top>
+        <HBox spacing="20.0" alignment="CENTER_LEFT" styleClass="navbar">
+            <padding>
+                <Insets top="10" bottom="10" left="20" right="20"/>
+            </padding>
+
+            <Button text="Home" styleClass="nav-button" onAction="#onHomeClick"/>
+            <Button text="Generator" styleClass="nav-button" onAction="#onGeneratorClick"/>
+            <Button text="Create" styleClass="nav-button" onAction="#onCreateClick"/>
+        </HBox>
+    </top>
+
+</BorderPane>

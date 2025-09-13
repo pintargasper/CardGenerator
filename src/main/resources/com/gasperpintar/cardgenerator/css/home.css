@@ -1,0 +1,62 @@
+.home-container {
+    -fx-background-color: #f5f5f5;
+    -fx-padding: 20px 30px 30px 30px;
+    -fx-alignment: TOP_CENTER;
+}
+
+.home-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-alignment: center;
+}
+
+.home-description-box {
+    -fx-alignment: CENTER;
+}
+
+.home-description {
+    -fx-font-size: 16px;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+    -fx-text-fill: #34495e;
+}
+
+.home-version {
+    -fx-font-size: 13px;
+    -fx-font-style: italic;
+    -fx-text-fill: #7f8c8d;
+    -fx-alignment: center;
+}
+
+.home-section-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-alignment: center;
+    -fx-padding: 10 0 0 0;
+}
+
+.home-language-list {
+    -fx-alignment: center;
+}
+
+.home-language-item {
+    -fx-font-size: 14px;
+    -fx-text-fill: #34495e;
+}
+
+.home-instructions {
+    -fx-alignment: center;
+}
+
+.instruction-item {
+    -fx-alignment: TOP_LEFT;
+    -fx-max-width: 500px;
+}
+
+.instruction-item Label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #34495e;
+    -fx-text-alignment: LEFT;
+}
