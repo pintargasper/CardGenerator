@@ -7,9 +7,16 @@ module com.gasperpintar.cardgenerator {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
+    requires javafx.graphics;
+    requires static lombok;
+    requires org.apache.poi.poi;
+    requires org.apache.poi.ooxml;
+    requires java.desktop;
 
     exports com.gasperpintar.cardgenerator;
+    exports com.gasperpintar.cardgenerator.component;
 
     opens com.gasperpintar.cardgenerator to javafx.fxml;
     opens com.gasperpintar.cardgenerator.controller to javafx.fxml;
+    opens com.gasperpintar.cardgenerator.component to javafx.fxml;
 }

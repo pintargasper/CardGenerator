@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.gasperpintar.cardgenerator.component.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<StackPane maxHeight="332" maxWidth="240" minHeight="332" minWidth="240" prefHeight="332" prefWidth="240" style="-fx-pref-width: 240px; -fx-pref-height: 332px; -fx-min-width: 240px; -fx-min-height: 332px; -fx-padding: 0;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+
+    <ImageView fx:id="backgroundImageView" fitHeight="332" fitWidth="240" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0.2, 0, 2);" />
+
+    <VBox alignment="TOP_CENTER" style="-fx-alignment: top-center; -fx-spacing: 0;">
+
+        <HBox alignment="CENTER_LEFT" minHeight="30" prefHeight="30" spacing="5" style="-fx-background-color: rgba(0, 0, 0, 0.6); -fx-pref-height: 30px; -fx-min-height: 30px; -fx-max-height: 30px; -fx-padding: 0 0 0 5; -fx-alignment: center-left;">
+            <Label fx:id="nameLabelView" maxWidth="210" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #ffffff; -fx-wrap-text: true; -fx-font-family: 'Bahnschrift Condensed';" />
+            <Region HBox.hgrow="ALWAYS" />
+            <ImageView fx:id="typeImageView" fitHeight="30" fitWidth="30" preserveRatio="true" />
+        </HBox>
+
+        <StackPane minHeight="165" prefHeight="165">
+            <Rectangle fill="transparent" height="160" stroke="aliceblue" strokeWidth="5" width="160" />
+
+            <ImageView fx:id="imageImageView" fitHeight="157" fitWidth="157" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.14), 6, 0.3, 0, 1);" />
+        </StackPane>
+
+        <VBox prefHeight="139.0" prefWidth="240.0" style="-fx-background-color: rgba(0, 0, 0, 0.6);">
+            <Region VBox.vgrow="ALWAYS" />
+
+            <Label fx:id="totalLabelView" alignment="CENTER_RIGHT" contentDisplay="BOTTOM" maxWidth="230.0" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #ffffff; -fx-wrap-text: true;" text="Total: ">
+                <VBox.margin>
+                    <Insets left="10" right="10" />
+                </VBox.margin>
+            </Label>
+
+            <LoadingBar fx:id="loyaltyLoadingBar" progressColor="#2596be" progressWidth="130" titleColor="aliceblue" titleSize="13" titleWidth="60">
+                <VBox.margin>
+                    <Insets bottom="2" left="10" right="10" />
+                </VBox.margin>
+            </LoadingBar>
+
+            <LoadingBar fx:id="wisdomLoadingBar" progressColor="#2596be" progressWidth="130" titleColor="aliceblue" titleSize="13" titleWidth="60">
+                <VBox.margin>
+                    <Insets bottom="2" left="10" right="10" />
+                </VBox.margin>
+            </LoadingBar>
+
+            <LoadingBar fx:id="militancyLoadingBar" progressColor="#2596be" progressWidth="130" titleColor="aliceblue" titleSize="13" titleWidth="60">
+                <VBox.margin>
+                    <Insets bottom="2" left="10" right="10" />
+                </VBox.margin>
+            </LoadingBar>
+
+            <LoadingBar fx:id="influenceLoadingBar" progressColor="#2596be" progressWidth="130" titleColor="aliceblue" titleSize="13" titleWidth="60">
+                <VBox.margin>
+                    <Insets bottom="2" left="10" right="10" />
+                </VBox.margin>
+            </LoadingBar>
+        </VBox>
+    </VBox>
+</StackPane>

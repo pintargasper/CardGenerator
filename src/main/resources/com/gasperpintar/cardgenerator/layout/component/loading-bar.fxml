@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<fx:root alignment="CENTER" prefHeight="25" spacing="10" type="HBox" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+
+    <Label fx:id="titleLabel" text="Title" />
+
+    <Region HBox.hgrow="ALWAYS" />
+
+    <StackPane prefHeight="20">
+        <Rectangle fx:id="backgroundBar" height="20" style="-fx-fill: lightgray; -fx-arc-width: 10; -fx-arc-height: 10;" />
+        <HBox prefHeight="20" alignment="CENTER_LEFT">
+            <Rectangle fx:id="progressBar" height="20" style="-fx-arc-width: 10; -fx-arc-height: 10;" />
+        </HBox>
+        <Label fx:id="progressLabel" text="0%" alignment="CENTER"/>
+    </StackPane>
+
+</fx:root>
