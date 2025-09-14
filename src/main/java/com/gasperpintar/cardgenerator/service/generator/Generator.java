@@ -1,8 +1,9 @@
-package com.gasperpintar.cardgenerator.service;
+package com.gasperpintar.cardgenerator.service.generator;
 
 import com.gasperpintar.cardgenerator.CardGenerator;
 import com.gasperpintar.cardgenerator.component.LoadingBar;
 import com.gasperpintar.cardgenerator.model.CardData;
+import com.gasperpintar.cardgenerator.service.ExcelService;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -14,13 +15,13 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-public class GeneratorService {
+public class Generator {
 
     private static final double IMAGE_SCALE_FACTOR = 3.0;
 
     private final ExcelService excelService;
 
-    public GeneratorService() {
+    public Generator() {
         this.excelService = new ExcelService();
     }
 

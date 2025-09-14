@@ -1,5 +1,6 @@
 package com.gasperpintar.cardgenerator;
 
+import com.gasperpintar.cardgenerator.utils.Utils;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -21,6 +22,9 @@ public class CardGenerator extends Application {
 
         stage.setTitle("Card Generator");
         stage.setScene(scene);
+
+        Utils.stage = stage;
+
         stage.show();
     }
 }

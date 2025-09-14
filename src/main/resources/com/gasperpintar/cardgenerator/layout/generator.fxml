@@ -58,15 +58,13 @@
                             <items>
                                 <FXCollections fx:factory="observableArrayList">
                                     <String fx:value="pdf"/>
-                                    <String fx:value="jpg"/>
-                                    <String fx:value="jpeg"/>
                                     <String fx:value="png"/>
                                 </FXCollections>
                             </items>
                         </ComboBox>
                     </VBox>
                 </HBox>
-                <Button fx:id="generateButton" text="Generate" styleClass="nav-button"/>
+                <Button fx:id="downloadButton" text="Generate" styleClass="nav-button"/>
             </VBox>
         </StackPane>
 

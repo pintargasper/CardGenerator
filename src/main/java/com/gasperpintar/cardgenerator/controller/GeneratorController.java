@@ -1,10 +1,13 @@
 package com.gasperpintar.cardgenerator.controller;
 
 import com.gasperpintar.cardgenerator.model.CardData;
-import com.gasperpintar.cardgenerator.service.GeneratorService;
+import com.gasperpintar.cardgenerator.service.generator.Download;
+import com.gasperpintar.cardgenerator.service.generator.Generator;
+import com.gasperpintar.cardgenerator.utils.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.TilePane;
 import javafx.stage.FileChooser;
@@ -25,7 +28,7 @@ public class GeneratorController {
     private Button uploadButton;
 
     @FXML
-    public Button generateButton;
+    public Button downloadButton;
 
     @FXML
     private TilePane cardsTilePane;
@@ -33,13 +36,21 @@ public class GeneratorController {
     @FXML
     private Label totalCardsLabel;
 
+    @FXML
+    private ComboBox<String> formatComboBox;
+
+    @FXML
+    private ComboBox<String> typeComboBox;
+
     private File excelFile;
     private List<File> imageFiles;
 
-    private final GeneratorService generatorService;
+    private final Generator generator;
+    private final Download download;
 
     public GeneratorController() {
-        this.generatorService = new GeneratorService();
+        this.generator = new Generator();
+        this.download = new Download();
     }
 
     @FXML
@@ -47,6 +58,7 @@ public class GeneratorController {
         excelButton.setOnAction(actionEvent -> chooseExcelFile());
         imagesButton.setOnAction(actionEvent -> chooseImageFiles());
         uploadButton.setOnAction(actionEvent -> uploadCards());
+        downloadButton.setOnAction(actionEvent -> downloadCards());
     }
 
     private void chooseExcelFile() {
@@ -55,7 +67,7 @@ public class GeneratorController {
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("Excel file", "*.xlsx", "*.xls")
         );
-        excelFile = fileChooser.showOpenDialog(null);
+        excelFile = fileChooser.showOpenDialog(Utils.stage);
     }
 
     private void chooseImageFiles() {
@@ -64,21 +76,19 @@ public class GeneratorController {
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg")
         );
-        imageFiles = fileChooser.showOpenMultipleDialog(null);
+        imageFiles = fileChooser.showOpenMultipleDialog(Utils.stage);
     }
 
     private void uploadCards() {
         if (excelFile == null) {
-            System.out.println("Excel file not selected");
             return;
         }
 
         List<CardData> cardDataList;
         try {
-            cardDataList = generatorService.processExcelFile(excelFile);
+            cardDataList = generator.processExcelFile(excelFile);
         } catch (IOException ioException) {
-            System.out.println("Error reading Excel file: " + ioException.getMessage());
-            return;
+            throw new RuntimeException(ioException);
         }
 
         if (cardDataList.isEmpty()) {
@@ -90,9 +100,24 @@ public class GeneratorController {
         List<String> headers = cardDataList.getFirst().getColumns();
 
         for (int i = 1; i < cardDataList.size(); i++) {
-            Node cardNode = generatorService.generateCard(cardDataList.get(i), headers, imageFiles);
+            Node cardNode = generator.generateCard(cardDataList.get(i), headers, imageFiles);
             cardsTilePane.getChildren().add(cardNode);
         }
         totalCardsLabel.setText("Total number of cards: " + cardsTilePane.getChildren().size());
+    }
+
+    private void downloadCards() {
+        List<Node> cards = cardsTilePane.getChildren();
+        if (cards == null || cards.isEmpty()) {
+            return;
+        }
+
+        String selectedFormat = formatComboBox.getValue();
+        String selectedType = typeComboBox.getValue();
+
+        if (selectedFormat == null || selectedType == null) {
+            return;
+        }
+        download.saveCards(cards, selectedFormat, selectedType);
     }
 }
