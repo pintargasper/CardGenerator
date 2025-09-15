@@ -1,7 +1,7 @@
 package com.gasperpintar.cardgenerator.service.generator;
 
-import com.gasperpintar.cardgenerator.CardGenerator;
 import com.gasperpintar.cardgenerator.component.LoadingBar;
+import com.gasperpintar.cardgenerator.component.ShowIf;
 import com.gasperpintar.cardgenerator.model.CardData;
 import com.gasperpintar.cardgenerator.service.ExcelService;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,14 +27,35 @@ public class Generator {
     }
 
     public List<CardData> processExcelFile(File file) throws IOException {
-        if (file == null) return List.of();
+        if (file == null) {
+            return List.of();
+        }
         return excelService.readExcelFile(file);
     }
 
-    public Node generateCard(CardData cardData, List<String> headers, List<File> imageFiles) {
+    public Node generateCard(CardData cardData, List<String> headers, File templateFile, List<File> imageFiles) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(CardGenerator.class.getResource("layout/template/card.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(templateFile.toURI().toURL());
             Node cardNode = fxmlLoader.load();
+
+            List<Node> conditionalContainers = cardNode.lookupAll(".show-if").stream().toList();
+
+            for (Node node : conditionalContainers) {
+                if (node instanceof ShowIf conditionalContainer) {
+                    String conditionKey = conditionalContainer.getType();
+
+                    int columnIndex = -1;
+                    for (int i = 0; i < headers.size(); i++) {
+                        if (headers.get(i).equalsIgnoreCase(conditionKey)) {
+                            columnIndex = i;
+                            break;
+                        }
+                    }
+                    if (columnIndex != -1) {
+                        conditionalContainer.setCardType(cardData.getColumns().get(columnIndex));
+                    }
+                }
+            }
 
             for (int i = 0; i < headers.size(); i++) {
                 String header = headers.get(i).toLowerCase();
@@ -95,7 +117,7 @@ public class Generator {
 
     private File findImageFile(String fileName, List<File> imageFiles) {
         return imageFiles.stream()
-                .filter(file -> Objects.equals(file.getName(), fileName))
+                .filter(file -> Objects.equals(FilenameUtils.removeExtension(file.getName()), fileName.toLowerCase()))
                 .findFirst()
                 .orElse(null);
     }

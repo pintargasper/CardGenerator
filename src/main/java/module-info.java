@@ -11,6 +11,7 @@ module com.gasperpintar.cardgenerator {
     requires static lombok;
     requires org.apache.poi.poi;
     requires org.apache.poi.ooxml;
+    requires org.apache.commons.io;
     requires java.desktop;
     requires javafx.swing;
     requires kernel;

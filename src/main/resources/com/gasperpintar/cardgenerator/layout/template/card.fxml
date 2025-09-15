@@ -21,42 +21,29 @@
 
         <StackPane minHeight="165" prefHeight="165">
             <Rectangle fill="transparent" height="160" stroke="aliceblue" strokeWidth="5" width="160" />
-
             <ImageView fx:id="imageImageView" fitHeight="157" fitWidth="157" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.14), 6, 0.3, 0, 1);" />
         </StackPane>
 
         <VBox prefHeight="139.0" prefWidth="240.0" style="-fx-background-color: rgba(0, 0, 0, 0.6);">
-            <Region VBox.vgrow="ALWAYS" />
 
-            <Label fx:id="totalLabelView" alignment="CENTER_RIGHT" contentDisplay="BOTTOM" maxWidth="230.0" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #ffffff; -fx-wrap-text: true;" text="Total: ">
+            <ShowIf condition="Type==Spell" managed="false" visible="false">
                 <VBox.margin>
-                    <Insets left="10" right="10" />
+                    <Insets top="10" bottom="10" left="10" right="10" />
                 </VBox.margin>
-            </Label>
+                <Label fx:id="descriptionLabelView" contentDisplay="TOP" maxWidth="230.0" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" wrapText="true"/>
+            </ShowIf>
 
-            <LoadingBar fx:id="loyaltyLoadingBar" progressColor="#2596be" progressWidth="130" titleColor="aliceblue" titleSize="13" titleWidth="60">
+            <ShowIf condition="Type!=Spell">
                 <VBox.margin>
-                    <Insets bottom="2" left="10" right="10" />
+                    <Insets top="10" left="10" right="10" />
                 </VBox.margin>
-            </LoadingBar>
 
-            <LoadingBar fx:id="wisdomLoadingBar" progressColor="#2596be" progressWidth="130" titleColor="aliceblue" titleSize="13" titleWidth="60">
-                <VBox.margin>
-                    <Insets bottom="2" left="10" right="10" />
-                </VBox.margin>
-            </LoadingBar>
-
-            <LoadingBar fx:id="militancyLoadingBar" progressColor="#2596be" progressWidth="130" titleColor="aliceblue" titleSize="13" titleWidth="60">
-                <VBox.margin>
-                    <Insets bottom="2" left="10" right="10" />
-                </VBox.margin>
-            </LoadingBar>
-
-            <LoadingBar fx:id="influenceLoadingBar" progressColor="#2596be" progressWidth="130" titleColor="aliceblue" titleSize="13" titleWidth="60">
-                <VBox.margin>
-                    <Insets bottom="2" left="10" right="10" />
-                </VBox.margin>
-            </LoadingBar>
+                <Label fx:id="totalLabelView" alignment="CENTER_RIGHT" contentDisplay="BOTTOM" maxWidth="230.0" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #ffffff; -fx-wrap-text: true;" text="Total: "/>
+                <LoadingBar fx:id="loyaltyLoadingBar" progressColor="#2596be" progressWidth="130" titleColor="aliceblue" titleSize="13" titleWidth="60"/>
+                <LoadingBar fx:id="wisdomLoadingBar" progressColor="#2596be" progressWidth="130" titleColor="aliceblue" titleSize="13" titleWidth="60"/>
+                <LoadingBar fx:id="militancyLoadingBar" progressColor="#2596be" progressWidth="130" titleColor="aliceblue" titleSize="13" titleWidth="60"/>
+                <LoadingBar fx:id="influenceLoadingBar" progressColor="#2596be" progressWidth="130" titleColor="aliceblue" titleSize="13" titleWidth="60"/>
+            </ShowIf>
         </VBox>
     </VBox>
 </StackPane>

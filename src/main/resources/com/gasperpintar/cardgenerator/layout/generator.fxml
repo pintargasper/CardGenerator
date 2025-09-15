@@ -4,13 +4,14 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
-<?import javafx.scene.layout.Region?>
 
 <HBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.gasperpintar.cardgenerator.controller.GeneratorController"
@@ -32,6 +33,19 @@
                     <Label text="Images" styleClass="card-label"/>
                     <Region HBox.hgrow="ALWAYS"/>
                     <Button fx:id="imagesButton" text="Choose" styleClass="nav-button"/>
+                </HBox>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Template" styleClass="card-label"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button fx:id="templateButton" text="Choose" styleClass="nav-button"/>
+                </HBox>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <VBox spacing="2">
+                        <Label text="Quantity" styleClass="card-label"/>
+                        <Label text="Column determining the number of cards" styleClass="card-sub-label"/>
+                    </VBox>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <TextField fx:id="quantityTextField" promptText="Column name" styleClass="text-field-card"/>
                 </HBox>
                 <Button fx:id="uploadButton" text="Upload" styleClass="nav-button"/>
             </VBox>
@@ -67,14 +81,11 @@
                 <Button fx:id="downloadButton" text="Generate" styleClass="nav-button"/>
             </VBox>
         </StackPane>
-
     </VBox>
 
     <VBox spacing="15" styleClass="generator-right-panel" HBox.hgrow="ALWAYS">
-        <ScrollPane fitToWidth="true" styleClass="generator-scroll-pane">
-            <StackPane>
-                <TilePane fx:id="cardsTilePane" hgap="10" vgap="10" prefColumns="3" style="-fx-alignment: center;"/>
-            </StackPane>
+        <ScrollPane fx:id="cardsScrollPane" fitToWidth="true" styleClass="generator-scroll-pane">
+            <TilePane fx:id="cardsTilePane" hgap="10" vgap="10" alignment="CENTER"/>
         </ScrollPane>
     </VBox>
 

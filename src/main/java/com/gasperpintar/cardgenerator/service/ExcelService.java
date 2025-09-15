@@ -22,17 +22,15 @@ public class ExcelService {
 
             for (Row row : sheet) {
                 List<String> rowColumns = new ArrayList<>();
-                boolean hasData = false;
+                short lastCellNum = row.getLastCellNum();
 
-                for (Cell cell : row) {
+                for (int i = 0; i < lastCellNum; i++) {
+                    Cell cell = row.getCell(i, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
                     String cellValue = getCellValue(cell);
                     rowColumns.add(cellValue);
-                    if (!cellValue.isBlank()) {
-                        hasData = true;
-                    }
                 }
 
-                if (hasData) {
+                if (!rowColumns.getFirst().isBlank() && !rowColumns.getFirst().isEmpty()) {
                     cardDataList.add(new CardData(rowColumns));
                 }
             }
