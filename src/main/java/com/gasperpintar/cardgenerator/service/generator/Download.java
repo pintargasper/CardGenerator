@@ -3,9 +3,9 @@ package com.gasperpintar.cardgenerator.service.generator;
 import com.gasperpintar.cardgenerator.model.Settings;
 import com.gasperpintar.cardgenerator.utils.Utils;
 import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
@@ -84,17 +84,32 @@ public class Download {
 
     private void saveAsPdf(List<Node> cards, File pdfFile, int numSheets, int cardsPerSheet,
                            int sheetWidthPx, int sheetHeightPx, int cardWidthPx, int cardHeightPx, Settings settings) throws IOException {
+
         try (PdfWriter pdfWriter = new PdfWriter(new FileOutputStream(pdfFile));
-             PdfDocument pdfDocument = new PdfDocument(pdfWriter);
-             Document pdfLayout = new Document(pdfDocument)) {
+             PdfDocument pdfDocument = new PdfDocument(pdfWriter)) {
 
             for (int sheetIndex = 0; sheetIndex < numSheets; sheetIndex++) {
                 BufferedImage sheetImage = renderSheet(cards, sheetIndex, cardsPerSheet,
                         sheetWidthPx, sheetHeightPx, cardWidthPx, cardHeightPx, settings);
+
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 ImageIO.write(sheetImage, "png", byteArrayOutputStream);
+
+                float pageWidthPt = (float) sheetWidthPx * 72f / settings.dpi;
+                float pageHeightPt = (float) sheetHeightPx * 72f / settings.dpi;
+
+                PageSize pageSize =
+                        new PageSize(pageWidthPt, pageHeightPt);
+                pdfDocument.addNewPage(pageSize);
+
                 Image pdfImage = new Image(ImageDataFactory.create(byteArrayOutputStream.toByteArray()));
-                pdfLayout.add(pdfImage);
+                pdfImage.scaleToFit(pageWidthPt, pageHeightPt);
+                pdfImage.setFixedPosition(0, 0);
+
+                com.itextpdf.layout.Canvas canvas =
+                        new com.itextpdf.layout.Canvas(pdfDocument.getLastPage(), pageSize);
+                canvas.add(pdfImage);
+                canvas.close();
             }
         }
     }
@@ -147,7 +162,6 @@ public class Download {
             int y = (i / settings.numCols) * cardHeightPx;
             graphics.drawImage(scaledCard, x, y, null);
         }
-
         graphics.dispose();
         return sheetImage;
     }

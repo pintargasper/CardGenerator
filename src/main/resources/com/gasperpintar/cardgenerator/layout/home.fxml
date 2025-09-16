@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.TextArea?>
+
 <VBox alignment="TOP_CENTER"
       spacing="20.0"
       styleClass="home-container"
@@ -27,5 +29,15 @@
     <VBox spacing="5" alignment="CENTER" styleClass="home-language-list">
         <Label text="• English" styleClass="home-language-item"/>
     </VBox>
+
+    <TextArea editable="false" wrapText="true" styleClass="home-code-area">
+        <![CDATA[
+            public class HelloWorld {
+                public static void main(String[] args) {
+                    System.out.println("Hello, world!");
+                }
+            }
+        ]]>
+    </TextArea>
 
 </VBox>

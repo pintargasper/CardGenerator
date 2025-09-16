@@ -17,3 +17,12 @@
 .nav-button:hover {
     -fx-background-color: #16a085;
 }
+
+.home-code-area {
+    -fx-font-family: "Consolas", "Courier New", monospace;
+    -fx-font-size: 13px;
+    -fx-background-color: #f6f8fa;
+    -fx-border-color: #d1d5da;
+    -fx-border-radius: 5;
+    -fx-padding: 10;
+}

@@ -35,11 +35,6 @@ public class MainController implements Initializable {
         loadCenterContent("layout/generator.fxml");
     }
 
-    @FXML
-    private void onCreateClick() throws IOException {
-        loadCenterContent("layout/create.fxml");
-    }
-
     private void loadCenterContent(String fxmlPath) throws IOException {
         FXMLLoader loader = new FXMLLoader(CardGenerator.class.getResource(fxmlPath));
         Pane newCenter = loader.load();

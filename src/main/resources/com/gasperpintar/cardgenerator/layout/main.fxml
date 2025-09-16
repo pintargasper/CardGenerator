@@ -18,7 +18,6 @@
 
             <Button text="Home" styleClass="nav-button" onAction="#onHomeClick"/>
             <Button text="Generator" styleClass="nav-button" onAction="#onGeneratorClick"/>
-            <Button text="Create" styleClass="nav-button" onAction="#onCreateClick"/>
         </HBox>
     </top>
 

@@ -89,8 +89,22 @@
     -fx-font-weight: normal;
 }
 
-.generator-scroll-pane,
-.generator-scroll-pane:hover,
-.generator-scroll-pane:focused {
+.card-list-view,
+.card-list-view:hover,
+.card-list-view:focused,
+.list-cell,
+.list-cell:selected,
+.list-cell:hover,
+.list-cell:focused {
+    fx-alignment: center;
     -fx-background-color: #b3bdbb;
+    -fx-background-insets: 0;
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+}
+
+.list-cell:filled:selected .label,
+.list-cell:filled:focused .label,
+.list-cell:filled:hover .label {
+    -fx-text-fill: inherit;
 }
