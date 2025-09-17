@@ -37,6 +37,14 @@
     -fx-padding: 10 0 0 0;
 }
 
+.home-section-small {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-alignment: center;
+    -fx-padding: 10 0 0 0;
+}
+
 .home-language-list {
     -fx-alignment: center;
 }
@@ -59,4 +67,19 @@
     -fx-font-size: 14px;
     -fx-text-fill: #34495e;
     -fx-text-alignment: LEFT;
+}
+
+.home-code-text {
+    -fx-font-family: "Consolas", "Courier New", monospace;
+    -fx-background-color: #2d2d2d;
+    -fx-fill: #ffffff;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-text-alignment: left;
+    -fx-wrap-text: true;
+}
+
+.home-code-text Text {
+    -fx-fill: #ffffff;
 }

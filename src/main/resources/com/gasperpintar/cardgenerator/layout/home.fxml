@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
-
-<?import javafx.scene.control.TextArea?>
-
-<VBox alignment="TOP_CENTER"
+<?import javafx.scene.text.*?>
+<VBox xmlns:fx="http://javafx.com/fxml"
+      alignment="TOP_CENTER"
       spacing="20.0"
       styleClass="home-container"
       stylesheets="@../css/home.css">
@@ -18,26 +17,56 @@
     <Label text="Welcome to Card Generator!" styleClass="home-title"/>
 
     <VBox alignment="CENTER" spacing="5" styleClass="home-description-box">
-        <Label text="Card Generator allows the creation of any card and its export in JPG, JPEG, or PNG format."
+        <Label text="Card Generator allows the creation of any card and its export in png format"
                wrapText="true" styleClass="home-description"/>
-        <Label text="You can also download images in PDF mode." wrapText="true" styleClass="home-description"/>
+        <Label text="You can also download images in pdf mode" wrapText="true" styleClass="home-description"/>
     </VBox>
 
-    <Label text="Latest version: 1.0.0" styleClass="home-version"/>
+    <Label text="Version: 1.0.0" styleClass="home-version"/>
 
     <Label text="Supported languages" styleClass="home-section-title"/>
     <VBox spacing="5" alignment="CENTER" styleClass="home-language-list">
         <Label text="• English" styleClass="home-language-item"/>
     </VBox>
 
-    <TextArea editable="false" wrapText="true" styleClass="home-code-area">
-        <![CDATA[
-            public class HelloWorld {
-                public static void main(String[] args) {
-                    System.out.println("Hello, world!");
-                }
-            }
-        ]]>
-    </TextArea>
+    <Label text="Components (How to use)" styleClass="home-section-title"/>
+    <Label text="Default (supported)" styleClass="home-section-small"/>
+
+    <VBox alignment="CENTER" spacing="10.0" maxWidth="390">
+        <TextFlow styleClass="home-code-text">
+            <Text text="&lt;Label" />
+            <Text text="&#10;     fx:id=&quot;(ColumnName)LabelView&quot;" />
+            <Text text="&#10;     ..." />
+            <Text text="&#10;&lt;/Label&gt;" />
+        </TextFlow>
+
+        <TextFlow styleClass="home-code-text">
+            <Text text="&lt;ImageView" />
+            <Text text="&#10;     fx:id=&quot;(ColumnName)ImageView&quot;" />
+            <Text text="&#10;     ..." />
+            <Text text="&#10;&lt;/ImageView&gt;" />
+        </TextFlow>
+    </VBox>
+
+    <Label text="Additional" styleClass="home-section-small"/>
+
+    <VBox alignment="CENTER" spacing="10.0" maxWidth="390">
+        <TextFlow styleClass="home-code-text">
+            <Text text="&lt;ShowIf condition=&quot;ColumnName==[or]!=RowValue&quot;&gt;" />
+            <Text text="&#10;     ..." />
+            <Text text="&#10;" />
+            <Text text="&lt;/ShowIf&gt;" />
+        </TextFlow>
+
+        <TextFlow styleClass="home-code-text">
+            <Text text="&lt;LoadingBar" />
+            <Text text="&#10;     fx:id=&quot;(ColumnName)LoadingBar&quot;" />
+            <Text text="&#10;     progressColor=&quot;color&quot;" />
+            <Text text="&#10;     progressWidth=&quot;text&quot;" />
+            <Text text="&#10;     titleColor=&quot;color&quot;" />
+            <Text text="&#10;     titleSize=&quot;size&quot;" />
+            <Text text="&#10;     titleWidth=&quot;width&quot;/&gt;" />
+        </TextFlow>
+    </VBox>
 
 </VBox>
