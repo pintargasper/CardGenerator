@@ -1,0 +1,16 @@
+#splashLayout {
+    -fx-padding: 20;
+    -fx-alignment: center;
+    -fx-background-color: #2c3e50;
+    -fx-border-color: black;
+    -fx-border-width: 2;
+}
+
+#loadingText {
+    -fx-font-size: 16px;
+    -fx-fill: #ffffff;
+}
+
+#progressBar {
+    -fx-accent: #16a085;
+}

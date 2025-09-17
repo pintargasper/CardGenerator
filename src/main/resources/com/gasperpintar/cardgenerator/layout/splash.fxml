@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<VBox xmlns="http://javafx.com/javafx/20"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:id="splashLayout"
+      spacing="10"
+      alignment="CENTER"
+      stylesheets="@../css/splash.css">
+
+    <ImageView fx:id="logoView" fitWidth="150" preserveRatio="true"/>
+    <Text fx:id="loadingText" text="Loading..." />
+    <ProgressBar fx:id="progressBar" prefWidth="250"/>
+
+</VBox>
