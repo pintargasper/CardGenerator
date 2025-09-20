@@ -8,6 +8,7 @@ DEPLOY_DIR="$PACKAGE_OUTPUT_DIR/deploy"
 CUSTOM_JRE_DIR="$PACKAGE_OUTPUT_DIR/custom-runtime"
 APP_IMAGE_DIR="$PACKAGE_OUTPUT_DIR"
 JAR_FILE="CardGenerator-1.0.0-jar-with-dependencies.jar"
+JAR_FILE_FINAL="CardGenerator-1.0.0.jar"
 MAIN_CLASS="com.gasperpintar.cardgenerator.Launcher"
 APP_NAME="Card Generator"
 APP_VERSION="1.0.0"
@@ -56,7 +57,7 @@ cp -r "$WINDOWS_JAVAFX_LIB_PATH" "$LINUX_BASE/"
 # ============================
 # Copy the fat JAR
 # ============================
-cp "$PROJECT_ROOT/target/$JAR_FILE" "$DEPLOY_DIR"
+cp "$PROJECT_ROOT/target/$JAR_FILE" "$DEPLOY_DIR/$JAR_FILE_FINAL"
 
 # ============================
 # Create a minimal custom JRE with jlink
@@ -83,9 +84,9 @@ find "$JAVAFX_LIB_PATH" -name "*.so" -exec cp {} "$CUSTOM_JRE_DIR/lib" \;
 # ============================
 # {"app-image", "rpm", "deb"}
 "$JDK_PATH/bin/jpackage" \
-    --type app-image \
+    --type rpm \
     --input "$DEPLOY_DIR" \
-    --main-jar "$JAR_FILE" \
+    --main-jar "$JAR_FILE_FINAL" \
     --main-class "$MAIN_CLASS" \
     --name "$APP_NAME" \
     --app-version "$APP_VERSION" \
@@ -100,4 +101,4 @@ find "$JAVAFX_LIB_PATH" -name "*.so" -exec cp {} "$CUSTOM_JRE_DIR/lib" \;
 # Debug command
 # ============================
 echo "For debugging JavaFX rendering, use the following command:"
-echo "$CUSTOM_JRE_DIR/bin/java -Dprism.verbose=true -jar $DEPLOY_DIR/$JAR_FILE"
+echo "$CUSTOM_JRE_DIR/bin/java -Dprism.verbose=true -jar $DEPLOY_DIR/$JAR_FILE_FINAL"

@@ -7,6 +7,7 @@ $deployDir         = "$packageOutputDir\deploy"
 $customJreDir      = "$packageOutputDir\custom-runtime"
 $appImageDir       = "$packageOutputDir"
 $jarFile           = "CardGenerator-1.0.0-jar-with-dependencies.jar"
+$jarFileFinal      = "CardGenerator-1.0.0.jar"
 $mainClass         = "com.gasperpintar.cardgenerator.Launcher"
 $appName           = "Card Generator"
 $appVersion        = "1.0.0"
@@ -27,7 +28,7 @@ New-Item -ItemType Directory -Path $deployDir | Out-Null
 # ============================
 # Copy the fat JAR
 # ============================
-Copy-Item "$projectRoot\target\$jarFile" -Destination $deployDir
+Copy-Item "$projectRoot\target\$jarFile" -Destination $deployDir\$jarFileFinal
 
 # ============================
 # Create a minimal custom JRE with jlink
@@ -56,7 +57,7 @@ Get-ChildItem -Path "$javafxLibPath" -Filter "*.dll" | ForEach-Object {
 jpackage `
   --type app-image `
   --input $deployDir `
-  --main-jar $jarFile `
+  --main-jar $jarFileFinal `
   --main-class $mainClass `
   --name $appName `
   --app-version $appVersion `
@@ -71,4 +72,4 @@ jpackage `
 # Debug command
 # ============================
 Write-Host "For debugging JavaFX rendering, use the following command:"
-Write-Host "& `"$customJreDir\bin\java.exe`" `"-Dprism.verbose=true`" `"-jar`" `"$deployDir\$jarFile`""
+Write-Host "& `"$customJreDir\bin\java.exe`" `"-Dprism.verbose=true`" `"-jar`" `"$deployDir\$jarFileFinal`""
