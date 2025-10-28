@@ -13,7 +13,7 @@
 ---
 <div align="center">
 
-[![GitHub Releases](https://custom-icon-badges.herokuapp.com/badge/Website-lightgray?style=for-the-badge&logo=website&logoColor=white)](https://cards.gasperpintar.com)
+[![GitHub Releases](https://custom-icon-badges.herokuapp.com/badge/Website-lightgray?style=for-the-badge&logo=website&logoColor=white)](https://gasperpintar.com/card-generator)
 
 [![GitHub Releases](https://custom-icon-badges.herokuapp.com/badge/Download-lightgray?style=for-the-badge&logo=download&logoColor=white)](https://github.com/pintargasper/CardGenerator/releases/latest)
 
