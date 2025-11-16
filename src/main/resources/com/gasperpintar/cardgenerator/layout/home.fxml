@@ -17,10 +17,13 @@
     <Label text="Welcome to Card Generator!" styleClass="home-title"/>
 
     <VBox alignment="CENTER" spacing="5" styleClass="home-description-box">
-        <Label text="Card Generator allows the creation of any card and its export in png format"
+        <Label text="Card Generator is a desktop application for creating and generating custom playing cards."
                wrapText="true" styleClass="home-description"/>
-        <Label text="You can also download images in pdf mode" wrapText="true" styleClass="home-description"/>
+        <Label text="Using Excel spreadsheets and customizable fxml templates, you can quickly create entire decks of playing cards without having to design each card individually."
+               wrapText="true" styleClass="home-description"/>
     </VBox>
+
+    <Label text="You can also download images in pdf mode" wrapText="true" styleClass="home-description"/>
 
     <Label text="Version: 1.0.0" styleClass="home-version"/>
 

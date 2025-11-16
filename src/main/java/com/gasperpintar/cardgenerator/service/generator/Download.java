@@ -60,7 +60,7 @@ public class Download {
                             cardWidthPx, cardHeightPx, type, settings);
                 }
             } catch (Exception exception) {
-               throw new RuntimeException(exception);
+                throw new RuntimeException(exception);
             }
         }).start();
     }
