@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/20"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.gasperpintar.cardgenerator.controller.LoadingPopupController"
+      alignment="CENTER"
+      spacing="30"
+      minWidth="400"
+      minHeight="160"
+      styleClass="loading-popup-root"
+      stylesheets="@../css/loadingPopup.css">
+    <Label text="Generating cards, please wait..." styleClass="loading-label"/>
+    <ProgressBar fx:id="loadingProgressBar" prefWidth="340" progress="0" styleClass="loading-progress-bar"/>
+</VBox>

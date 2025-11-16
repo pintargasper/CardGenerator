@@ -1,0 +1,32 @@
+.info-label {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.info-close-button {
+    -fx-background-color: #1abc9c;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+    -fx-padding: 8px 20px;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: transparent;
+    -fx-pref-width: 120;
+    -fx-pref-height: 35;
+}
+
+.info-close-button:hover {
+    -fx-background-color: #16a085;
+}
+
+.info-popup-root {
+    -fx-background-color: #ecf0f1;
+    -fx-padding: 30;
+    -fx-border-color: #16a085;
+    -fx-border-width: 2;
+    -fx-border-style: solid;
+    -fx-border-insets: 0;
+}

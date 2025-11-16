@@ -2,11 +2,6 @@ package com.gasperpintar.cardgenerator.service.generator;
 
 import com.gasperpintar.cardgenerator.model.Settings;
 import com.gasperpintar.cardgenerator.utils.Utils;
-import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.geom.PageSize;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.element.Image;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Node;
@@ -16,19 +11,27 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 
 import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.ImageOutputStream;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
+import java.util.function.Consumer;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class Download {
 
-    public void saveCards(List<Node> cards, String format, String type) {
-        Settings settings = setupFormat(format);
-        if (settings == null) return;
+    public void saveCards(List<Node> cards, String format, String type, File selectedFile, Consumer<Double> progressCallback, Runnable onComplete) {
+        Settings settings = CardFormatUtil.setupFormat(format);
+        if (settings == null) {
+            if (onComplete != null) onComplete.run();
+            return;
+        }
 
         int sheetWidthPx = (int) Math.round(settings.cardWidthCm / settings.cmToInch * settings.dpi);
         int sheetHeightPx = (int) Math.round(settings.cardHeightCm / settings.cmToInch * settings.dpi);
@@ -37,107 +40,96 @@ public class Download {
         int cardsPerSheet = settings.numCols * settings.numRows;
         int numberOfSheets = (int) Math.ceil((double) cards.size() / cardsPerSheet);
 
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save file");
-        if ("pdf".equalsIgnoreCase(type)) {
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF document", "*.pdf"));
-            fileChooser.setInitialFileName("cards.pdf");
-        } else {
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("ZIP archive", "*.zip"));
-            fileChooser.setInitialFileName("cards.zip");
+        if (selectedFile == null) {
+            if (onComplete != null) onComplete.run();
+            return;
         }
 
-        File selectedFile = fileChooser.showSaveDialog(Utils.stage);
-        if (selectedFile == null) return;
-
-        new Thread(() -> {
+        CompletableFuture.runAsync(() -> {
             try {
-                if ("pdf".equalsIgnoreCase(type)) {
-                    saveAsPdf(cards, selectedFile, numberOfSheets, cardsPerSheet, sheetWidthPx, sheetHeightPx,
-                            cardWidthPx, cardHeightPx, settings);
-                } else {
-                    saveAsZip(cards, selectedFile, numberOfSheets, cardsPerSheet, sheetWidthPx, sheetHeightPx,
-                            cardWidthPx, cardHeightPx, type, settings);
-                }
+                saveAsZip(cards, selectedFile, numberOfSheets,
+                        cardsPerSheet, sheetWidthPx, sheetHeightPx,
+                        cardWidthPx, cardHeightPx, type, settings, progressCallback
+                );
             } catch (Exception exception) {
                 throw new RuntimeException(exception);
+            } finally {
+                if (onComplete != null) onComplete.run();
             }
-        }).start();
+        });
     }
 
-    private Settings setupFormat(String format) {
-        Settings settings = new Settings();
-        settings.cmToInch = 2.54;
-
-        if ("13x18".equals(format)) {
-            settings.dpi = 300;
-            settings.numCols = 2;
-            settings.numRows = 2;
-            settings.scaleFactor = 3.0;
-            settings.cardWidthCm = 13.0;
-            settings.cardHeightCm = 18.0;
-        } else {
-            return null;
-        }
-        return settings;
-    }
-
-    private void saveAsPdf(List<Node> cards, File pdfFile, int numSheets, int cardsPerSheet,
-                           int sheetWidthPx, int sheetHeightPx, int cardWidthPx, int cardHeightPx, Settings settings) throws IOException {
-
-        try (PdfWriter pdfWriter = new PdfWriter(new FileOutputStream(pdfFile));
-             PdfDocument pdfDocument = new PdfDocument(pdfWriter)) {
-
-            for (int sheetIndex = 0; sheetIndex < numSheets; sheetIndex++) {
-                BufferedImage sheetImage = renderSheet(cards, sheetIndex, cardsPerSheet,
-                        sheetWidthPx, sheetHeightPx, cardWidthPx, cardHeightPx, settings);
-
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                ImageIO.write(sheetImage, "png", byteArrayOutputStream);
-
-                float pageWidthPt = (float) sheetWidthPx * 72f / settings.dpi;
-                float pageHeightPt = (float) sheetHeightPx * 72f / settings.dpi;
-
-                PageSize pageSize =
-                        new PageSize(pageWidthPt, pageHeightPt);
-                pdfDocument.addNewPage(pageSize);
-
-                Image pdfImage = new Image(ImageDataFactory.create(byteArrayOutputStream.toByteArray()));
-                pdfImage.scaleToFit(pageWidthPt, pageHeightPt);
-                pdfImage.setFixedPosition(0, 0);
-
-                com.itextpdf.layout.Canvas canvas =
-                        new com.itextpdf.layout.Canvas(pdfDocument.getLastPage(), pageSize);
-                canvas.add(pdfImage);
-                canvas.close();
-            }
-        }
+    public File showSaveDialog() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save file");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("ZIP archive", "*.zip"));
+        fileChooser.setInitialFileName("cards.zip");
+        return fileChooser.showSaveDialog(Utils.stage);
     }
 
     private void saveAsZip(List<Node> cards, File zipFile, int numSheets, int cardsPerSheet,
                            int sheetWidthPx, int sheetHeightPx, int cardWidthPx, int cardHeightPx,
-                           String type, Settings settings) throws IOException {
+                           String type, Settings settings, Consumer<Double> progressCallback) throws IOException {
+        int imageType = getImageType(type);
         try (FileOutputStream fos = new FileOutputStream(zipFile);
              ZipOutputStream zipOut = new ZipOutputStream(fos)) {
 
             for (int sheetIndex = 0; sheetIndex < numSheets; sheetIndex++) {
                 BufferedImage sheetImage = renderSheet(cards, sheetIndex, cardsPerSheet,
-                        sheetWidthPx, sheetHeightPx, cardWidthPx, cardHeightPx, settings);
-                String entryName = "image_" + (sheetIndex + 1) + "." + type.toLowerCase();
+                        sheetWidthPx, sheetHeightPx, cardWidthPx, cardHeightPx, settings, imageType);
+                String entryName = getEntryName(sheetIndex, type);
                 zipOut.putNextEntry(new ZipEntry(entryName));
 
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                ImageIO.write(sheetImage, type.toLowerCase(), byteArrayOutputStream);
-                zipOut.write(byteArrayOutputStream.toByteArray());
+                writeImageToZip(sheetImage, type, zipOut);
+                sheetImage.flush();
                 zipOut.closeEntry();
+                System.gc();
+                if (progressCallback != null) {
+                    double progress = (sheetIndex + 1) / (double) numSheets;
+                    progressCallback.accept(progress);
+                }
             }
         }
     }
 
+    private int getImageType(String type) {
+        if (type.equalsIgnoreCase("jpg") || type.equalsIgnoreCase("jpeg")) {
+            return BufferedImage.TYPE_INT_RGB;
+        }
+        return BufferedImage.TYPE_INT_ARGB;
+    }
+
+    private String getEntryName(int sheetIndex, String type) {
+        return "image_" + (sheetIndex + 1) + "." + type.toLowerCase();
+    }
+
+    private void writeImageToZip(BufferedImage image, String type, ZipOutputStream zipOut) throws IOException {
+        if (type.equalsIgnoreCase("jpg") || type.equalsIgnoreCase("jpeg")) {
+            writeJpgToZip(image, zipOut);
+        } else if (type.equalsIgnoreCase("png")) {
+            ImageIO.write(image, "png", zipOut);
+        }
+    }
+
+    private void writeJpgToZip(BufferedImage image, ZipOutputStream zipOut) throws IOException {
+        ImageWriter jpgWriter = ImageIO.getImageWritersByFormatName("jpg").next();
+        ImageOutputStream ios = ImageIO.createImageOutputStream(zipOut);
+        jpgWriter.setOutput(ios);
+        ImageWriteParam jpgWriteParam = jpgWriter.getDefaultWriteParam();
+        if (jpgWriteParam.canWriteCompressed()) {
+            jpgWriteParam.setCompressionMode(javax.imageio.ImageWriteParam.MODE_EXPLICIT);
+            jpgWriteParam.setCompressionQuality(0.9f);
+        }
+        jpgWriter.write(null, new javax.imageio.IIOImage(image, null, null), jpgWriteParam);
+        ios.flush();
+        jpgWriter.dispose();
+        ios.close();
+    }
+
     private BufferedImage renderSheet(List<Node> cards, int sheetIndex, int cardsPerSheet,
                                       int sheetWidthPx, int sheetHeightPx, int cardWidthPx, int cardHeightPx,
-                                      Settings settings) {
-        BufferedImage sheetImage = new BufferedImage(sheetWidthPx, sheetHeightPx, BufferedImage.TYPE_INT_ARGB);
+                                      Settings settings, int imageType) {
+        BufferedImage sheetImage = new BufferedImage(sheetWidthPx, sheetHeightPx, imageType);
         Graphics2D graphics = sheetImage.createGraphics();
         graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -148,10 +140,8 @@ public class Download {
             if (cardIndex >= cards.size()) break;
 
             Node cardNode = cards.get(cardIndex);
-
             BufferedImage bufferedCard = snapshotNode(cardNode, settings.scaleFactor);
-
-            BufferedImage scaledCard = new BufferedImage(cardWidthPx, cardHeightPx, BufferedImage.TYPE_INT_ARGB);
+            BufferedImage scaledCard = new BufferedImage(cardWidthPx, cardHeightPx, imageType);
             Graphics2D graphics2D = scaledCard.createGraphics();
             graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
             graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);

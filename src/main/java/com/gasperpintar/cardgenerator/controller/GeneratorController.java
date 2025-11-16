@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
@@ -74,6 +75,7 @@ public class GeneratorController {
         downloadButton.setOnAction(event -> downloadCards());
 
         cardsListView.setCellFactory(listView -> new ListCell<>() {
+
             @Override
             protected void updateItem(HBox hBox, boolean empty) {
                 super.updateItem(hBox, empty);
@@ -110,17 +112,30 @@ public class GeneratorController {
     private void uploadCards() {
 
         if (excelFile == null) {
+            InfoPopupController.showPopup("Excel file not selected!");
+            return;
+        }
+
+        if (imageFiles == null || imageFiles.isEmpty()) {
+            InfoPopupController.showPopup("Images not selected!");
+            return;
+        }
+
+        if (templateFile == null) {
+            InfoPopupController.showPopup("Template file not selected!");
             return;
         }
 
         clearMemory();
         quantityTextField.setDisable(true);
         uploadButton.setDisable(true);
+        downloadButton.setDisable(true);
 
-        new Thread(() -> {
+        CompletableFuture.runAsync(() -> {
             try {
                 cardDataList = generator.processExcelFile(excelFile);
                 if (cardDataList == null || cardDataList.isEmpty()) {
+                    Platform.runLater(() -> InfoPopupController.showPopup("No data to generate cards!"));
                     return;
                 }
 
@@ -170,13 +185,15 @@ public class GeneratorController {
                 Platform.runLater(() -> {
                     quantityTextField.setDisable(false);
                     uploadButton.setDisable(false);
+                    downloadButton.setDisable(false);
                 });
             }
-        }).start();
+        });
     }
 
     private void downloadCards() {
         if (cardDataList == null || cardDataList.isEmpty()) {
+            InfoPopupController.showPopup("No cards to download!");
             return;
         }
 
@@ -195,7 +212,28 @@ public class GeneratorController {
         if (allCardNodes.isEmpty()) {
             return;
         }
-        download.saveCards(allCardNodes, selectedFormat, selectedType);
+
+        LoadingPopupController.showPopup();
+
+        Platform.runLater(() -> {
+            File selectedFile = download.showSaveDialog();
+            if (selectedFile == null) {
+                LoadingPopupController.closePopup();
+                return;
+            }
+
+            download.saveCards(
+                    allCardNodes,
+                    selectedFormat,
+                    selectedType,
+                    selectedFile,
+                    LoadingPopupController::updateProgress,
+                    () -> {
+                        LoadingPopupController.closePopup();
+                        InfoPopupController.showPopup("ZIP file was successfully created!");
+                    }
+            );
+        });
     }
 
     private int getQuantityForCard(CardData cardData) {

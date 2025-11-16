@@ -1,0 +1,19 @@
+.loading-label {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.loading-progress-bar {
+    -fx-accent: #16a085;
+    -fx-background-radius: 5;
+    -fx-pref-height: 18;
+}
+
+.loading-popup-root {
+    -fx-background-color: #ecf0f1;
+    -fx-padding: 30;
+    -fx-border-color: #16a085;
+    -fx-border-width: 2;
+}
+

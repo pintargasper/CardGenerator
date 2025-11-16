@@ -60,10 +60,10 @@
                     </VBox>
                     <VBox spacing="5">
                         <Label text="Type" styleClass="card-label"/>
-                        <ComboBox fx:id="typeComboBox" styleClass="combo-box-card" value="pdf">
+                        <ComboBox fx:id="typeComboBox" styleClass="combo-box-card" value="jpg">
                             <items>
                                 <FXCollections fx:factory="observableArrayList">
-                                    <String fx:value="pdf"/>
+                                    <String fx:value="jpg"/>
                                     <String fx:value="png"/>
                                 </FXCollections>
                             </items>

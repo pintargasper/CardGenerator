@@ -14,9 +14,6 @@ module com.gasperpintar.cardgenerator {
     requires org.apache.commons.io;
     requires java.desktop;
     requires javafx.swing;
-    requires kernel;
-    requires io;
-    requires layout;
 
     exports com.gasperpintar.cardgenerator;
     exports com.gasperpintar.cardgenerator.component;

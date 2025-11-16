@@ -14,15 +14,19 @@ import java.io.IOException;
 public class LoadingBar extends HBox {
 
     @FXML
+    @SuppressWarnings("unused")
     private Rectangle backgroundBar;
 
     @FXML
+    @SuppressWarnings("unused")
     private Rectangle progressBar;
 
     @FXML
+    @SuppressWarnings("unused")
     private Label titleLabel;
 
     @FXML
+    @SuppressWarnings("unused")
     private Label progressLabel;
 
     public LoadingBar() {
@@ -40,6 +44,7 @@ public class LoadingBar extends HBox {
         return titleLabel.getPrefWidth();
     }
 
+    @SuppressWarnings("unused")
     public void setTitleWidth(double width) {
         titleLabel.setMinWidth(width);
         titleLabel.setMaxWidth(width);
@@ -49,6 +54,7 @@ public class LoadingBar extends HBox {
         return titleLabel.getFont().getSize();
     }
 
+    @SuppressWarnings("unused")
     public void setTitleSize(double size) {
         titleLabel.setFont(new Font(titleLabel.getFont().getName(), size));
     }
@@ -57,6 +63,7 @@ public class LoadingBar extends HBox {
         return titleLabel.getTextFill();
     }
 
+    @SuppressWarnings("unused")
     public void setTitleColor(Paint color) {
         titleLabel.setTextFill(color);
     }
@@ -65,6 +72,7 @@ public class LoadingBar extends HBox {
         return backgroundBar.getWidth();
     }
 
+    @SuppressWarnings("unused")
     public void setProgressWidth(double width) {
         backgroundBar.setWidth(width);
     }
@@ -73,6 +81,7 @@ public class LoadingBar extends HBox {
         return progressBar.getFill();
     }
 
+    @SuppressWarnings("unused")
     public void setProgressColor(Paint color) {
         progressBar.setFill(color);
     }

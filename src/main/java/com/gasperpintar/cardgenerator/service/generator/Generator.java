@@ -15,20 +15,19 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Generator {
 
-    private final double IMAGE_SCALE_FACTOR;
+    private static final double IMAGE_SCALE_FACTOR = 3.0;
+    private static final String CARD_LOADING_ERROR = "Card loading error";
+    private static final Map<String, Image> imageCache = new ConcurrentHashMap<>();
+
     private final ExcelService excelService;
 
-    private static Map<String, Image> imageCache;
-
     public Generator() {
-        this.IMAGE_SCALE_FACTOR = 3.0;
         this.excelService = new ExcelService();
-        imageCache = new ConcurrentHashMap<>();
     }
 
     public List<CardData> processExcelFile(File file) throws IOException {
@@ -40,39 +39,36 @@ public class Generator {
 
     public Node generateCard(CardData cardData, List<String> headers, File templateFile, List<File> imageFiles) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(templateFile.toURI().toURL());
-            Node cardNode = fxmlLoader.load();
+            final FXMLLoader fxmlLoader = new FXMLLoader(templateFile.toURI().toURL());
+            final Node cardNode = fxmlLoader.load();
 
-            List<Node> conditionalContainers = cardNode.lookupAll(".show-if").stream().toList();
-
-            for (Node node : conditionalContainers) {
-                if (node instanceof ShowIf conditionalContainer) {
-                    String conditionKey = conditionalContainer.getType();
-
-                    int columnIndex = -1;
-                    for (int i = 0; i < headers.size(); i++) {
-                        if (headers.get(i).equalsIgnoreCase(conditionKey)) {
-                            columnIndex = i;
-                            break;
+            cardNode.lookupAll(".show-if").stream()
+                    .filter(ShowIf.class::isInstance)
+                    .map(ShowIf.class::cast)
+                    .forEach(conditionalContainer -> {
+                        String conditionKey = conditionalContainer.getType();
+                        int columnIndex = -1;
+                        for (int i = 0; i < headers.size(); i++) {
+                            if (headers.get(i).equalsIgnoreCase(conditionKey)) {
+                                columnIndex = i;
+                                break;
+                            }
                         }
-                    }
-                    if (columnIndex != -1) {
-                        conditionalContainer.setCardType(cardData.getColumns().get(columnIndex));
-                    }
-                }
-            }
+                        if (columnIndex != -1) {
+                            conditionalContainer.setCardType(cardData.getColumns().get(columnIndex));
+                        }
+                    });
 
             for (int i = 0; i < headers.size(); i++) {
-                String header = headers.get(i).toLowerCase();
-                String value = cardData.getColumns().get(i);
-
+                final String header = headers.get(i).toLowerCase();
+                final String value = cardData.getColumns().get(i);
                 updateLabel(cardNode, header, value);
                 updateImageView(cardNode, header, value, imageFiles);
                 updateLoadingBar(cardNode, header, value);
             }
             return cardNode;
         } catch (IOException ioException) {
-            return new Label("Card loading error");
+            return new Label(CARD_LOADING_ERROR);
         }
     }
 
@@ -80,7 +76,11 @@ public class Generator {
         Label label = (Label) cardNode.lookup("#" + header + "LabelView");
         if (label != null) {
             String currentText = label.getText();
-            label.setText((currentText == null || currentText.isBlank()) ? value : currentText + value);
+            if (currentText == null || currentText.isBlank()) {
+                label.setText(value);
+            } else {
+                label.setText(currentText + value);
+            }
         }
     }
 
@@ -89,9 +89,7 @@ public class Generator {
         if (imageView == null || imageFiles == null) {
             return;
         }
-
-        File imageFile = findImageFile(value, imageFiles);
-        if (imageFile != null) {
+        findImageFile(value, imageFiles).ifPresent(imageFile -> {
             String cacheKey = imageFile.getAbsolutePath() + "-" + imageView.getFitWidth() + "x" + imageView.getFitHeight();
             Image image = imageCache.computeIfAbsent(cacheKey, key -> new Image(
                     imageFile.toURI().toString(),
@@ -105,14 +103,13 @@ public class Generator {
             imageView.setPreserveRatio(true);
             imageView.setSmooth(true);
             imageView.setCache(false);
-        }
+        });
     }
-
 
     private void updateLoadingBar(Node cardNode, String header, String value) {
         LoadingBar loadingBar = (LoadingBar) cardNode.lookup("#" + header + "LoadingBar");
         if (loadingBar != null) {
-            loadingBar.setTitle(header.substring(0, 1).toUpperCase() + header.substring(1));
+            loadingBar.setTitle(capitalize(header));
             try {
                 int progress = (int) Float.parseFloat(value);
                 loadingBar.setProgressTitle(value);
@@ -123,11 +120,18 @@ public class Generator {
         }
     }
 
-    private File findImageFile(String fileName, List<File> imageFiles) {
+    private Optional<File> findImageFile(String fileName, List<File> imageFiles) {
+        if (imageFiles == null) return Optional.empty();
         return imageFiles.stream()
-                .filter(file -> Objects.equals(FilenameUtils.removeExtension(file.getName()), fileName.toLowerCase()))
-                .findFirst()
-                .orElse(null);
+                .filter(file -> FilenameUtils.removeExtension(file.getName()).equalsIgnoreCase(fileName))
+                .findFirst();
+    }
+
+    private String capitalize(String string) {
+        if (string == null || string.isEmpty()) {
+            return string;
+        }
+        return string.substring(0, 1).toUpperCase() + string.substring(1);
     }
 
     public static void clearCache() {
