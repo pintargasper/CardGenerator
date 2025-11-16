@@ -2,7 +2,6 @@ package com.gasperpintar.cardgenerator.controller;
 
 import com.gasperpintar.cardgenerator.CardGenerator;
 import com.gasperpintar.cardgenerator.utils.Utils;
-import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -39,32 +38,28 @@ public class InfoPopupController {
     }
 
     public static void showPopup(String message) {
-        Platform.runLater(() -> {
-            try {
-                if (popupStage != null && popupStage.isShowing()) return;
-                FXMLLoader loader = new FXMLLoader(CardGenerator.class.getResource("layout/info_popup.fxml"));
-                Parent root = loader.load();
-                controllerInstance = loader.getController();
-                popupStage = new Stage(StageStyle.UNDECORATED);
-                popupStage.initModality(Modality.APPLICATION_MODAL);
-                popupStage.setResizable(false);
-                popupStage.setTitle("Info");
-                popupStage.setScene(new Scene(root, 420, 140));
-                popupStage.initOwner(Utils.stage);
-                popupStage.setOnCloseRequest(Event::consume);
-                controllerInstance.setMessage(message);
-                popupStage.show();
-            } catch (Exception ignored) {}
-        });
+        try {
+            if (popupStage != null && popupStage.isShowing()) return;
+            FXMLLoader loader = new FXMLLoader(CardGenerator.class.getResource("layout/info_popup.fxml"));
+            Parent root = loader.load();
+            controllerInstance = loader.getController();
+            popupStage = new Stage(StageStyle.UNDECORATED);
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+            popupStage.setResizable(false);
+            popupStage.setTitle("Info");
+            popupStage.setScene(new Scene(root, 420, 140));
+            popupStage.initOwner(Utils.stage);
+            popupStage.setOnCloseRequest(Event::consume);
+            controllerInstance.setMessage(message);
+            popupStage.show();
+        } catch (Exception ignored) {}
     }
 
     public static void closePopup() {
-        Platform.runLater(() -> {
-            if (popupStage != null) {
-                popupStage.close();
-                popupStage = null;
-                controllerInstance = null;
-            }
-        });
+        if (popupStage != null) {
+            popupStage.close();
+            popupStage = null;
+            controllerInstance = null;
+        }
     }
 }

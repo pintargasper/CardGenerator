@@ -3,7 +3,10 @@ package com.gasperpintar.cardgenerator.service.generator;
 import com.gasperpintar.cardgenerator.model.Settings;
 
 public class CardFormatUtil {
-    private CardFormatUtil() {}
+
+    private CardFormatUtil() {
+
+    }
 
     public static Settings setupFormat(String format) {
         Settings settings = new Settings();

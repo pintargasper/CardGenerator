@@ -23,9 +23,7 @@
                wrapText="true" styleClass="home-description"/>
     </VBox>
 
-    <Label text="You can also download images in pdf mode" wrapText="true" styleClass="home-description"/>
-
-    <Label text="Version: 1.0.0" styleClass="home-version"/>
+    <Label text="Version: 1.1.0" styleClass="home-version"/>
 
     <Label text="Supported languages" styleClass="home-section-title"/>
     <VBox spacing="5" alignment="CENTER" styleClass="home-language-list">

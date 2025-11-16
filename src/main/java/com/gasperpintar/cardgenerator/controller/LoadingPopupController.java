@@ -32,32 +32,28 @@ public class LoadingPopupController {
     }
 
     public static void showPopup() {
-        Platform.runLater(() -> {
-            try {
-                if (popupStage != null && popupStage.isShowing()) return;
-                FXMLLoader loader = new FXMLLoader(CardGenerator.class.getResource("layout/loading_popup.fxml"));
-                Parent root = loader.load();
-                controllerInstance = loader.getController();
-                popupStage = new Stage(StageStyle.UNDECORATED);
-                popupStage.initModality(Modality.APPLICATION_MODAL);
-                popupStage.setResizable(false);
-                popupStage.setTitle("Please wait");
-                popupStage.setScene(new Scene(root, 420, 180));
-                popupStage.initOwner(com.gasperpintar.cardgenerator.utils.Utils.stage);
-                popupStage.setOnCloseRequest(Event::consume);
-                popupStage.show();
-            } catch (Exception ignored) {}
-        });
+        try {
+            if (popupStage != null && popupStage.isShowing()) return;
+            FXMLLoader loader = new FXMLLoader(CardGenerator.class.getResource("layout/loading_popup.fxml"));
+            Parent root = loader.load();
+            controllerInstance = loader.getController();
+            popupStage = new Stage(StageStyle.UNDECORATED);
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+            popupStage.setResizable(false);
+            popupStage.setTitle("Please wait");
+            popupStage.setScene(new Scene(root, 420, 180));
+            popupStage.initOwner(com.gasperpintar.cardgenerator.utils.Utils.stage);
+            popupStage.setOnCloseRequest(Event::consume);
+            popupStage.show();
+        } catch (Exception ignored) {}
     }
 
     public static void closePopup() {
-        Platform.runLater(() -> {
-            if (popupStage != null) {
-                popupStage.close();
-                popupStage = null;
-                controllerInstance = null;
-            }
-        });
+        if (popupStage != null) {
+            popupStage.close();
+            popupStage = null;
+            controllerInstance = null;
+        }
     }
 
     public static void updateProgress(double progress) {

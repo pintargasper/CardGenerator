@@ -16,6 +16,7 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 
 public class CardGenerator extends Application {
 
@@ -40,7 +41,7 @@ public class CardGenerator extends Application {
         splashStage.setScene(new Scene(splashLayout));
         splashStage.show();
 
-        new Thread(() -> {
+        CompletableFuture.runAsync(() -> {
             try {
                 for (int i = 1; i <= 100; i++) {
                     Thread.sleep(20);
@@ -51,7 +52,7 @@ public class CardGenerator extends Application {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        }).start();
+        });
     }
 
     private void loadMainStage(Stage primaryStage, Stage splashStage, Image iconImage, VBox splashLayout) {
