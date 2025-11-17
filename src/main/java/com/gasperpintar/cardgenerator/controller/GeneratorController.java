@@ -4,6 +4,8 @@ import com.gasperpintar.cardgenerator.model.CardData;
 import com.gasperpintar.cardgenerator.service.generator.Download;
 import com.gasperpintar.cardgenerator.service.generator.Generator;
 import com.gasperpintar.cardgenerator.utils.Utils;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -12,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
@@ -60,6 +63,8 @@ public class GeneratorController {
     private List<CardData> cardDataList;
     private List<String> headers;
     private static final int CARDS_PER_ROW = 5;
+
+    private final List<Node> allCardNodes = new ArrayList<>();
 
     public GeneratorController() {
         this.generator = new Generator();
@@ -127,6 +132,7 @@ public class GeneratorController {
         }
 
         clearMemory();
+        allCardNodes.clear();
         quantityTextField.setDisable(true);
         uploadButton.setDisable(true);
         downloadButton.setDisable(true);
@@ -146,49 +152,64 @@ public class GeneratorController {
                 headers = firstCardData.getColumns();
 
                 List<CardData> cardsToGenerate = cardDataList.stream().skip(1).toList();
-                List<Node> currentRowNodes = new ArrayList<>();
-                AtomicInteger totalGenerated = new AtomicInteger(0);
-
+                List<CardData> allCards = new ArrayList<>();
                 for (CardData cardData : cardsToGenerate) {
                     int quantity = getQuantityForCard(cardData);
                     for (int i = 0; i < quantity; i++) {
-                        Node cardNode = generator.generateCard(cardData, headers, templateFile, imageFiles);
-                        currentRowNodes.add(cardNode);
-
-                        if (currentRowNodes.size() == CARDS_PER_ROW) {
-                            List<Node> rowToAdd = new ArrayList<>(currentRowNodes);
-                            currentRowNodes.clear();
-                            Platform.runLater(() -> {
-                                HBox hBox = new HBox(10);
-                                hBox.getChildren().addAll(rowToAdd);
-                                cardsListView.getItems().add(hBox);
-                                totalGenerated.addAndGet(rowToAdd.size());
-                                totalCardsLabel.setText("Total number of cards: " + totalGenerated.get());
-                            });
-                        }
+                        allCards.add(cardData);
                     }
                 }
-
-                if (!currentRowNodes.isEmpty()) {
-                    Platform.runLater(() -> {
-                        HBox hBox = new HBox(10);
-                        hBox.getChildren().addAll(currentRowNodes);
-                        cardsListView.getItems().add(hBox);
-                        totalGenerated.addAndGet(currentRowNodes.size());
-                        totalCardsLabel.setText("Total number of cards: " + totalGenerated.get());
-                    });
-                }
+                Platform.runLater(() -> animateCardsAdd(allCards));
 
             } catch (IOException ioException) {
                 throw new RuntimeException(ioException);
-            } finally {
-                Platform.runLater(() -> {
-                    quantityTextField.setDisable(false);
-                    uploadButton.setDisable(false);
-                    downloadButton.setDisable(false);
-                });
             }
         });
+    }
+
+    private void animateCardsAdd(List<CardData> cardsToAdd) {
+        Timeline timeline = new Timeline();
+        cardsListView.getItems().clear();
+        totalCardsLabel.setText("Total number of cards: 0");
+        allCardNodes.clear();
+        uploadButton.setDisable(true);
+        downloadButton.setDisable(true);
+        int numRows = (int) Math.ceil(cardsToAdd.size() / (double) CARDS_PER_ROW);
+        List<List<CardData>> rowDataList = new ArrayList<>();
+        int cardIndex = 0;
+        for (int i = 0; i < numRows; i++) {
+            int cardsInThisRow = Math.min(CARDS_PER_ROW, cardsToAdd.size() - cardIndex);
+            List<CardData> rowData = new ArrayList<>();
+            for (int j = 0; j < cardsInThisRow; j++) {
+                rowData.add(cardsToAdd.get(cardIndex));
+                cardIndex++;
+            }
+            rowDataList.add(rowData);
+        }
+        AtomicInteger totalGenerated = new AtomicInteger(0);
+        for (int i = 0; i < rowDataList.size(); i++) {
+            final int idx = i;
+            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(120 * (idx + 1)), actionEvent -> {
+                List<CardData> rowData = rowDataList.get(idx);
+                HBox row = new HBox(10);
+                for (CardData cardData : rowData) {
+                    Node cardNode = generator.generateCard(cardData, headers, templateFile, imageFiles);
+                    row.getChildren().add(cardNode);
+                    allCardNodes.add(cardNode);
+                }
+                cardsListView.getItems().add(row);
+                cardsListView.scrollTo(cardsListView.getItems().size());
+                totalGenerated.addAndGet(row.getChildren().size());
+                totalCardsLabel.setText("Total number of cards: " + totalGenerated.get());
+            }));
+        }
+        timeline.setOnFinished(actionEvent -> Platform.runLater(() -> {
+            cardsListView.scrollTo(0);
+            quantityTextField.setDisable(false);
+            uploadButton.setDisable(false);
+            downloadButton.setDisable(false);
+        }));
+        timeline.play();
     }
 
     private void downloadCards() {
@@ -204,12 +225,8 @@ public class GeneratorController {
             return;
         }
 
-        List<Node> allCardNodes = new ArrayList<>();
-        for (HBox row : cardsListView.getItems()) {
-            allCardNodes.addAll(row.getChildren());
-        }
-
         if (allCardNodes.isEmpty()) {
+            InfoPopupController.showPopup("No cards to download!");
             return;
         }
 
@@ -227,7 +244,11 @@ public class GeneratorController {
                     selectedFormat,
                     selectedType,
                     selectedFile,
-                    LoadingPopupController::updateProgress,
+                    (progress) -> {
+                        int total = allCardNodes.size();
+                        int current = (int) Math.round(progress * total);
+                        LoadingPopupController.updateProgress(progress, current, total);
+                    },
                     () -> {
                         LoadingPopupController.closePopup();
                         InfoPopupController.showPopup("ZIP file was successfully created!");
@@ -273,6 +294,8 @@ public class GeneratorController {
             cardDataList.clear();
             cardDataList = null;
         }
+
+        allCardNodes.clear();
         Generator.clearCache();
         System.gc();
     }

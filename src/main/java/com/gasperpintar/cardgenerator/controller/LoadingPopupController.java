@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -16,6 +17,8 @@ public class LoadingPopupController {
 
     @FXML
     public ProgressBar loadingProgressBar;
+    @FXML
+    public Label progressCountLabel;
 
     private static Stage popupStage;
     private static LoadingPopupController controllerInstance;
@@ -28,6 +31,13 @@ public class LoadingPopupController {
     public void setProgress(double progress) {
         if (loadingProgressBar != null) {
             loadingProgressBar.setProgress(progress);
+        }
+    }
+
+    public void updateProgressCount(int current, int total) {
+        if (progressCountLabel != null) {
+            double percent = (total > 0) ? (current * 100.0 / total) : 0;
+            progressCountLabel.setText(current + "/" + total + " (" + String.format("%.0f", percent) + "%)");
         }
     }
 
@@ -56,10 +66,11 @@ public class LoadingPopupController {
         }
     }
 
-    public static void updateProgress(double progress) {
+    public static void updateProgress(double progress, int current, int total) {
         Platform.runLater(() -> {
             if (controllerInstance != null) {
                 controllerInstance.setProgress(progress);
+                controllerInstance.updateProgressCount(current, total);
             }
         });
     }

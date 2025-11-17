@@ -14,5 +14,8 @@
       styleClass="loading-popup-root"
       stylesheets="@../css/loadingPopup.css">
     <Label text="Generating cards, please wait..." styleClass="loading-label"/>
-    <ProgressBar fx:id="loadingProgressBar" prefWidth="340" progress="0" styleClass="loading-progress-bar"/>
+    <VBox spacing="5" alignment="CENTER">
+        <Label fx:id="progressCountLabel" text="0/100 (0%)" styleClass="progress-count-label"/>
+        <ProgressBar fx:id="loadingProgressBar" prefWidth="340" prefHeight="25" progress="0" styleClass="loading-progress-bar"/>
+    </VBox>
 </VBox>

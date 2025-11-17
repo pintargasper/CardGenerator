@@ -29,7 +29,9 @@ public class Download {
     public void saveCards(List<Node> cards, String format, String type, File selectedFile, Consumer<Double> progressCallback, Runnable onComplete) {
         Settings settings = CardFormatUtil.setupFormat(format);
         if (settings == null) {
-            if (onComplete != null) onComplete.run();
+            if (onComplete != null) {
+                Platform.runLater(onComplete);
+            }
             return;
         }
 
@@ -41,7 +43,9 @@ public class Download {
         int numberOfSheets = (int) Math.ceil((double) cards.size() / cardsPerSheet);
 
         if (selectedFile == null) {
-            if (onComplete != null) onComplete.run();
+            if (onComplete != null) {
+                Platform.runLater(onComplete);
+            }
             return;
         }
 
@@ -54,7 +58,9 @@ public class Download {
             } catch (Exception exception) {
                 throw new RuntimeException(exception);
             } finally {
-                if (onComplete != null) onComplete.run();
+                if (onComplete != null) {
+                    Platform.runLater(onComplete);
+                }
             }
         });
     }

@@ -1,21 +1,40 @@
 # ============================
-# Project settings
+# Project settings (portable, no fixed absolute paths)
 # ============================
-$projectRoot       = "..\"
-$packageOutputDir  = "$PSScriptRoot\output\windows"
-$deployDir         = "$packageOutputDir\deploy"
-$customJreDir      = "$packageOutputDir\custom-runtime"
-$appImageDir       = "$packageOutputDir"
-$jarFile           = "CardGenerator-1.0.0-jar-with-dependencies.jar"
-$jarFileFinal      = "CardGenerator-1.0.0.jar"
+$projectRoot       = Resolve-Path "$PSScriptRoot\.." | Select-Object -ExpandProperty Path  # project root = parent of build-tools
+$packageOutputDir  = "$PSScriptRoot\output\windows"           # all generated files will be here
+$deployDir         = "$packageOutputDir\deploy"               # fat JAR
+$customJreDir      = "$packageOutputDir\custom-runtime"       # minimal JRE
+$appImageDir       = "$packageOutputDir"                      # app-image with exe
+$jarFile           = "CardGenerator-1.1.0.jar"
 $mainClass         = "com.gasperpintar.cardgenerator.Launcher"
 $appName           = "Card Generator"
-$appVersion        = "1.0.0"
+$appVersion        = "1.1.0"
 $vendor            = "Gašper Pintar"
 $iconPath          = "$projectRoot\src\main\resources\com\gasperpintar\cardgenerator\images\logo.ico"
-$javafxJmodsPath   = "$projectRoot\dev\java\windows\javafx\javafx-jmods-21.0.8"
-$jdkPath           = "$projectRoot\dev\java\windows\jdk-21"
-$javafxLibPath     = "$projectRoot\dev\java\windows\javafx\javafx-sdk-21.0.8\lib"
+$imagePath         = "$projectRoot\src\main\resources\com\gasperpintar\cardgenerator\images\logo.bmp"
+$javafxJmodsPath   = "$PSScriptRoot\java\windows\javafx-jmods-21.0.9"
+$jdkPath           = "$PSScriptRoot\java\windows\jdk-21"
+$javafxLibPath     = "$PSScriptRoot\java\windows\javafx-sdk-21.0.9\lib"
+
+# ============================
+# Pre-checks for required files and folders (MUST BE FIRST!)
+# ============================
+if (!(Test-Path "$projectRoot\target\$jarFile")) {
+    Write-Host "ERROR: JAR file does not exist: $projectRoot\target\$jarFile" -ForegroundColor Red
+    Write-Host "First build the project with: mvn package" -ForegroundColor Yellow
+    exit 1
+}
+if (!(Test-Path $javafxJmodsPath)) {
+    Write-Host "ERROR: JavaFX jmods folder does not exist: $javafxJmodsPath" -ForegroundColor Red
+    Write-Host "Check that JavaFX jmods are correctly installed." -ForegroundColor Yellow
+    exit 1
+}
+if (!(Test-Path $javafxLibPath)) {
+    Write-Host "ERROR: JavaFX lib folder does not exist: $javafxLibPath" -ForegroundColor Red
+    Write-Host "Check that JavaFX SDK is correctly installed." -ForegroundColor Yellow
+    exit 1
+}
 
 # ============================
 # Clean package-output folder
@@ -23,12 +42,12 @@ $javafxLibPath     = "$projectRoot\dev\java\windows\javafx\javafx-sdk-21.0.8\lib
 if (Test-Path $packageOutputDir) { Remove-Item $packageOutputDir -Recurse -Force }
 
 # Create only the deploy folder, because we copy the fat JAR there
-New-Item -ItemType Directory -Path $deployDir | Out-Null
+New-Item -ItemType Directory -Path $deployDir -Force | Out-Null
 
 # ============================
 # Copy the fat JAR
 # ============================
-Copy-Item "$projectRoot\target\$jarFile" -Destination $deployDir\$jarFileFinal
+Copy-Item "$projectRoot\target\$jarFile" -Destination $deployDir
 
 # ============================
 # Create a minimal custom JRE with jlink
@@ -47,6 +66,8 @@ jlink `
 # ============================
 # Copy all JavaFX DLL files
 # ============================
+# Create bin folder if it does not exist
+if (!(Test-Path "$customJreDir\bin")) { New-Item -ItemType Directory -Path "$customJreDir\bin" -Force | Out-Null }
 Get-ChildItem -Path "$javafxLibPath" -Filter "*.dll" | ForEach-Object {
     Copy-Item $_.FullName -Destination "$customJreDir\bin"
 }
@@ -57,7 +78,7 @@ Get-ChildItem -Path "$javafxLibPath" -Filter "*.dll" | ForEach-Object {
 jpackage `
   --type app-image `
   --input $deployDir `
-  --main-jar $jarFileFinal `
+  --main-jar $jarFile `
   --main-class $mainClass `
   --name $appName `
   --app-version $appVersion `
@@ -65,11 +86,18 @@ jpackage `
   --icon $iconPath `
   --runtime-image $customJreDir `
   --dest $appImageDir `
-  --description "Card Generator allows the creation of any card and also its generation in png format. It also allows downloading images in pdf mode" `
-  --copyright "(C) 2025 Gasper Pintar. All rights reserved"
+  --description "Card Generator is a desktop application for creating and generating custom playing cards. Using Excel spreadsheets and customizable fxml templates, you can quickly create entire decks of playing cards without having to design each card individually" `
+  --copyright "(C) 2025 Gasper Pintar"
+
+# ============================
+# Copy app-icon
+# ============================
+# Create icon folder if it does not exist
+if (!(Test-Path "$packageOutputDir\Card Generator")) { New-Item -ItemType Directory -Path "$packageOutputDir\CardGenerator" -Force | Out-Null }
+Copy-Item "$imagePath" -Destination "$packageOutputDir\Card Generator\icon.bmp"
 
 # ============================
 # Debug command
 # ============================
 Write-Host "For debugging JavaFX rendering, use the following command:"
-Write-Host "& `"$customJreDir\bin\java.exe`" `"-Dprism.verbose=true`" `"-jar`" `"$deployDir\$jarFileFinal`""
+Write-Host "& `\"$customJreDir\bin\java.exe`\" `\"-Dprism.verbose=true`\" `\"-jar`\" `\"$deployDir\$jarFile`\""
