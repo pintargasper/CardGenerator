@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.layout.HBox?>
 <VBox xmlns:fx="http://javafx.com/fxml"
       alignment="TOP_CENTER"
       spacing="20.0"
@@ -14,24 +15,28 @@
         <Insets top="20" bottom="30" left="30" right="30"/>
     </padding>
 
-    <Label text="Welcome to Card Generator!" styleClass="home-title"/>
+    <Label text="%home.welcome" styleClass="home-title"/>
 
     <VBox alignment="CENTER" spacing="5" styleClass="home-description-box">
-        <Label text="Card Generator is a desktop application for creating and generating custom playing cards."
+        <Label text="%home.description.lead"
                wrapText="true" styleClass="home-description"/>
-        <Label text="Using Excel spreadsheets and customizable fxml templates, you can quickly create entire decks of playing cards without having to design each card individually."
+        <Label text="%home.description.detail"
                wrapText="true" styleClass="home-description"/>
     </VBox>
 
-    <Label text="Version: 1.1.0" styleClass="home-version"/>
+    <HBox alignment="CENTER">
+        <Label text="%home.about.version" styleClass="home-version"/>
+        <Label text="1.1.0" styleClass="home-version"/>
+    </HBox>
 
-    <Label text="Supported languages" styleClass="home-section-title"/>
+    <Label text="%home.about.supported-languages" styleClass="home-section-title"/>
     <VBox spacing="5" alignment="CENTER" styleClass="home-language-list">
         <Label text="• English" styleClass="home-language-item"/>
+        <Label text="• Slovenščina" styleClass="home-language-item"/>
     </VBox>
 
-    <Label text="Components (How to use)" styleClass="home-section-title"/>
-    <Label text="Default (supported)" styleClass="home-section-small"/>
+    <Label text="%home.components.title" styleClass="home-section-title"/>
+    <Label text="%home.components.default" styleClass="home-section-small"/>
 
     <VBox alignment="CENTER" spacing="10.0" maxWidth="390">
         <TextFlow styleClass="home-code-text">
@@ -49,7 +54,7 @@
         </TextFlow>
     </VBox>
 
-    <Label text="Additional" styleClass="home-section-small"/>
+    <Label text="%home.components.additional" styleClass="home-section-small"/>
 
     <VBox alignment="CENTER" spacing="10.0" maxWidth="390">
         <TextFlow styleClass="home-code-text">

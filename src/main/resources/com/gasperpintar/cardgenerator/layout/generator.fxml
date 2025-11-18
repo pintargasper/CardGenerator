@@ -15,38 +15,44 @@
 
         <StackPane styleClass="card-view">
             <VBox alignment="CENTER" spacing="15">
-                <Label text="Upload" styleClass="card-label" alignment="CENTER"/>
+                <Label text="%generator.upload.title" styleClass="card-label" alignment="CENTER"/>
                 <HBox spacing="10" alignment="CENTER_LEFT">
                     <Label text="Excel" styleClass="card-label"/>
                     <Region HBox.hgrow="ALWAYS"/>
-                    <Button fx:id="excelButton" text="Choose" styleClass="nav-button"/>
+                    <Button fx:id="excelButton" text="%generator.upload.button" styleClass="nav-button"/>
                 </HBox>
                 <HBox spacing="10" alignment="CENTER_LEFT">
-                    <Label text="Images" styleClass="card-label"/>
+                    <Label text="%generator.images.title" styleClass="card-label"/>
                     <Region HBox.hgrow="ALWAYS"/>
-                    <Button fx:id="imagesButton" text="Choose" styleClass="nav-button"/>
+                    <Button fx:id="imagesButton" text="%generator.images.button" styleClass="nav-button"/>
                 </HBox>
                 <HBox spacing="10" alignment="CENTER_LEFT">
-                    <Label text="Template" styleClass="card-label"/>
+                    <Label text="%generator.template.title" styleClass="card-label"/>
                     <Region HBox.hgrow="ALWAYS"/>
-                    <Button fx:id="templateButton" text="Choose" styleClass="nav-button"/>
+                    <Button fx:id="templateButton" text="%generator.template.button" styleClass="nav-button"/>
                 </HBox>
                 <HBox spacing="10" alignment="CENTER_LEFT">
                     <VBox spacing="2">
-                        <Label text="Quantity" styleClass="card-label"/>
-                        <Label text="Column determining the number of cards" styleClass="card-sub-label"/>
+                        <Label text="%generator.quantity.title" styleClass="card-label"/>
+                        <Label text="%generator.quantity.description" styleClass="card-sub-label"/>
                     </VBox>
                     <Region HBox.hgrow="ALWAYS"/>
-                    <TextField fx:id="quantityTextField" promptText="Column name" styleClass="text-field-card"/>
+                    <TextField fx:id="quantityTextField" promptText="%generator.quantity.text-field" styleClass="text-field-card"/>
                 </HBox>
-                <Button fx:id="uploadButton" text="Upload" styleClass="nav-button"/>
+                <Button fx:id="uploadButton" text="%generator.upload-data.button" styleClass="nav-button"/>
             </VBox>
         </StackPane>
 
         <StackPane styleClass="card-view">
             <VBox alignment="CENTER" spacing="15">
                 <Label text="Download" styleClass="card-label" alignment="CENTER"/>
-                <Label fx:id="totalCardsLabel" text="Total number of cards: 0" styleClass="card-label"/>
+                <HBox>
+                    <Label fx:id="totalCardsLabel" text="%generator.cards.total" styleClass="card-label"/>
+                    <HBox spacing="5">
+                        <Label text=":" styleClass="card-label"/>
+                        <Label text="0" styleClass="card-label"/>
+                    </HBox>
+                </HBox>
                 <HBox spacing="15" alignment="CENTER">
                     <VBox spacing="5">
                         <Label text="Format" styleClass="card-label"/>
@@ -59,7 +65,7 @@
                         </ComboBox>
                     </VBox>
                     <VBox spacing="5">
-                        <Label text="Type" styleClass="card-label"/>
+                        <Label text="%generator.cards.type" styleClass="card-label"/>
                         <ComboBox fx:id="typeComboBox" styleClass="combo-box-card" value="jpg">
                             <items>
                                 <FXCollections fx:factory="observableArrayList">
@@ -70,7 +76,7 @@
                         </ComboBox>
                     </VBox>
                 </HBox>
-                <Button fx:id="downloadButton" text="Generate" styleClass="nav-button"/>
+                <Button fx:id="downloadButton" text="%generator.cards.generate" styleClass="nav-button"/>
             </VBox>
         </StackPane>
     </VBox>

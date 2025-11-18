@@ -4,6 +4,6 @@
 <?import javafx.scene.layout.*?>
 
 <VBox alignment="CENTER" minHeight="140" minWidth="400" spacing="30" styleClass="info-popup-root" stylesheets="@../css/infoPopup.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gasperpintar.cardgenerator.controller.InfoPopupController">
-    <Label fx:id="infoLabel" styleClass="info-label" text="Operation completed successfully!" />
+    <Label fx:id="infoLabel" styleClass="info-label" />
     <Button fx:id="closeButton" styleClass="info-close-button" text="Zapri" />
 </VBox>
