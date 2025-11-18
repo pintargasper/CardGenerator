@@ -1,6 +1,7 @@
 package com.gasperpintar.cardgenerator;
 
 import com.gasperpintar.cardgenerator.utils.Utils;
+import com.gasperpintar.cardgenerator.utils.FallbackResourceBundle;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -33,7 +34,9 @@ public class CardGenerator extends Application {
         if (resourceBundle == null) {
             Locale defaultLocale = Locale.getDefault();
             try {
-                resourceBundle = ResourceBundle.getBundle("com.gasperpintar.Messages", defaultLocale);
+                ResourceBundle primary = ResourceBundle.getBundle("com.gasperpintar.Messages", defaultLocale);
+                ResourceBundle fallback = ResourceBundle.getBundle("com.gasperpintar.Messages", Locale.ENGLISH);
+                resourceBundle = new FallbackResourceBundle(primary, fallback, defaultLocale);
             } catch (Exception exception) {
                 resourceBundle = ResourceBundle.getBundle("com.gasperpintar.Messages", Locale.ENGLISH);
             }
@@ -43,7 +46,9 @@ public class CardGenerator extends Application {
 
     public static void setResourceBundle(Locale locale) {
         try {
-            resourceBundle = ResourceBundle.getBundle("com.gasperpintar.Messages", locale);
+            ResourceBundle primary = ResourceBundle.getBundle("com.gasperpintar.Messages", locale);
+            ResourceBundle fallback = ResourceBundle.getBundle("com.gasperpintar.Messages", Locale.ENGLISH);
+            resourceBundle = new FallbackResourceBundle(primary, fallback, locale);
         } catch (Exception exception) {
             resourceBundle = ResourceBundle.getBundle("com.gasperpintar.Messages", Locale.ENGLISH);
         }

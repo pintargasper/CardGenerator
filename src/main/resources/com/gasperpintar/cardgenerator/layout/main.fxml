@@ -20,8 +20,8 @@
                 <Insets top="10" bottom="10" left="20" right="20"/>
             </padding>
 
-            <Button text="%menu.home" styleClass="nav-button" onAction="#onHomeClick"/>
-            <Button text="%menu.generator" styleClass="nav-button" onAction="#onGeneratorClick"/>
+            <Button text="%main.home" styleClass="nav-button" onAction="#onHomeClick"/>
+            <Button text="%main.generator" styleClass="nav-button" onAction="#onGeneratorClick"/>
             <Pane HBox.hgrow="ALWAYS" />
             <ComboBox fx:id="languageComboBox" styleClass="language-combo">
                 <items>
