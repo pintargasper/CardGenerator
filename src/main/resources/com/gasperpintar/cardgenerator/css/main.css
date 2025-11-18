@@ -17,3 +17,34 @@
 .nav-button:hover {
     -fx-background-color: #16a085;
 }
+
+.language-combo {
+    -fx-background-color: #1abc9c;
+    -fx-text-fill: white;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+}
+
+.language-combo .list-cell {
+    -fx-text-fill: white;
+    -fx-background-color: #1abc9c;
+}
+
+.language-combo .list-cell:hover {
+    -fx-background-color: #16a085;
+    -fx-text-fill: white;
+}
+
+.language-combo .combo-box-popup .list-view {
+    -fx-background-color: #1abc9c;
+}
+
+.language-combo .arrow-button .arrow {
+    -fx-background-color: white;
+}
+
+.language-combo .text {
+    -fx-fill: white;
+}

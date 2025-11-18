@@ -15,14 +15,38 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 public class CardGenerator extends Application {
 
+    private static ResourceBundle resourceBundle;
+
     @Override
     public void start(Stage primaryStage) throws IOException {
         showSplashScreen(primaryStage);
+    }
+
+    public static ResourceBundle getResourceBundle() {
+        if (resourceBundle == null) {
+            Locale defaultLocale = Locale.getDefault();
+            try {
+                resourceBundle = ResourceBundle.getBundle("com.gasperpintar.Messages", defaultLocale);
+            } catch (Exception exception) {
+                resourceBundle = ResourceBundle.getBundle("com.gasperpintar.Messages", Locale.ENGLISH);
+            }
+        }
+        return resourceBundle;
+    }
+
+    public static void setResourceBundle(Locale locale) {
+        try {
+            resourceBundle = ResourceBundle.getBundle("com.gasperpintar.Messages", locale);
+        } catch (Exception exception) {
+            resourceBundle = ResourceBundle.getBundle("com.gasperpintar.Messages", Locale.ENGLISH);
+        }
     }
 
     private void showSplashScreen(Stage primaryStage) throws IOException {
@@ -49,8 +73,8 @@ public class CardGenerator extends Application {
                     Platform.runLater(() -> progressBar.setProgress(progress));
                 }
                 Platform.runLater(() -> loadMainStage(primaryStage, splashStage, iconImage, splashLayout));
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+            } catch (InterruptedException interruptedException) {
+                throw new RuntimeException(interruptedException);
             }
         });
     }
@@ -58,6 +82,7 @@ public class CardGenerator extends Application {
     private void loadMainStage(Stage primaryStage, Stage splashStage, Image iconImage, VBox splashLayout) {
         try {
             FXMLLoader mainLoader = new FXMLLoader(CardGenerator.class.getResource("layout/main.fxml"));
+            mainLoader.setResources(getResourceBundle());
             Scene mainScene = new Scene(mainLoader.load(), 320, 240);
 
             primaryStage.getIcons().add(iconImage);
