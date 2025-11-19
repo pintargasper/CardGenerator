@@ -1,6 +1,7 @@
 package com.gasperpintar.cardgenerator.controller;
 
 import com.gasperpintar.cardgenerator.CardGenerator;
+import com.gasperpintar.cardgenerator.utils.BundleUtils;
 import com.gasperpintar.cardgenerator.utils.Utils;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -39,14 +40,16 @@ public class InfoPopupController {
 
     public static void showPopup(String message) {
         try {
-            if (popupStage != null && popupStage.isShowing()) return;
+            if (popupStage != null && popupStage.isShowing()) {
+                return;
+            }
             FXMLLoader loader = new FXMLLoader(CardGenerator.class.getResource("layout/info_popup.fxml"));
             Parent root = loader.load();
             controllerInstance = loader.getController();
             popupStage = new Stage(StageStyle.UNDECORATED);
             popupStage.initModality(Modality.APPLICATION_MODAL);
             popupStage.setResizable(false);
-            popupStage.setTitle("Info");
+            popupStage.setTitle(BundleUtils.getString("popup.info.title"));
             popupStage.setScene(new Scene(root, 420, 140));
             popupStage.initOwner(Utils.stage);
             popupStage.setOnCloseRequest(Event::consume);

@@ -37,6 +37,7 @@ The app allows users to **display generated cards** and **export them** in multi
 
 ## 🌐 Supported Languages
 - English
+- Slovenian
 
 > Additional languages will be added in future releases
 

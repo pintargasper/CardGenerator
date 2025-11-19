@@ -47,11 +47,7 @@
             <VBox alignment="CENTER" spacing="15">
                 <Label text="Download" styleClass="card-label" alignment="CENTER"/>
                 <HBox>
-                    <Label fx:id="totalCardsLabel" text="%generator.cards.total" styleClass="card-label"/>
-                    <HBox spacing="5">
-                        <Label text=":" styleClass="card-label"/>
-                        <Label text="0" styleClass="card-label"/>
-                    </HBox>
+                    <Label fx:id="totalCardsLabel" styleClass="card-label"/>
                 </HBox>
                 <HBox spacing="15" alignment="CENTER">
                     <VBox spacing="5">

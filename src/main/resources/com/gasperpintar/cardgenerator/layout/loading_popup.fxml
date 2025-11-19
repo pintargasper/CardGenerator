@@ -4,8 +4,7 @@
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/20"
-      xmlns:fx="http://javafx.com/fxml/1"
+<VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.gasperpintar.cardgenerator.controller.LoadingPopupController"
       alignment="CENTER"
       spacing="30"
@@ -13,7 +12,7 @@
       minHeight="160"
       styleClass="loading-popup-root"
       stylesheets="@../css/loadingPopup.css">
-    <Label text="%popup.loading.title" styleClass="loading-label"/>
+    <Label fx:id="loadingLabel" styleClass="loading-label"/>
     <VBox spacing="5" alignment="CENTER">
         <Label fx:id="progressCountLabel" text="0/100 (0%)" styleClass="progress-count-label"/>
         <ProgressBar fx:id="loadingProgressBar" prefWidth="340" prefHeight="25" progress="0" styleClass="loading-progress-bar"/>

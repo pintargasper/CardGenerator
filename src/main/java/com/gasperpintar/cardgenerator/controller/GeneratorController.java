@@ -3,6 +3,7 @@ package com.gasperpintar.cardgenerator.controller;
 import com.gasperpintar.cardgenerator.model.CardData;
 import com.gasperpintar.cardgenerator.service.generator.Download;
 import com.gasperpintar.cardgenerator.service.generator.Generator;
+import com.gasperpintar.cardgenerator.utils.BundleUtils;
 import com.gasperpintar.cardgenerator.utils.Utils;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -64,20 +65,21 @@ public class GeneratorController {
     private List<String> headers;
     private static final int CARDS_PER_ROW = 5;
 
-    private final List<Node> allCardNodes = new ArrayList<>();
+    private final List<Node> allCardNodes;
 
     public GeneratorController() {
         this.generator = new Generator();
         this.download = new Download();
+        this.allCardNodes = new ArrayList<>();
     }
 
     @FXML
     public void initialize() {
-        excelButton.setOnAction(event -> chooseExcelFile());
-        imagesButton.setOnAction(event -> chooseImageFiles());
-        templateButton.setOnAction(event -> chooseTemplateFile());
-        uploadButton.setOnAction(event -> uploadCards());
-        downloadButton.setOnAction(event -> downloadCards());
+        excelButton.setOnAction(actionEvent -> chooseExcelFile());
+        imagesButton.setOnAction(actionEvent -> chooseImageFiles());
+        templateButton.setOnAction(actionEvent -> chooseTemplateFile());
+        uploadButton.setOnAction(actionEvent -> uploadCards());
+        downloadButton.setOnAction(actionEvent -> downloadCards());
 
         cardsListView.setCellFactory(listView -> new ListCell<>() {
 
@@ -91,25 +93,26 @@ public class GeneratorController {
                 setText(null);
             }
         });
+        totalCardsLabel.setText(BundleUtils.getString("generator.cards.total", 0));
     }
 
     private void chooseExcelFile() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choose Excel file");
+        fileChooser.setTitle(BundleUtils.getString("generator.file-chooser.excel"));
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel file", "*.xlsx", "*.xls"));
         excelFile = fileChooser.showOpenDialog(Utils.stage);
     }
 
     private void chooseImageFiles() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choose images");
+        fileChooser.setTitle(BundleUtils.getString("generator.file-chooser.images"));
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg"));
         imageFiles = fileChooser.showOpenMultipleDialog(Utils.stage);
     }
 
     private void chooseTemplateFile() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choose Template file");
+        fileChooser.setTitle(BundleUtils.getString("generator.file-chooser.template"));
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Template file", "*.fxml"));
         templateFile = fileChooser.showOpenDialog(Utils.stage);
     }
@@ -117,17 +120,17 @@ public class GeneratorController {
     private void uploadCards() {
 
         if (excelFile == null) {
-            InfoPopupController.showPopup("Excel file not selected!");
+            InfoPopupController.showPopup(BundleUtils.getString("popup.info.excel-not-selected"));
             return;
         }
 
         if (imageFiles == null || imageFiles.isEmpty()) {
-            InfoPopupController.showPopup("Images not selected!");
+            InfoPopupController.showPopup(BundleUtils.getString("popup.info.images-not-selected"));
             return;
         }
 
         if (templateFile == null) {
-            InfoPopupController.showPopup("Template file not selected!");
+            InfoPopupController.showPopup(BundleUtils.getString("popup.info.template-not-selected"));
             return;
         }
 
@@ -141,7 +144,7 @@ public class GeneratorController {
             try {
                 cardDataList = generator.processExcelFile(excelFile);
                 if (cardDataList == null || cardDataList.isEmpty()) {
-                    Platform.runLater(() -> InfoPopupController.showPopup("No data to generate cards!"));
+                    Platform.runLater(() -> InfoPopupController.showPopup(BundleUtils.getString("popup.info.no-data")));
                     return;
                 }
 
@@ -170,7 +173,7 @@ public class GeneratorController {
     private void animateCardsAdd(List<CardData> cardsToAdd) {
         Timeline timeline = new Timeline();
         cardsListView.getItems().clear();
-        totalCardsLabel.setText("Total number of cards: 0");
+        totalCardsLabel.setText(BundleUtils.getString("generator.cards.total", 0));
         allCardNodes.clear();
         uploadButton.setDisable(true);
         downloadButton.setDisable(true);
@@ -200,7 +203,7 @@ public class GeneratorController {
                 cardsListView.getItems().add(row);
                 cardsListView.scrollTo(cardsListView.getItems().size());
                 totalGenerated.addAndGet(row.getChildren().size());
-                totalCardsLabel.setText("Total number of cards: " + totalGenerated.get());
+                totalCardsLabel.setText(BundleUtils.getString("generator.cards.total", totalGenerated.get()));
             }));
         }
         timeline.setOnFinished(actionEvent -> Platform.runLater(() -> {
@@ -214,7 +217,7 @@ public class GeneratorController {
 
     private void downloadCards() {
         if (cardDataList == null || cardDataList.isEmpty()) {
-            InfoPopupController.showPopup("No cards to download!");
+            InfoPopupController.showPopup(BundleUtils.getString("popup.info.no-cards"));
             return;
         }
 
@@ -226,7 +229,7 @@ public class GeneratorController {
         }
 
         if (allCardNodes.isEmpty()) {
-            InfoPopupController.showPopup("No cards to download!");
+            InfoPopupController.showPopup(BundleUtils.getString("popup.info.no-cards"));
             return;
         }
 
@@ -251,7 +254,7 @@ public class GeneratorController {
                     },
                     () -> {
                         LoadingPopupController.closePopup();
-                        InfoPopupController.showPopup("ZIP file was successfully created!");
+                        InfoPopupController.showPopup(BundleUtils.getString("popup.info.zip-created"));
                     }
             );
         });
@@ -287,7 +290,7 @@ public class GeneratorController {
             }));
             cardsListView.getItems().forEach(hbox -> hbox.getChildren().clear());
             cardsListView.getItems().clear();
-            totalCardsLabel.setText("Total number of cards: 0");
+            totalCardsLabel.setText(BundleUtils.getString("generator.cards.total", 0));
         });
 
         if (cardDataList != null) {
