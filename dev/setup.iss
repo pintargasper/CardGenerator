@@ -1,88 +1,77 @@
-#define ProjectRoot "..\"
+; Inno Setup script for Card Generator
 
-#define AppVersion "v1.0.0"
-#define AppVersionNumber "1.0.0"
-#define AppVersionFileName "1.0.0"
+#define src GetEnv('PWD')
+; If PWD does not work on all systems, you can use {#src} = CurrentSourceDir
 
+#define url "https://gasperpintar.com"
+#define AppUrl "https://gasperpintar.com/card-generator"
 #define AppName "Card Generator"
-#define AppExeName "Card Generator.exe"
-#define AppNameNoSpace "CardGenerator"
-#define AppNameLower "cardgenerator"
-#define AppPublisher "Gašper Pintar"
-#define AppUrl "https://cards.gasperpintar.com"
-#define AppDateYear GetDateTimeString('yyyy', '', '')
-#define AppCopyRight "Copyright (c) Gašper Pintar -" + AppDateYear
-#define AppDescription "Card Generator allows the creation of any card and also its generation in png format. It also allows downloading images in pdf mode"
+#define AppVersion "1.1.0"
 
-#define LanguageGlobal "global"
+#include "custom-messages.iss"
 
 [Setup]
-SignTool=card-generator
 AppId={{E2C81343-9913-4AF8-8AEA-CD365129D612}
 AppName={#AppName}
 AppVersion={#AppVersion}
-AppVerName={#AppName} {#AppVersionFileName}
-AppPublisher={#AppPublisher}
-AppPublisherURL={#AppUrl}
-AppSupportURL={#AppUrl}
+AppPublisher=Gasper Pintar
+AppPublisherURL={#url}
+AppSupportURL={#url}
 AppUpdatesURL={#AppUrl}
-AppCopyright={#AppCopyRight}
-
 DefaultDirName={localappdata}\Programs\{#AppName}
 DefaultGroupName={#AppName}
-
-SetupIconFile={#ProjectRoot}\src\main\resources\com\gasperpintar\cardgenerator\images\logo.ico
-WizardImageFile={#ProjectRoot}\src\main\resources\com\gasperpintar\cardgenerator\images\logo.bmp
-WizardSmallImageFile={#ProjectRoot}\src\main\resources\com\gasperpintar\cardgenerator\images\logo.bmp
-WizardStyle=modern
-
 AllowNoIcons=yes
-DisableDirPage=no
-OutputDir={#ProjectRoot}\dev\output\windows\setup\
-OutputBaseFilename={#AppName}-setup
-
-Compression=lzma2/ultra
+SetupIconFile=..\src\main\resources\com\gasperpintar\cardgenerator\images\logo.ico
+WizardImageFile=..\src\main\resources\com\gasperpintar\cardgenerator\images\logo.bmp
+WizardSmallImageFile=..\src\main\resources\com\gasperpintar\cardgenerator\images\logo.bmp
+Compression=lzma
 SolidCompression=yes
-
-ShowTasksTreeLines=Yes
-DisableProgramGroupPage=True
-
 PrivilegesRequired=lowest
-ArchitecturesAllowed=x86compatible
-ArchitecturesInstallIn64BitMode=x64compatible
-
-VersionInfoCompany={#AppPublisher}
-VersionInfoDescription={#AppDescription}
-VersionInfoVersion={#AppVersionNumber}
-VersionInfoCopyright={#AppCopyRight}
-
-UninstallDisplayName={#AppName}
-UninstallDisplayIcon={app}\{#AppExeName}
-UninstallFilesDir={app}\uninstall
+DisableDirPage=no
+DisableProgramGroupPage=no
+CreateAppDir=yes
+CreateUninstallRegKey=yes
 Uninstallable=yes
-AllowCancelDuringInstall=yes
-
-[Files]
-Source: "{#ProjectRoot}\dev\output\windows\Card Generator\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-
-[Icons]
-Name: "{userdesktop}\{#AppName}"; Filename: "{app}\{#AppExeName}"; Tasks: desktopicon
-Name: "{userstartup}\{#AppName}"; Filename: "{app}\{#AppExeName}"; Tasks: startupicon
-Name: "{group}\{#AppName}"; Filename: "{app}\{#AppExeName}"
-Name: "{group}\Visit Card Generator"; Filename: "{#AppUrl}"; IconFilename: "{app}\{#AppExeName}"
-
-[Tasks]
-Name: "desktopicon"; Description: "Create a desktop icon";
-Name: "startupicon"; Description: "Create a startup icon";
-
-[INI]
-Filename: "{app}\languages\{#LanguageGlobal}.ini"; Section: "Global"; Key: "LanguageCode"; String: "EN"; Languages: english
-
-[Run]
-Filename: "{app}\{#AppExeName}"; WorkingDir: "{app}"; Description: "Run application"; Flags: nowait postinstall skipifsilent
+UninstallDisplayName={#AppName}
+UninstallDisplayIcon={app}\Card Generator.exe
+UninstallFilesDir={app}\uninstall
+ArchitecturesInstallIn64BitMode=x64compatible
+DisableWelcomePage=no
+DisableFinishedPage=no
+DisableReadyPage=no
+ShowLanguageDialog=yes
+WizardStyle=modern
+OutputBaseFilename=CardGeneratorSetup
+VersionInfoDescription=Card Generator is a desktop application for creating and generating custom playing cards. Using Excel spreadsheets and customizable fxml templates, you can quickly create entire decks of playing cards without having to design each card individually
+VersionInfoVersion={#AppVersion}
+VersionInfoCompany=Gasper Pintar
+VersionInfoCopyright=Copyright (C) Gasper Pintar
 
 [Languages]
-Name: "english"; MessagesFile: "compiler:Default.isl"; LicenseFile: "{#ProjectRoot}\dev\files\LICENSE.txt";
+Name: "en"; MessagesFile: "compiler:Default.isl";
+Name: "sl"; MessagesFile: "compiler:Languages\Slovenian.isl";
+
+[Files]
+Source: "output\windows\Card Generator\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\src\main\resources\com\gasperpintar\cardgenerator\images\logo.ico"; DestDir: "{app}"; Flags: ignoreversion
+; Optionally include other needed files (DLLs, config, etc.)
+
+[Icons]
+Name: "{group}\{#AppName}"; Filename: "{app}\Card Generator.exe"; WorkingDir: "{app}"
+Name: "{group}\Uninstall {#AppName}"; Filename: "{uninstallexe}"
+Name: "{userdesktop}\{#AppName}"; Filename: "{app}\Card Generator.exe"; Tasks: desktopicon
+Name: "{userstartup}\{#AppName}"; Filename: "{app}\Card Generator.exe"; Tasks: startupicon
+Name: "{group}\Visit Card Generator"; Filename: "{#AppUrl}"; IconFilename: "{app}\Card Generator.exe"
+
+[Tasks]
+Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"
+Name: "startupicon"; Description: "{cm:CreateStartupIcon}"; GroupDescription: "{cm:AdditionalIcons}"
+
+[INI]
+Filename: "{app}\languages\global.ini"; Section: "Global"; Key: "LanguageCode"; String: "{language}";
+
+[Run]
+Filename: "{app}\Card Generator.exe"; WorkingDir: "{app}"; Description: "Run application"; Flags: nowait postinstall skipifsilent
 
 [UninstallDelete]
 Type: filesandordirs; Name: "{app}"

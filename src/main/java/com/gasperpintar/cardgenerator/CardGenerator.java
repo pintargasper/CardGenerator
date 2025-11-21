@@ -2,6 +2,7 @@ package com.gasperpintar.cardgenerator;
 
 import com.gasperpintar.cardgenerator.utils.Utils;
 import com.gasperpintar.cardgenerator.utils.FallbackResourceBundle;
+import com.gasperpintar.cardgenerator.utils.IniUtils;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -15,16 +16,19 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
-import java.util.prefs.Preferences;
 
 public class CardGenerator extends Application {
 
     private static ResourceBundle resourceBundle;
+    private static final String INI_PATH = "languages/global.ini";
+    private static final String INI_SECTION = "Global";
+    private static final String INI_KEY = "LanguageCode";
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -33,13 +37,11 @@ public class CardGenerator extends Application {
 
     public static ResourceBundle getResourceBundle() {
         if (resourceBundle == null) {
-            Preferences preferences = Preferences.userNodeForPackage(CardGenerator.class);
-            String language = preferences.get("app.language", null);
-            Locale defaultLocale = language != null ? Locale.forLanguageTag(language) : Locale.getDefault();
+            Locale locale = getLocaleFromIni();
             try {
-                ResourceBundle primary = ResourceBundle.getBundle("com.gasperpintar.Messages", defaultLocale);
+                ResourceBundle primary = ResourceBundle.getBundle("com.gasperpintar.Messages", locale);
                 ResourceBundle fallback = ResourceBundle.getBundle("com.gasperpintar.Messages", Locale.ENGLISH);
-                resourceBundle = new FallbackResourceBundle(primary, fallback, defaultLocale);
+                resourceBundle = new FallbackResourceBundle(primary, fallback, locale);
             } catch (Exception exception) {
                 resourceBundle = ResourceBundle.getBundle("com.gasperpintar.Messages", Locale.ENGLISH);
             }
@@ -49,14 +51,43 @@ public class CardGenerator extends Application {
 
     public static void setResourceBundle(Locale locale) {
         try {
-            Preferences prefs = Preferences.userNodeForPackage(CardGenerator.class);
-            prefs.put("app.language", locale.toLanguageTag());
+            setLocaleToIni(locale);
             ResourceBundle primary = ResourceBundle.getBundle("com.gasperpintar.Messages", locale);
             ResourceBundle fallback = ResourceBundle.getBundle("com.gasperpintar.Messages", Locale.ENGLISH);
             resourceBundle = new FallbackResourceBundle(primary, fallback, locale);
         } catch (Exception exception) {
             resourceBundle = ResourceBundle.getBundle("com.gasperpintar.Messages", Locale.ENGLISH);
         }
+    }
+
+    private static Locale getLocaleFromIni() {
+        try {
+            File iniFile = getIniFile();
+            String code = IniUtils.getIniValue(iniFile, INI_SECTION, INI_KEY, null);
+            if (code != null && !code.isEmpty()) {
+                return Locale.forLanguageTag(code);
+            }
+        } catch (Exception ignored) {}
+        return Locale.getDefault();
+    }
+
+    private static void setLocaleToIni(Locale locale) {
+        try {
+            File iniFile = getIniFile();
+            IniUtils.setIniValue(iniFile, INI_SECTION, INI_KEY, locale.getLanguage());
+        } catch (Exception ignored) {}
+    }
+
+    private static File getIniFile() {
+        String base = System.getProperty("user.dir");
+        File ini = new File(base, INI_PATH);
+        if (!ini.exists()) {
+            String jarPath = CardGenerator.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            File jarDir = new File(jarPath).getParentFile();
+            File alt = new File(jarDir, INI_PATH);
+            if (alt.exists()) return alt;
+        }
+        return ini;
     }
 
     private void showSplashScreen(Stage primaryStage) throws IOException {
