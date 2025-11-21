@@ -20,6 +20,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
+import java.util.prefs.Preferences;
 
 public class CardGenerator extends Application {
 
@@ -32,7 +33,9 @@ public class CardGenerator extends Application {
 
     public static ResourceBundle getResourceBundle() {
         if (resourceBundle == null) {
-            Locale defaultLocale = Locale.getDefault();
+            Preferences preferences = Preferences.userNodeForPackage(CardGenerator.class);
+            String language = preferences.get("app.language", null);
+            Locale defaultLocale = language != null ? Locale.forLanguageTag(language) : Locale.getDefault();
             try {
                 ResourceBundle primary = ResourceBundle.getBundle("com.gasperpintar.Messages", defaultLocale);
                 ResourceBundle fallback = ResourceBundle.getBundle("com.gasperpintar.Messages", Locale.ENGLISH);
@@ -46,6 +49,8 @@ public class CardGenerator extends Application {
 
     public static void setResourceBundle(Locale locale) {
         try {
+            Preferences prefs = Preferences.userNodeForPackage(CardGenerator.class);
+            prefs.put("app.language", locale.toLanguageTag());
             ResourceBundle primary = ResourceBundle.getBundle("com.gasperpintar.Messages", locale);
             ResourceBundle fallback = ResourceBundle.getBundle("com.gasperpintar.Messages", Locale.ENGLISH);
             resourceBundle = new FallbackResourceBundle(primary, fallback, locale);

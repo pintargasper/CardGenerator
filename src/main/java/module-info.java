@@ -13,6 +13,7 @@ module com.gasperpintar.cardgenerator {
     requires org.apache.poi.ooxml;
     requires org.apache.commons.io;
     requires java.desktop;
+    requires java.prefs;
     requires javafx.swing;
 
     exports com.gasperpintar.cardgenerator;

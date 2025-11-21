@@ -24,7 +24,7 @@
                wrapText="true" styleClass="home-description"/>
     </VBox>
 
-    <HBox alignment="CENTER">
+    <HBox alignment="CENTER" spacing="3">
         <Label text="%home.about.version" styleClass="home-version"/>
         <Label text="1.1.0" styleClass="home-version"/>
     </HBox>
