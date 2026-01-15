@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox spacing="20.0" styleClass="builder-root" stylesheets="@../css/builder.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.12" fx:controller="com.gasperpintar.cardgenerator.controller.BuilderController">
+
+    <VBox spacing="20" styleClass="builder-left-panel">
+
+        <StackPane styleClass="card-view">
+            <VBox alignment="CENTER" spacing="15">
+                <Label alignment="CENTER" styleClass="card-label" text="Upload" />
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="Template" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Button fx:id="templateButton" styleClass="nav-button" text="Choose" />
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="Format" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <ComboBox fx:id="formatComboBox" styleClass="combo-box-card" value="13x18">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="13x18" />
+                            </FXCollections>
+                        </items>
+                    </ComboBox>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="Editing" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Button onAction="#openBuilderPanel" styleClass="nav-button" text="Builder" />
+                    <Button onAction="#openTextPanel" styleClass="nav-button" text="Text" />
+                </HBox>
+            </VBox>
+        </StackPane>
+
+        <StackPane styleClass="card-view">
+            <VBox alignment="CENTER_LEFT" spacing="15">
+                <Label alignment="CENTER" styleClass="card-label" text="Components" />
+                <Label styleClass="card-label" text="Label" />
+                <Button fx:id="showIfButton" styleClass="nav-button" text="ShowIF" />
+                <ProgressBar prefWidth="100" progress="0" />
+            </VBox>
+        </StackPane>
+    </VBox>
+
+    <StackPane styleClass="builder-right-panel" HBox.hgrow="ALWAYS">
+        <SplitPane fx:id="splitPane" dividerPositions="0.5" managed="false" visible="false" VBox.vgrow="ALWAYS">
+            <AnchorPane fx:id="builderPane" minHeight="400.0" minWidth="0.0" prefHeight="400.0" prefWidth="300.0">
+
+                <StackPane fx:id="cardPreviewStackPane" minHeight="332.0" minWidth="240.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+                    <VBox fx:id="cardPreviewRectangle"
+                          alignment="CENTER"
+                          maxHeight="332"
+                          maxWidth="240"
+                          minHeight="332"
+                          minWidth="240"
+                          prefHeight="332"
+                          prefWidth="240"
+                          styleClass="card-preview-rectangle">
+                    </VBox>
+                </StackPane>
+
+                <HBox alignment="CENTER_RIGHT" spacing="5" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                    <Label styleClass="card-label" text="Zoom:" />
+                    <Slider fx:id="zoomSlider" styleClass="zoom-slider" blockIncrement="0.1" max="1.7" min="1" prefWidth="120" value="1.35" />
+                </HBox>
+
+            </AnchorPane>
+
+            <AnchorPane fx:id="textPane" minWidth="0.0" prefWidth="200.0">
+                <TextArea fx:id="fxmlTextArea" promptText="Vnesi FXML kodo tukaj..." wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            </AnchorPane>
+        </SplitPane>
+    </StackPane>
+
+</HBox>
