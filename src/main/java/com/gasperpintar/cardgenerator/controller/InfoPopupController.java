@@ -28,7 +28,7 @@ public class InfoPopupController {
     @FXML
     public void initialize() {
         if (closeButton != null) {
-            closeButton.setOnAction(actionEven -> closePopup());
+            closeButton.setOnAction(_ -> closePopup());
         }
     }
 

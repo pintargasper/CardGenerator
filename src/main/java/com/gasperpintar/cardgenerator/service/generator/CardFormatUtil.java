@@ -4,10 +4,6 @@ import com.gasperpintar.cardgenerator.model.Settings;
 
 public class CardFormatUtil {
 
-    private CardFormatUtil() {
-
-    }
-
     public static Settings setupFormat(String format) {
         Settings settings = new Settings();
         settings.cmToInch = 2.54;

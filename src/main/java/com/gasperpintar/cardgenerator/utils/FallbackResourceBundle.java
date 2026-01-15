@@ -1,5 +1,7 @@
 package com.gasperpintar.cardgenerator.utils;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Enumeration;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -14,7 +16,7 @@ public class FallbackResourceBundle extends ResourceBundle {
     private final Locale locale;
 
     @Override
-    public Enumeration<String> getKeys() {
+    public @NotNull Enumeration<String> getKeys() {
         Set<String> keys = new HashSet<>(Collections.list(primary.getKeys()));
         if (fallback != null) {
             keys.addAll(Collections.list(fallback.getKeys()));
@@ -28,7 +30,7 @@ public class FallbackResourceBundle extends ResourceBundle {
     }
 
     @Override
-    protected Object handleGetObject(String key) {
+    protected Object handleGetObject(@NotNull String key) {
         if (primary.containsKey(key)) {
             return primary.getObject(key);
         } else if (fallback != null && fallback.containsKey(key)) {

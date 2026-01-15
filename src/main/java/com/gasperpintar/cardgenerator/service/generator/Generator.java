@@ -91,7 +91,7 @@ public class Generator {
         }
         findImageFile(value, imageFiles).ifPresent(imageFile -> {
             String cacheKey = imageFile.getAbsolutePath() + "-" + imageView.getFitWidth() + "x" + imageView.getFitHeight();
-            Image image = imageCache.computeIfAbsent(cacheKey, key -> new Image(
+            Image image = imageCache.computeIfAbsent(cacheKey, _ -> new Image(
                     imageFile.toURI().toString(),
                     imageView.getFitWidth() * IMAGE_SCALE_FACTOR,
                     imageView.getFitHeight() * IMAGE_SCALE_FACTOR,

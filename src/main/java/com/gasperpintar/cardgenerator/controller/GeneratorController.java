@@ -75,13 +75,13 @@ public class GeneratorController {
 
     @FXML
     public void initialize() {
-        excelButton.setOnAction(actionEvent -> chooseExcelFile());
-        imagesButton.setOnAction(actionEvent -> chooseImageFiles());
-        templateButton.setOnAction(actionEvent -> chooseTemplateFile());
-        uploadButton.setOnAction(actionEvent -> uploadCards());
-        downloadButton.setOnAction(actionEvent -> downloadCards());
+        excelButton.setOnAction(_ -> chooseExcelFile());
+        imagesButton.setOnAction(_ -> chooseImageFiles());
+        templateButton.setOnAction(_ -> chooseTemplateFile());
+        uploadButton.setOnAction(_ -> uploadCards());
+        downloadButton.setOnAction(_ -> downloadCards());
 
-        cardsListView.setCellFactory(listView -> new ListCell<>() {
+        cardsListView.setCellFactory(_ -> new ListCell<>() {
 
             @Override
             protected void updateItem(HBox hBox, boolean empty) {
@@ -192,7 +192,7 @@ public class GeneratorController {
         AtomicInteger totalGenerated = new AtomicInteger(0);
         for (int i = 0; i < rowDataList.size(); i++) {
             final int idx = i;
-            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(120 * (idx + 1)), actionEvent -> {
+            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(120 * (idx + 1)), _ -> {
                 List<CardData> rowData = rowDataList.get(idx);
                 HBox row = new HBox(10);
                 for (CardData cardData : rowData) {
@@ -206,7 +206,7 @@ public class GeneratorController {
                 totalCardsLabel.setText(BundleUtils.getString("generator.cards.total", totalGenerated.get()));
             }));
         }
-        timeline.setOnFinished(actionEvent -> Platform.runLater(() -> {
+        timeline.setOnFinished(_ -> Platform.runLater(() -> {
             cardsListView.scrollTo(0);
             quantityTextField.setDisable(false);
             uploadButton.setDisable(false);
