@@ -13,20 +13,23 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <javafx.version>21.0.6</javafx.version>
+        <maven.compiler.source>25</maven.compiler.source>
+        <maven.compiler.target>25</maven.compiler.target>
+
+        <javafx.version>25.0.1</javafx.version>
         <controlsfx.version>11.2.1</controlsfx.version>
-        <ikonli.version>12.3.1</ikonli.version>
-        <bootstrapfx.version>0.4.0</bootstrapfx.version>
-        <tilesfx.version>21.0.9</tilesfx.version>
-        <lombok.version>1.18.40</lombok.version>
-        <poi.version>5.4.1</poi.version>
-        <commons-lang3.version>3.18.0</commons-lang3.version>
+        <ikonli.version>12.4.0</ikonli.version>
+
+        <lombok.version>1.18.42</lombok.version>
+        <poi.version>5.5.1</poi.version>
+        <commons-lang3.version>3.20.0</commons-lang3.version>
         <slf4j.version>2.0.17</slf4j.version>
-        <log4j.version>2.25.1</log4j.version>
-        <junit.version>5.12.1</junit.version>
-        <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+        <log4j.version>2.25.3</log4j.version>
+        <junit.version>6.0.2</junit.version>
+
+        <maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
         <javafx-maven-plugin.version>0.0.8</javafx-maven-plugin.version>
-        <maven-assembly-plugin.version>3.7.1</maven-assembly-plugin.version>
+        <maven-assembly-plugin.version>3.8.0</maven-assembly-plugin.version>
     </properties>
 
     <dependencies>
@@ -59,22 +62,6 @@
             <groupId>org.kordamp.ikonli</groupId>
             <artifactId>ikonli-javafx</artifactId>
             <version>${ikonli.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.kordamp.bootstrapfx</groupId>
-            <artifactId>bootstrapfx-core</artifactId>
-            <version>${bootstrapfx.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>eu.hansolo</groupId>
-            <artifactId>tilesfx</artifactId>
-            <version>${tilesfx.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.openjfx</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -119,6 +106,12 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>13.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -128,8 +121,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <source>21</source>
-                    <target>21</target>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.projectlombok</groupId>
