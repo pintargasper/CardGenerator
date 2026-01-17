@@ -42,6 +42,12 @@ public class Generator {
             final FXMLLoader fxmlLoader = new FXMLLoader(templateFile.toURI().toURL());
             final Node cardNode = fxmlLoader.load();
 
+            cardNode.lookupAll(".label").forEach(node -> {
+                if (node instanceof Label label) {
+                    label.setText("");
+                }
+            });
+
             cardNode.lookupAll(".show-if").stream()
                     .filter(ShowIf.class::isInstance)
                     .map(ShowIf.class::cast)

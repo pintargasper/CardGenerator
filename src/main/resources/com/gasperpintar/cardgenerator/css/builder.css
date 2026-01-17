@@ -29,6 +29,7 @@
 .card-label {
     -fx-font-size: 14px;
     -fx-font-weight: bold;
+    -fx-text-alignment: justify;
 }
 
 .combo-box-card {
@@ -83,4 +84,33 @@
 
 .zoom-slider .thumb:hover {
     -fx-background-color: #16a085;
+}
+
+.component-drag-button {
+    -fx-background-color: #1abc9c;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-pref-width: 120;
+    -fx-pref-height: 35;
+    -fx-background-radius: 5;
+    -fx-font-size: 14px;
+    -fx-border-width: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 2,0,0,1);
+}
+
+.component-drag-button:hover {
+    -fx-background-color: #16a085;
+}
+
+.text-field-card {
+    -fx-pref-width: 120;
+    -fx-pref-height: 35;
+    -fx-background-radius: 5;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #1abc9c;
+    -fx-border-width: 1;
+    -fx-text-fill: #2c3e50;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
 }

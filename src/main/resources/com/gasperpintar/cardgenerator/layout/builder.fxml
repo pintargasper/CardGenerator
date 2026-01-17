@@ -20,7 +20,7 @@
                 <HBox alignment="CENTER_LEFT" spacing="10">
                     <Label styleClass="card-label" text="Format" />
                     <Region HBox.hgrow="ALWAYS" />
-                    <ComboBox fx:id="formatComboBox" styleClass="combo-box-card" value="13x18">
+                    <ComboBox styleClass="combo-box-card" value="13x18">
                         <items>
                             <FXCollections fx:factory="observableArrayList">
                                 <String fx:value="13x18" />
@@ -38,11 +38,91 @@
         </StackPane>
 
         <StackPane styleClass="card-view">
-            <VBox alignment="CENTER_LEFT" spacing="15">
+            <VBox alignment="CENTER" spacing="15">
                 <Label alignment="CENTER" styleClass="card-label" text="Components" />
-                <Label styleClass="card-label" text="Label" />
-                <Button fx:id="showIfButton" styleClass="nav-button" text="ShowIF" />
-                <ProgressBar prefWidth="100" progress="0" />
+                <VBox spacing="15">
+                    <HBox spacing="10">
+                        <Button fx:id="dragLabelButton" text="Label" styleClass="component-drag-button" />
+                        <Button fx:id="dragImageViewButton" text="ImageView" styleClass="component-drag-button" />
+                        <Button fx:id="dragBoxButton" text="Box" styleClass="component-drag-button" />
+                    </HBox>
+                </VBox>
+            </VBox>
+        </StackPane>
+
+        <StackPane styleClass="card-view">
+            <VBox fx:id="labelEditorVBox" spacing="10" visible="false" managed="false">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="Connect (ID)" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="labelIdField" promptText="ID..." prefWidth="120" styleClass="text-field-card" />
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="Text" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="componentTextField" prefWidth="120" styleClass="text-field-card" />
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="Color" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="componentColorField" prefWidth="80" styleClass="text-field-card" />
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="Text Size" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="componentTextSizeField" prefWidth="80" styleClass="text-field-card" />
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="Text padding" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="componentTextPaddingField" prefWidth="80" styleClass="text-field-card" />
+                </HBox>
+            </VBox>
+
+            <VBox fx:id="ImageEditorVBox" spacing="10" visible="false" managed="false">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="Connect (ID)" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="imageIdField" promptText="ID..." prefWidth="120" styleClass="text-field-card" />
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="Image Width" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="imageWidthField" prefWidth="80" styleClass="text-field-card" />
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="Image Height" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="imageHeightField" prefWidth="80" styleClass="text-field-card" />
+                </HBox>
+            </VBox>
+
+            <VBox fx:id="BoxEditorVBox" spacing="10" visible="false" managed="false">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="Width" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="boxWidthField" prefWidth="80" styleClass="text-field-card" />
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="Height" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="boxHeightField" prefWidth="80" styleClass="text-field-card" />
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="Background Color" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="boxBgColorField" prefWidth="80" styleClass="text-field-card" />
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="Border Color" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="boxBorderColorField" prefWidth="80" styleClass="text-field-card" />
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="Border Width" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="boxBorderWidthField" prefWidth="80" styleClass="text-field-card" />
+                </HBox>
             </VBox>
         </StackPane>
     </VBox>
@@ -53,16 +133,15 @@
 
                 <StackPane fx:id="cardPreviewStackPane" minHeight="332.0" minWidth="240.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 
-                    <VBox fx:id="cardPreviewRectangle"
-                          alignment="CENTER"
-                          maxHeight="332"
-                          maxWidth="240"
-                          minHeight="332"
-                          minWidth="240"
-                          prefHeight="332"
-                          prefWidth="240"
-                          styleClass="card-preview-rectangle">
-                    </VBox>
+                    <AnchorPane fx:id="cardPreviewRectangle"
+                                maxHeight="332"
+                                maxWidth="240"
+                                minHeight="332"
+                                minWidth="240"
+                                prefHeight="332"
+                                prefWidth="240"
+                                styleClass="card-preview-rectangle">
+                    </AnchorPane>
                 </StackPane>
 
                 <HBox alignment="CENTER_RIGHT" spacing="5" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
