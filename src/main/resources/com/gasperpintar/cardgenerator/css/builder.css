@@ -1,0 +1,116 @@
+.builder-root {
+    -fx-padding: 20;
+}
+
+.builder-left-panel {
+    -fx-background-color: #ecf0f1;
+    -fx-padding: 15;
+    -fx-border-color: #bdc3c7;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-pref-width: 450;
+}
+
+.builder-right-panel {
+    -fx-background-color: #ffffff;
+    -fx-padding: 15;
+}
+
+.card-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #bdc3c7;
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5,0,0,2);
+}
+
+.card-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-alignment: justify;
+}
+
+.combo-box-card {
+    -fx-pref-width: 120;
+    -fx-background-radius: 5;
+    -fx-background-color: #1abc9c;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.combo-box-card .arrow {
+    -fx-background-color: white;
+}
+
+.combo-box-card .list-cell {
+    -fx-text-fill: white;
+    -fx-background-color: #1abc9c;
+}
+
+.combo-box-card .list-cell:filled:selected {
+    -fx-background-color: #16a085;
+}
+
+.nav-button, .card-view .nav-button {
+    -fx-background-color: #1abc9c;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-pref-width: 120;
+    -fx-pref-height: 35;
+    -fx-background-radius: 5;
+}
+
+.nav-button:hover, .card-view .nav-button:hover {
+    -fx-background-color: #16a085;
+}
+
+.card-preview-rectangle {
+    -fx-background-color: #f5f5f5;
+    -fx-border-color: #888;
+    -fx-border-width: 2;
+    -fx-background-radius: 16;
+}
+
+.zoom-slider .thumb {
+    -fx-background-color: #1abc9c;
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 2,0,0,1);
+    -fx-border-color: #16a085;
+    -fx-border-width: 1;
+}
+
+.zoom-slider .thumb:hover {
+    -fx-background-color: #16a085;
+}
+
+.component-drag-button {
+    -fx-background-color: #1abc9c;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-pref-width: 120;
+    -fx-pref-height: 35;
+    -fx-background-radius: 5;
+    -fx-font-size: 14px;
+    -fx-border-width: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 2,0,0,1);
+}
+
+.component-drag-button:hover {
+    -fx-background-color: #16a085;
+}
+
+.text-field-card {
+    -fx-pref-width: 120;
+    -fx-pref-height: 35;
+    -fx-background-radius: 5;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #1abc9c;
+    -fx-border-width: 1;
+    -fx-text-fill: #2c3e50;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+}

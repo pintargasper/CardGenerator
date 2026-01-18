@@ -19,18 +19,10 @@ public class ShowIf extends VBox {
         this.conditionExpression = new SimpleStringProperty(this, "condition");
         this.getStyleClass().add("show-if");
 
-        conditionExpression.addListener((obs, oldVal, newVal) -> {
+        conditionExpression.addListener((_, _, _) -> {
             parseTypePart();
             evaluateCondition();
         });
-    }
-
-    public String getCondition() {
-        return conditionExpression.get();
-    }
-
-    public void setCondition(String conditionExpression) {
-        this.conditionExpression.set(conditionExpression);
     }
 
     public void setCardType(String cardType) {
@@ -47,7 +39,7 @@ public class ShowIf extends VBox {
 
     private void evaluateCondition() {
         boolean shouldShow = Optional.ofNullable(conditionExpression.get())
-                .filter(string -> cardType != null)
+                .filter(_ -> cardType != null)
                 .map(String::trim)
                 .map(string -> {
                     String operator = string.contains("!=") ? "!=" : string.contains("==") ? "==" : null;
@@ -68,5 +60,13 @@ public class ShowIf extends VBox {
                 .orElse(false);
         this.setVisible(shouldShow);
         this.setManaged(shouldShow);
+    }
+
+    public String getCondition() {
+        return conditionExpression.get();
+    }
+
+    public void setCondition(String conditionExpression) {
+        this.conditionExpression.set(conditionExpression);
     }
 }

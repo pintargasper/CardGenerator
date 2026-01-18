@@ -26,13 +26,13 @@
 
     <HBox alignment="CENTER" spacing="3">
         <Label text="%home.about.version" styleClass="home-version"/>
-        <Label text="1.1.0" styleClass="home-version"/>
+        <Label text="1.2.0-alpha+1" styleClass="home-version"/>
     </HBox>
 
     <Label text="%home.about.supported-languages" styleClass="home-section-title"/>
     <VBox spacing="5" alignment="CENTER" styleClass="home-language-list">
-        <Label text="• English" styleClass="home-language-item"/>
-        <Label text="• Slovenščina" styleClass="home-language-item"/>
+        <Label text="%home.about.supported-languages.english" styleClass="home-language-item"/>
+        <Label text="%home.about.supported-languages.slovenian" styleClass="home-language-item"/>
     </VBox>
 
     <Label text="%home.components.title" styleClass="home-section-title"/>

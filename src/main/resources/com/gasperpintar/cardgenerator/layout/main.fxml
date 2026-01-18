@@ -22,6 +22,7 @@
 
             <Button text="%main.home" styleClass="nav-button" onAction="#onHomeClick"/>
             <Button text="%main.generator" styleClass="nav-button" onAction="#onGeneratorClick"/>
+            <Button text="%main.builder" styleClass="nav-button" onAction="#onBuilderClick"/>
             <Pane HBox.hgrow="ALWAYS" />
             <ComboBox fx:id="languageComboBox" styleClass="language-combo">
                 <items>

@@ -32,7 +32,7 @@ public class MainController implements Initializable {
         } else {
             languageComboBox.getSelectionModel().select("English");
         }
-        languageComboBox.setOnAction(actionEvent -> onLanguageChange());
+        languageComboBox.setOnAction(_ -> onLanguageChange());
         loadInitialContent();
     }
 
@@ -53,6 +53,12 @@ public class MainController implements Initializable {
     @FXML
     private void onGeneratorClick() throws IOException {
         currentPage = "layout/generator.fxml";
+        loadCenterContent(currentPage);
+    }
+
+    @FXML
+    public void onBuilderClick() throws IOException {
+        currentPage = "layout/builder.fxml";
         loadCenterContent(currentPage);
     }
 
@@ -82,10 +88,10 @@ public class MainController implements Initializable {
                     newController.setCurrentPage(currentPage);
                 }
             } else {
-                System.err.println("Scene is null, cannot reload main scene.");
+                throw new RuntimeException("Scene is null, cannot reload main scene");
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (IOException ioException) {
+            throw new RuntimeException(ioException);
         }
     }
 

@@ -21,7 +21,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Generator {
 
     private static final double IMAGE_SCALE_FACTOR = 3.0;
-    private static final String CARD_LOADING_ERROR = "Card loading error";
     private static final Map<String, Image> imageCache = new ConcurrentHashMap<>();
 
     private final ExcelService excelService;
@@ -41,6 +40,15 @@ public class Generator {
         try {
             final FXMLLoader fxmlLoader = new FXMLLoader(templateFile.toURI().toURL());
             final Node cardNode = fxmlLoader.load();
+
+            cardNode.lookupAll(".label").forEach(node -> {
+                if (node instanceof Label label) {
+                    label.setText("");
+                    label.setMaxWidth(240);
+                    label.setPrefWidth(240);
+                    label.setWrapText(true);
+                }
+            });
 
             cardNode.lookupAll(".show-if").stream()
                     .filter(ShowIf.class::isInstance)
@@ -68,7 +76,7 @@ public class Generator {
             }
             return cardNode;
         } catch (IOException ioException) {
-            return new Label(CARD_LOADING_ERROR);
+            return new Label("Card loading error");
         }
     }
 
@@ -91,7 +99,7 @@ public class Generator {
         }
         findImageFile(value, imageFiles).ifPresent(imageFile -> {
             String cacheKey = imageFile.getAbsolutePath() + "-" + imageView.getFitWidth() + "x" + imageView.getFitHeight();
-            Image image = imageCache.computeIfAbsent(cacheKey, key -> new Image(
+            Image image = imageCache.computeIfAbsent(cacheKey, _ -> new Image(
                     imageFile.toURI().toString(),
                     imageView.getFitWidth() * IMAGE_SCALE_FACTOR,
                     imageView.getFitHeight() * IMAGE_SCALE_FACTOR,

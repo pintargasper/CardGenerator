@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox spacing="20.0" styleClass="builder-root" stylesheets="@../css/builder.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.12" fx:controller="com.gasperpintar.cardgenerator.controller.BuilderController">
+
+    <VBox spacing="20" styleClass="builder-left-panel">
+
+        <StackPane styleClass="card-view">
+            <VBox alignment="CENTER" spacing="15">
+                <Label alignment="CENTER" styleClass="card-label" text="%builder.upload.title" />
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="%builder.upload.file" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Button styleClass="nav-button" text="%builder.upload.open" onAction="#openTemplate" />
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="%builder.upload.format" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <ComboBox styleClass="combo-box-card" value="13x18">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="13x18" />
+                            </FXCollections>
+                        </items>
+                    </ComboBox>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="%builder.upload.editing" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Button onAction="#openBuilderPanel" styleClass="nav-button" text="%builder.upload.editing.builder" />
+                    <Button onAction="#openTextPanel" styleClass="nav-button" text="%builder.upload.editing.text" />
+                </HBox>
+            </VBox>
+        </StackPane>
+
+        <StackPane styleClass="card-view">
+            <VBox alignment="CENTER" spacing="15">
+                <Label alignment="CENTER" styleClass="card-label" text="%builder.download.title" />
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="%builder.download.file" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Button styleClass="nav-button" text="%builder.download.button" onAction="#downloadTemplate" />
+                </HBox>
+            </VBox>
+        </StackPane>
+
+        <StackPane styleClass="card-view">
+            <VBox alignment="CENTER" spacing="15">
+                <Label alignment="CENTER" styleClass="card-label" text="%builder.components.title" />
+                <VBox spacing="15">
+                    <HBox spacing="10">
+                        <Button fx:id="dragLabelButton" text="%builder.components.label" styleClass="component-drag-button" />
+                        <Button fx:id="dragImageViewButton" text="%builder.components.image-view" styleClass="component-drag-button" />
+                        <Button fx:id="dragBoxButton" text="%builder.components.box" styleClass="component-drag-button" />
+                    </HBox>
+                </VBox>
+            </VBox>
+        </StackPane>
+
+        <StackPane styleClass="card-view">
+            <VBox fx:id="labelEditorVBox" spacing="10" visible="false" managed="false">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="%builder.components.editor.label.connect.text" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="labelIdField" promptText="%builder.components.editor.label.connect.prompt" prefWidth="120" styleClass="text-field-card" />
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="%builder.components.editor.label.text.text" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="componentTextField" promptText="%builder.components.editor.label.text.prompt" prefWidth="120" styleClass="text-field-card" />
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="%builder.components.editor.label.color.text" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="componentColorField" promptText="%builder.components.editor.label.color.prompt" prefWidth="80" styleClass="text-field-card" />
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="%builder.components.editor.label.size.text" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="componentTextSizeField" promptText="%builder.components.editor.label.size.prompt" prefWidth="80" styleClass="text-field-card" />
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="%builder.components.editor.label.padding.text" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="componentTextPaddingField" promptText="%builder.components.editor.label.padding.prompt" prefWidth="80" styleClass="text-field-card" />
+                </HBox>
+            </VBox>
+
+            <VBox fx:id="ImageEditorVBox" spacing="10" visible="false" managed="false">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="%builder.components.editor.image-view.connect.text" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="imageIdField" promptText="%builder.components.editor.image-view.connect.prompt" prefWidth="120" styleClass="text-field-card" />
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="%builder.components.editor.image-view.width.text" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="imageWidthField" promptText="%builder.components.editor.image-view.width.prompt" prefWidth="80" styleClass="text-field-card" />
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="%builder.components.editor.image-view.height.text" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="imageHeightField" promptText="%builder.components.editor.image-view.height.prompt" prefWidth="80" styleClass="text-field-card" />
+                </HBox>
+            </VBox>
+
+            <VBox fx:id="BoxEditorVBox" spacing="10" visible="false" managed="false">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="%builder.components.editor.box.width.text" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="boxWidthField" promptText="%builder.components.editor.box.width.prompt" prefWidth="80" styleClass="text-field-card" />
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="%builder.components.editor.box.height.text" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="boxHeightField" promptText="%builder.components.editor.box.height.prompt" prefWidth="80" styleClass="text-field-card" />
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="%builder.components.editor.box.background-color.text" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="boxBackgroundColorField" promptText="%builder.components.editor.box.background-color.prompt" prefWidth="80" styleClass="text-field-card" />
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="%builder.components.editor.box.border-color.text" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="boxBorderColorField" promptText="%builder.components.editor.box.border-color.prompt" prefWidth="80" styleClass="text-field-card" />
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="%builder.components.editor.box.border-width.text" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="boxBorderWidthField" promptText="%builder.components.editor.box.border-width.prompt" prefWidth="80" styleClass="text-field-card" />
+                </HBox>
+            </VBox>
+        </StackPane>
+    </VBox>
+
+    <StackPane styleClass="builder-right-panel" HBox.hgrow="ALWAYS">
+        <SplitPane fx:id="splitPane" dividerPositions="0.5" managed="false" visible="false" VBox.vgrow="ALWAYS">
+            <AnchorPane fx:id="builderPane" minHeight="400.0" minWidth="0.0" prefHeight="400.0" prefWidth="300.0">
+
+                <StackPane fx:id="cardPreviewStackPane" minHeight="332.0" minWidth="240.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+                    <AnchorPane fx:id="cardPreviewRectangle"
+                                maxHeight="332"
+                                maxWidth="240"
+                                minHeight="332"
+                                minWidth="240"
+                                prefHeight="332"
+                                prefWidth="240"
+                                styleClass="card-preview-rectangle">
+                    </AnchorPane>
+                </StackPane>
+
+                <HBox alignment="CENTER_RIGHT" spacing="5" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                    <Label styleClass="card-label" text="Zoom:" />
+                    <Slider fx:id="zoomSlider" styleClass="zoom-slider" blockIncrement="0.1" max="1.7" min="1" prefWidth="120" value="1.35" />
+                </HBox>
+
+            </AnchorPane>
+
+            <AnchorPane fx:id="textPane" minWidth="0.0" prefWidth="200.0">
+                <TextArea fx:id="fxmlTextArea" promptText="%builder.textarea.prompt" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            </AnchorPane>
+        </SplitPane>
+    </StackPane>
+
+</HBox>
