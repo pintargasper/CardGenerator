@@ -34,6 +34,7 @@ The app allows users to **display generated cards** and **export them** in multi
 - **Display generated cards** directly in the application
 - **Export cards** as pdf or png at 13x18 cm
 - **Simple and intuitive user interface**
+- **Easy card creation via UI (alpha version)**
 
 ## 🌐 Supported Languages
 - English
@@ -44,8 +45,8 @@ The app allows users to **display generated cards** and **export them** in multi
 ## 📝 Dependencies & Versions
 
 **Maven Plugin & Java**
-- Maven Plugin: 3.13.0
-- Java: 21.0.2
+- Maven Plugin: 3.14.1
+- Java: 25.0.1
 
 **Libraries**
 > All libraries are configured in `pom.xml`
