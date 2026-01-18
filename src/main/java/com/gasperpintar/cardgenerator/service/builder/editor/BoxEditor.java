@@ -14,7 +14,6 @@ public class BoxEditor implements Editor<Pane> {
     private final TextField borderColorField;
     private final TextField borderWidthField;
     private final Runnable onChange;
-    private boolean isActive;
 
     public BoxEditor(Pane box,
                      TextField widthField,
@@ -37,10 +36,7 @@ public class BoxEditor implements Editor<Pane> {
     @Override
     public void updateNode(Pane node) {
         this.box = node;
-        if (!isActive) {
-            updateFields();
-            isActive = true;
-        }
+        updateFields();
     }
 
     @Override

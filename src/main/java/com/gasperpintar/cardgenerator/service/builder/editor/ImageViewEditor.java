@@ -11,7 +11,6 @@ public class ImageViewEditor implements Editor<ImageView> {
     private final TextField heightField;
     private final TextField idField;
     private final Runnable onChange;
-    private boolean isActive;
 
     public ImageViewEditor(ImageView imageView,
                            TextField widthField,
@@ -23,7 +22,6 @@ public class ImageViewEditor implements Editor<ImageView> {
         this.heightField = heightField;
         this.idField = idField;
         this.onChange = onChange;
-        this.isActive = false;
 
         setupListeners();
     }
@@ -31,10 +29,7 @@ public class ImageViewEditor implements Editor<ImageView> {
     @Override
     public void updateNode(ImageView node) {
         this.imageView = node;
-        if (!isActive) {
-            updateFields();
-            isActive = true;
-        }
+        updateFields();
     }
 
     @Override

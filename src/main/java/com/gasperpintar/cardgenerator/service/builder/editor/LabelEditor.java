@@ -14,7 +14,6 @@ public class LabelEditor implements Editor<Label> {
     private final TextField paddingField;
     private final TextField idField;
     private final Runnable onChange;
-    private boolean isActive;
 
     public LabelEditor(Label label,
                        TextField textField,
@@ -30,7 +29,6 @@ public class LabelEditor implements Editor<Label> {
         this.paddingField = paddingField;
         this.idField = idField;
         this.onChange = onChange;
-        this.isActive = false;
 
         setupListeners();
     }
@@ -38,10 +36,7 @@ public class LabelEditor implements Editor<Label> {
     @Override
     public void updateNode(Label node) {
         this.label = node;
-        if (!isActive) {
-            updateFields();
-            isActive = true;
-        }
+        updateFields();
     }
 
     @Override
@@ -59,7 +54,7 @@ public class LabelEditor implements Editor<Label> {
         }
 
         if (sizeField != null) {
-            sizeField.setText(Styles.extractStyleValue(label.getStyle(), "-fx-font-size"));
+            sizeField.setText(Styles.extractStyleValue(label.getStyle(), "-fx-font-size").replace("px", ""));
         }
 
         if (paddingField != null) {
@@ -90,8 +85,12 @@ public class LabelEditor implements Editor<Label> {
         }
 
         if (sizeField != null) {
-            sizeField.textProperty().addListener((_,_,newVal) -> {
-                updateStyle("-fx-font-size", newVal != null && !newVal.isEmpty() ? String.format("%spx", newVal) : null);
+            sizeField.textProperty().addListener((_, _, newVal) -> {
+                if (newVal != null && !newVal.isEmpty()) {
+                    updateStyle("-fx-font-size", String.format("%spx", newVal));
+                } else {
+                    updateStyle("-fx-font-size", null);
+                }
                 onChange.run();
             });
         }

@@ -21,7 +21,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Generator {
 
     private static final double IMAGE_SCALE_FACTOR = 3.0;
-    private static final String CARD_LOADING_ERROR = "Card loading error";
     private static final Map<String, Image> imageCache = new ConcurrentHashMap<>();
 
     private final ExcelService excelService;
@@ -45,6 +44,9 @@ public class Generator {
             cardNode.lookupAll(".label").forEach(node -> {
                 if (node instanceof Label label) {
                     label.setText("");
+                    label.setMaxWidth(240);
+                    label.setPrefWidth(240);
+                    label.setWrapText(true);
                 }
             });
 
@@ -74,7 +76,7 @@ public class Generator {
             }
             return cardNode;
         } catch (IOException ioException) {
-            return new Label(CARD_LOADING_ERROR);
+            return new Label("Card loading error");
         }
     }
 
