@@ -56,7 +56,11 @@ public class ImageViewEditor implements Editor<ImageView> {
             widthField.textProperty().addListener((_, _, newVal) -> {
                 if (imageView != null) {
                     try {
-                        imageView.setFitWidth(Double.parseDouble(newVal));
+                        double width = Double.parseDouble(newVal);
+                        if (width <= 0) {
+                            width = 1;
+                        }
+                        imageView.setFitWidth(width);
                     } catch (NumberFormatException _) {}
                     onChange.run();
                 }
@@ -67,7 +71,11 @@ public class ImageViewEditor implements Editor<ImageView> {
             heightField.textProperty().addListener((_, _, newVal) -> {
                 if (imageView != null) {
                     try {
-                        imageView.setFitHeight(Double.parseDouble(newVal));
+                        double height = Double.parseDouble(newVal);
+                        if (height <= 0) {
+                            height = 1;
+                        }
+                        imageView.setFitHeight(height);
                     } catch (NumberFormatException _) {}
                     onChange.run();
                 }

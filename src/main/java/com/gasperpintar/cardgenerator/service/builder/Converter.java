@@ -1,6 +1,6 @@
 package com.gasperpintar.cardgenerator.service.builder;
 
-import com.gasperpintar.cardgenerator.controller.BuilderController;
+import com.gasperpintar.cardgenerator.utils.Utils;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 
 public class Converter {
 
-    public void convertGraphicsToFXML(AnchorPane cardPreviewPane, TextArea textArea) {
+    public String convertGraphicsToFXML(AnchorPane cardPreviewPane) {
         StringBuilder code = new StringBuilder();
 
         boolean hasLabel = false;
@@ -72,7 +72,7 @@ public class Converter {
             code.append(convertGraphicsToFXML(node));
         }
         code.append("</AnchorPane>");
-        textArea.setText(code.toString());
+        return code.toString();
     }
 
     public void convertFXMLToGraphics(AnchorPane targetPane, String fxmlText) {
@@ -161,11 +161,6 @@ public class Converter {
 
                 if (node.getParent() instanceof AnchorPane parentPane) {
                     adjustLabelWidth(parentPane, label);
-                }
-
-                String padding = Styles.extractStyleValue(label.getStyle(), "-fx-padding");
-                if (padding != null && !padding.isEmpty()) {
-                    atribute.append(String.format(" padding=\"%s\"", escapeXML(padding)));
                 }
 
                 double prefWidth = label.getPrefWidth();
@@ -291,7 +286,7 @@ public class Converter {
 
             if (padding != null && !padding.isEmpty()) {
                 String oldStyle = control.getStyle();
-                String newStyle = Styles.setStyleValue(oldStyle, "-fx-padding", String.format("%spx", padding));
+                String newStyle = Styles.setStyleValue(oldStyle, "-fx-padding", String.format("%s", padding));
                 control.setStyle(newStyle);
             }
         }
@@ -348,12 +343,12 @@ public class Converter {
 
         String imageAttribute = getAttribute(line, "image");
         if (imageAttribute == null || imageAttribute.isEmpty()) {
-            node.setImage(new Image(Objects.requireNonNull(getClass().getResource(BuilderController.DEFAULT_IMAGE)).toExternalForm()));
+            node.setImage(new Image(Objects.requireNonNull(getClass().getResource(Utils.DEFAULT_IMAGE)).toExternalForm()));
         } else {
             try {
                 node.setImage(new Image(imageAttribute));
             } catch (Exception _) {
-                node.setImage(new Image(Objects.requireNonNull(getClass().getResource(BuilderController.DEFAULT_IMAGE)).toExternalForm()));
+                node.setImage(new Image(Objects.requireNonNull(getClass().getResource(Utils.DEFAULT_IMAGE)).toExternalForm()));
             }
         }
 

@@ -6,6 +6,7 @@ import com.gasperpintar.cardgenerator.service.builder.DragAndDrop;
 import com.gasperpintar.cardgenerator.service.builder.editor.BoxEditor;
 import com.gasperpintar.cardgenerator.service.builder.editor.ImageViewEditor;
 import com.gasperpintar.cardgenerator.service.builder.editor.LabelEditor;
+import com.gasperpintar.cardgenerator.utils.Utils;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -13,37 +14,28 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 
+import java.io.File;
+import java.nio.file.Files;
 import java.util.Map;
 
 public class BuilderController {
 
     @FXML
-    private Button templateButton;
+    private Button dragLabelButton;
 
     @FXML
-    private SplitPane splitPane;
+    private Button dragImageViewButton;
 
     @FXML
-    private AnchorPane builderPane, textPane;
-
-    @FXML
-    private StackPane cardPreviewStackPane;
-
-    @FXML
-    private Slider zoomSlider;
-
-    @FXML
-    private TextArea fxmlTextArea;
-
-    @FXML
-    private AnchorPane cardPreviewRectangle;
-
-    @FXML
-    private Button dragLabelButton, dragImageViewButton, dragBoxButton;
+    private Button dragBoxButton;
 
     @FXML
     private VBox labelEditorVBox;
+
+    @FXML
+    private TextField labelIdField;
 
     @FXML
     private TextField componentTextField;
@@ -58,6 +50,18 @@ public class BuilderController {
     private TextField componentTextPaddingField;
 
     @FXML
+    private VBox ImageEditorVBox;
+
+    @FXML
+    private TextField imageIdField;
+
+    @FXML
+    private TextField imageWidthField;
+
+    @FXML
+    private TextField imageHeightField;
+
+    @FXML
     private VBox BoxEditorVBox;
 
     @FXML
@@ -67,7 +71,7 @@ public class BuilderController {
     private TextField boxHeightField;
 
     @FXML
-    private TextField boxBgColorField;
+    private TextField boxBackgroundColorField;
 
     @FXML
     private TextField boxBorderColorField;
@@ -76,24 +80,25 @@ public class BuilderController {
     private TextField boxBorderWidthField;
 
     @FXML
-    private TextField imageWidthField;
+    private SplitPane splitPane;
 
     @FXML
-    private TextField imageHeightField;
-
-    private boolean isBuilderPanelFull;
-    private boolean isTextPanelFull;
+    private AnchorPane builderPane;
 
     @FXML
-    private VBox ImageEditorVBox;
-
-    public static final String DEFAULT_IMAGE = "/com/gasperpintar/cardgenerator/images/logo.png";
+    private StackPane cardPreviewStackPane;
 
     @FXML
-    private TextField labelIdField;
+    private AnchorPane cardPreviewRectangle;
 
     @FXML
-    private TextField imageIdField;
+    private Slider zoomSlider;
+
+    @FXML
+    private AnchorPane textPane;
+
+    @FXML
+    private TextArea fxmlTextArea;
 
     private final DragAndDrop dragAndDrop;
     private final Converter converter;
@@ -102,20 +107,20 @@ public class BuilderController {
     private BoxEditor boxEditor;
     private ImageViewEditor imageViewEditor;
 
+    private boolean isBuilderPanelFull;
+    private boolean isTextPanelFull;
+    private boolean isUpdatingFromGraphics;
+
     public BuilderController() {
         this.dragAndDrop = new DragAndDrop();
         this.converter = new Converter();
-
         this.isBuilderPanelFull = false;
         this.isTextPanelFull = false;
+        this.isUpdatingFromGraphics = false;
     }
 
     @FXML
     public void initialize() {
-
-        if (templateButton != null) {
-            templateButton.setOnAction(_ -> handleTemplateButton());
-        }
 
         if (zoomSlider != null && cardPreviewStackPane != null) {
             cardPreviewStackPane.scaleXProperty().bind(zoomSlider.valueProperty());
@@ -123,7 +128,38 @@ public class BuilderController {
         }
 
         if (fxmlTextArea != null && cardPreviewRectangle != null) {
-            cardPreviewRectangle.getChildren().addListener((ListChangeListener<Node>) _ -> converter.convertGraphicsToFXML(cardPreviewRectangle, fxmlTextArea));
+            fxmlTextArea.textProperty().addListener((_, _, newValue) -> {
+                if (isUpdatingFromGraphics) {
+                    return;
+                }
+                converter.convertFXMLToGraphics(cardPreviewRectangle, newValue);
+                cardPreviewRectangle.getChildren().forEach(this::enableDrag);
+            });
+
+            fxmlTextArea.focusedProperty().addListener((_, _, _) -> hideAllEditors());
+            fxmlTextArea.sceneProperty().addListener((_, _, newScene) -> {
+                if (newScene != null) {
+                    newScene.addEventFilter(MouseEvent.MOUSE_PRESSED, mouseEvent -> {
+                        if (!fxmlTextArea.isFocused()) {
+                            return;
+                        }
+
+                        Node node = mouseEvent.getPickResult().getIntersectedNode();
+                        if (node != fxmlTextArea) {
+                            hideAllEditors();
+                            cardPreviewRectangle.requestFocus();
+                        }
+                    });
+                }
+            });
+
+            cardPreviewRectangle.getChildren().addListener((ListChangeListener<Node>) _ -> {
+                if (isUpdatingFromGraphics) {
+                    return;
+                }
+                updateTextAreaFromGraphics();
+            });
+
         }
 
         setupDragAndDrop();
@@ -133,19 +169,65 @@ public class BuilderController {
         labelEditor = new LabelEditor(null, componentTextField, componentColorField,
                 componentTextSizeField, componentTextPaddingField,
                 labelIdField,
-                () -> converter.convertGraphicsToFXML(cardPreviewRectangle, fxmlTextArea));
+                this::updateTextAreaFromGraphics);
 
-        boxEditor = new BoxEditor(null, boxWidthField, boxHeightField, boxBgColorField,
+        boxEditor = new BoxEditor(null, boxWidthField, boxHeightField, boxBackgroundColorField,
                 boxBorderColorField, boxBorderWidthField,
-                () -> converter.convertGraphicsToFXML(cardPreviewRectangle, fxmlTextArea));
+                this::updateTextAreaFromGraphics);
 
         imageViewEditor = new ImageViewEditor(null, imageWidthField, imageHeightField, imageIdField,
-                () -> converter.convertGraphicsToFXML(cardPreviewRectangle, fxmlTextArea));
+                this::updateTextAreaFromGraphics);
     }
 
     @FXML
-    private void handleTemplateButton() {
+    public void openTemplate() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Izberi template datoteko");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Template file", "*.fxml"));
+        File templateFile = fileChooser.showOpenDialog(Utils.stage);
 
+        if (templateFile != null) {
+            try {
+                String fxmlContent = Files.readString(templateFile.toPath());
+                if (fxmlTextArea != null) {
+                    fxmlTextArea.setText(fxmlContent);
+                }
+                converter.convertFXMLToGraphics(cardPreviewRectangle, fxmlContent);
+                cardPreviewRectangle.getChildren().forEach(this::enableDrag);
+            } catch (Exception _) {
+                InfoPopupController.showPopup("Napaka pri odpiranju datoteke");
+            }
+        }
+    }
+
+    @FXML
+    public void downloadTemplate() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Shrani template datoteko");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Template file", "*.fxml"));
+        fileChooser.setInitialFileName("template.fxml");
+
+        File saveFile = fileChooser.showSaveDialog(Utils.stage);
+
+        if (saveFile != null) {
+            try {
+                String fxmlContent = fxmlTextArea.getText();
+                Files.writeString(saveFile.toPath(), fxmlContent);
+                InfoPopupController.showPopup("Template je bil uspešno shranjen");
+            } catch (Exception _) {
+                InfoPopupController.showPopup("Napaka pri shranjevanju datoteke");
+            }
+        }
+    }
+
+    @FXML
+    public void openBuilderPanel() {
+        togglePanel(true);
+    }
+
+    @FXML
+    public void openTextPanel() {
+        togglePanel(false);
     }
 
     private void updatePanels() {
@@ -165,23 +247,34 @@ public class BuilderController {
         splitPane.setDividerPositions(dividerPosition);
     }
 
-    @FXML
-    public void openBuilderPanel() {
-        togglePanel(true);
+    private void updateTextAreaFromGraphics() {
+        isUpdatingFromGraphics = true;
+        fxmlTextArea.setText(converter.convertGraphicsToFXML(cardPreviewRectangle));
+        isUpdatingFromGraphics = false;
     }
 
-    @FXML
-    public void openTextPanel() {
-        togglePanel(false);
+    private void hideAllEditors() {
+        labelEditorVBox.setVisible(false);
+        labelEditorVBox.setManaged(false);
+
+        BoxEditorVBox.setVisible(false);
+        BoxEditorVBox.setManaged(false);
+
+        ImageEditorVBox.setVisible(false);
+        ImageEditorVBox.setManaged(false);
     }
 
     private void togglePanel(boolean isBuilder) {
         if (isBuilder) {
             isBuilderPanelFull = !isBuilderPanelFull;
-            if (isBuilderPanelFull) isTextPanelFull = false;
+            if (isBuilderPanelFull) {
+                isTextPanelFull = false;
+            }
         } else {
             isTextPanelFull = !isTextPanelFull;
-            if (isTextPanelFull) isBuilderPanelFull = false;
+            if (isTextPanelFull) {
+                isBuilderPanelFull = false;
+            }
         }
         updatePanels();
     }
@@ -249,7 +342,7 @@ public class BuilderController {
                     return;
                 }
             }
-            converter.convertGraphicsToFXML(cardPreviewRectangle, fxmlTextArea);
+            updateTextAreaFromGraphics();
         });
     }
 }

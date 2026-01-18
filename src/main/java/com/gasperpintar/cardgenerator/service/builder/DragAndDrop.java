@@ -2,7 +2,7 @@ package com.gasperpintar.cardgenerator.service.builder;
 
 import com.gasperpintar.cardgenerator._interface.DragDropListener;
 import com.gasperpintar.cardgenerator._interface.NodeDragListener;
-import com.gasperpintar.cardgenerator.controller.BuilderController;
+import com.gasperpintar.cardgenerator.utils.Utils;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -114,11 +114,11 @@ public class DragAndDrop {
             case "Label" -> {
                 Label label = new Label("Text");
                 label.getStyleClass().add("card-label");
-                label.setStyle("-fx-text-fill: #222; -fx-font-size: 18;");
+                label.setStyle("-fx-text-fill: #222; -fx-font-size: 18; -fx-padding: 0;");
                 return label;
             } case "ImageView" -> {
-                String imagePath = getClass().getResource(BuilderController.DEFAULT_IMAGE) != null
-                        ? Objects.requireNonNull(getClass().getResource(BuilderController.DEFAULT_IMAGE)).toExternalForm()
+                String imagePath = getClass().getResource(Utils.DEFAULT_IMAGE) != null
+                        ? Objects.requireNonNull(getClass().getResource(Utils.DEFAULT_IMAGE)).toExternalForm()
                         : null;
                 if (imagePath != null) {
                     ImageView imageView = new ImageView(imagePath);

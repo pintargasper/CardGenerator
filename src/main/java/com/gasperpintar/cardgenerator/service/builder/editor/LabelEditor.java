@@ -58,7 +58,7 @@ public class LabelEditor implements Editor<Label> {
         }
 
         if (paddingField != null) {
-            paddingField.setText(Styles.extractStyleValue(label.getStyle(), "-fx-padding"));
+            paddingField.setText(Styles.extractStyleValue(label.getStyle(), "-fx-padding").replace("px", ""));
         }
 
         if (idField != null) {
@@ -87,9 +87,9 @@ public class LabelEditor implements Editor<Label> {
         if (sizeField != null) {
             sizeField.textProperty().addListener((_, _, newVal) -> {
                 if (newVal != null && !newVal.isEmpty()) {
-                    updateStyle("-fx-font-size", String.format("%spx", newVal));
+                    updateStyle("-fx-font-size", String.format("%s", newVal));
                 } else {
-                    updateStyle("-fx-font-size", null);
+                    updateStyle("-fx-font-size", String.format("%s", 18));
                 }
                 onChange.run();
             });
@@ -97,7 +97,11 @@ public class LabelEditor implements Editor<Label> {
 
         if (paddingField != null) {
             paddingField.textProperty().addListener((_, _, newVal) -> {
-                updateStyle("-fx-padding", newVal != null && !newVal.isEmpty() ? String.format("%spx", newVal) : null);
+                if (newVal != null && !newVal.isEmpty()) {
+                    updateStyle("-fx-padding", String.format("%s", newVal));
+                } else {
+                    updateStyle("-fx-padding", String.format("%s", 0));
+                }
                 onChange.run();
             });
         }

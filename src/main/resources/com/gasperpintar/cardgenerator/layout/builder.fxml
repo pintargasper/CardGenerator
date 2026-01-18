@@ -15,7 +15,7 @@
                 <HBox alignment="CENTER_LEFT" spacing="10">
                     <Label styleClass="card-label" text="Template" />
                     <Region HBox.hgrow="ALWAYS" />
-                    <Button fx:id="templateButton" styleClass="nav-button" text="Choose" />
+                    <Button styleClass="nav-button" text="Open" onAction="#openTemplate" />
                 </HBox>
                 <HBox alignment="CENTER_LEFT" spacing="10">
                     <Label styleClass="card-label" text="Format" />
@@ -33,6 +33,17 @@
                     <Region HBox.hgrow="ALWAYS" />
                     <Button onAction="#openBuilderPanel" styleClass="nav-button" text="Builder" />
                     <Button onAction="#openTextPanel" styleClass="nav-button" text="Text" />
+                </HBox>
+            </VBox>
+        </StackPane>
+
+        <StackPane styleClass="card-view">
+            <VBox alignment="CENTER" spacing="15">
+                <Label alignment="CENTER" styleClass="card-label" text="Download" />
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="card-label" text="Template" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Button styleClass="nav-button" text="Download" onAction="#downloadTemplate" />
                 </HBox>
             </VBox>
         </StackPane>
