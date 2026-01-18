@@ -6,7 +6,8 @@
 #define url "https://gasperpintar.com"
 #define AppUrl "https://gasperpintar.com/card-generator"
 #define AppName "Card Generator"
-#define AppVersion "1.1.0"
+#define AppVersion "1.2.0-alpha+1"
+#define AppVersionNumeric "1.2.0"
 
 #include "custom-messages.iss"
 
@@ -43,7 +44,7 @@ ShowLanguageDialog=yes
 WizardStyle=modern
 OutputBaseFilename=CardGeneratorSetup
 VersionInfoDescription=Card Generator is a desktop application for creating and generating custom playing cards. Using Excel spreadsheets and customizable fxml templates, you can quickly create entire decks of playing cards without having to design each card individually
-VersionInfoVersion={#AppVersion}
+VersionInfoVersion={#AppVersionNumeric}
 VersionInfoCompany=Gasper Pintar
 VersionInfoCopyright=Copyright (C) Gasper Pintar
 

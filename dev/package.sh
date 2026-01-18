@@ -9,16 +9,16 @@ DEPLOY_DIR="$PACKAGE_OUTPUT_DIR/deploy"
 CUSTOM_JRE_DIR="$PACKAGE_OUTPUT_DIR/custom-runtime"
 APP_IMAGE_DIR="$PACKAGE_OUTPUT_DIR"
 
-JAR_FILE="CardGenerator-1.1.0.jar"
+JAR_FILE="CardGenerator-1.2.0-alpha+1.jar"
 MAIN_CLASS="com.gasperpintar.cardgenerator.Launcher"
 APP_NAME="Card Generator"
-APP_VERSION="1.1.0"
+APP_VERSION="1.2.0"
 VENDOR="Gašper Pintar"
 ICON_PATH="$PROJECT_ROOT/src/main/resources/com/gasperpintar/cardgenerator/images/logo.png"
 
-JDK_PATH="$PROJECT_ROOT/dev/java/linux/jdk-21.0.9"
-JAVAFX_JMODS_PATH="$PROJECT_ROOT/dev/java/linux/javafx-jmods-21.0.9"
-JAVAFX_LIB_PATH="$PROJECT_ROOT/dev/java/linux/javafx-sdk-21.0.9/lib"
+JDK_PATH="$PROJECT_ROOT/dev/java/linux/jdk-25.0.1"
+JAVAFX_JMODS_PATH="$PROJECT_ROOT/dev/java/linux/javafx-jmods-25.0.1"
+JAVAFX_LIB_PATH="$PROJECT_ROOT/dev/java/linux/javafx-sdk-25.0.1/lib"
 
 # ============================
 # Pre-checks (must be first)
@@ -74,7 +74,7 @@ find "$JAVAFX_LIB_PATH" -name "*.so" -exec cp {} "$CUSTOM_JRE_DIR/lib" \;
 # jpackage: build app-image
 # ============================
 "$JDK_PATH/bin/jpackage" \
-    --type app-image \
+    --type rpm \
     --input "$DEPLOY_DIR" \
     --main-jar "$JAR_FILE" \
     --main-class "$MAIN_CLASS" \

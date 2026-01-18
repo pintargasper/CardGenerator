@@ -6,16 +6,16 @@ $packageOutputDir  = "$PSScriptRoot\output\windows"           # all generated fi
 $deployDir         = "$packageOutputDir\deploy"               # fat JAR
 $customJreDir      = "$packageOutputDir\custom-runtime"       # minimal JRE
 $appImageDir       = "$packageOutputDir"                      # app-image with exe
-$jarFile           = "CardGenerator-1.1.0.jar"
+$jarFile           = "CardGenerator-1.2.0-alpha+1.jar"
 $mainClass         = "com.gasperpintar.cardgenerator.Launcher"
 $appName           = "Card Generator"
-$appVersion        = "1.1.0"
+$appVersion        = "1.2.0"
 $vendor            = "Gašper Pintar"
 $iconPath          = "$projectRoot\src\main\resources\com\gasperpintar\cardgenerator\images\logo.ico"
 $imagePath         = "$projectRoot\src\main\resources\com\gasperpintar\cardgenerator\images\logo.bmp"
-$javafxJmodsPath   = "$PSScriptRoot\java\windows\javafx-jmods-21.0.9"
-$jdkPath           = "$PSScriptRoot\java\windows\jdk-21"
-$javafxLibPath     = "$PSScriptRoot\java\windows\javafx-sdk-21.0.9\lib"
+$javafxJmodsPath   = "$PSScriptRoot\java\windows\javafx-jmods-25.0.1"
+$jdkPath           = "$PSScriptRoot\java\windows\jdk-25.0.1"
+$javafxLibPath     = "$PSScriptRoot\java\windows\javafx-sdk-25.0.1\lib"
 
 # ============================
 # Pre-checks for required files and folders (MUST BE FIRST!)
@@ -54,7 +54,7 @@ Copy-Item "$projectRoot\target\$jarFile" -Destination $deployDir
 # ============================
 $javafxModules = "javafx.base,javafx.controls,javafx.fxml,javafx.graphics,javafx.swing,javafx.media,javafx.web"
 
-jlink `
+& "$jdkPath\bin\jlink.exe" `
   --module-path "$jdkPath\jmods;$javafxJmodsPath" `
   --add-modules java.base,java.desktop,java.logging,java.sql,java.naming,java.management,$javafxModules `
   --output $customJreDir `
@@ -75,8 +75,8 @@ Get-ChildItem -Path "$javafxLibPath" -Filter "*.dll" | ForEach-Object {
 # ============================
 # Create app-image with jpackage
 # ============================
-jpackage `
-  --type app-image `
+& "$jdkPath\bin\jpackage.exe" `
+--type app-image `
   --input $deployDir `
   --main-jar $jarFile `
   --main-class $mainClass `
@@ -93,8 +93,8 @@ jpackage `
 # Copy app-icon
 # ============================
 # Create icon folder if it does not exist
-if (!(Test-Path "$packageOutputDir\Card Generator")) { New-Item -ItemType Directory -Path "$packageOutputDir\CardGenerator" -Force | Out-Null }
-Copy-Item "$imagePath" -Destination "$packageOutputDir\Card Generator\icon.bmp"
+if (!(Test-Path "$packageOutputDir\$appName")) { New-Item -ItemType Directory -Path "$packageOutputDir\$appName" -Force | Out-Null }
+Copy-Item "$imagePath" -Destination "$packageOutputDir\$appName\icon.bmp"
 
 # ============================
 # Debug command
